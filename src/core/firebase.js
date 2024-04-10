@@ -1,31 +1,34 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import dotenv from "dotenv";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-const APPKEY = process.env.APPKEY;
-const AUTHDOMAIN = process.env.AUTHDOMAIN;
-const PROJECTID = process.env.PROJECTID;
-const STORAGEBUCKET = process.env.STORAGEBUCKET;
-const MESSAGINGSENDERID = process.env.MESSAGINGSENDERID;
-const APPID = process.env.APPID;
-const MEASUREMENTID = process.env.MEASUREMENTID;
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app’s Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// dotenv.config();
+
+const {
+	VITE_FIREBASE_API_KEY,
+	VITE_FIREBASE_AUTH_DOMAIN,
+	VITE_FIREBASE_PROJECT_ID,
+	VITE_FIREBASE_STORAGE_BUCKET,
+	VITE_FIREBASE_SENDER_ID,
+	VITE_FIREBASE_APP_ID,
+	VITE_FIREBASE_MEASUREMENT_ID,
+} = import.meta.env;
+
+
 const firebaseConfig = {
-  apiKey: APPKEY,
-  authDomain: AUTHDOMAIN,
-  projectId: PROJECTID,
-  storageBucket: STORAGEBUCKET,
-  messagingSenderId: MESSAGINGSENDERID,
-  appId: APPID,
-  measurementId: MEASUREMENTID
+	apiKey: VITE_FIREBASE_API_KEY,
+	authDomain: VITE_FIREBASE_AUTH_DOMAIN,
+	projectId: VITE_FIREBASE_PROJECT_ID,
+	storageBucket: VITE_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: VITE_FIREBASE_SENDER_ID,
+	appId: VITE_FIREBASE_APP_ID,
+	measurementId: VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
