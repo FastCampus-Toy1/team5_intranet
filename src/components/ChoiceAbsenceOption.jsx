@@ -4,8 +4,8 @@ import { useState } from "react";
 
 function ChoiceAbsenceOption() {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
-  const [isHalfDayOffShow, setIsHalfDayOffShow] = useState(false);
-  const [isHalfDayOffOptionOpen, setIsHalfDayOffOptionOpen] = useState(false);
+  const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
+  const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);
   const [selectedAbsence, setSelectedAbsence] = useState("휴가 선택");
   const [selectedTime, setSelectedTime] = useState("시간 선택");
   const toggleHandler = (isOn, setIsOn) => {
@@ -14,19 +14,20 @@ function ChoiceAbsenceOption() {
 
   useEffect(() => {
     if (selectedAbsence === "반차") {
-      setIsHalfDayOffShow(true);
+      setIsHDOOpenBtnShow(true);
     } else {
-      setIsHalfDayOffShow(false);
+      setIsHDOOpenBtnShow(false);
+      setIsHDOOptionOpen(false);
     }
     setIsAbsenceOptionOpen(false);
   }, [selectedAbsence]);
 
   const absenceOptions = ["반차", "연차", "조퇴"];
-  const halfDayOffOptions = ["오전", "오후"];
+  const HDOOptions = ["오전", "오후"];
 
   return (
     <BtnFlexContainer>
-      <div className="absence__container">
+      <AbsenceContainer className="absence__container">
         <AbsenceOptionsOpenBtn
           onClick={() => {
             toggleHandler(isAbsenceOptionOpen, setIsAbsenceOptionOpen);
@@ -35,51 +36,56 @@ function ChoiceAbsenceOption() {
           <Option>{selectedAbsence}</Option>
           <div className="material-symbols-outlined">arrow_drop_down</div>
         </AbsenceOptionsOpenBtn>
-
-        <AbsenceOptionBtnsList $isopen={isAbsenceOptionOpen}>
-          {absenceOptions.map((list, index) => (
-            <li key={index}>
-              <OptionBtn
-                onClick={() => {
-                  setSelectedAbsence(list);
-                }}
-              >
-                {list}
-              </OptionBtn>
-            </li>
-          ))}
-        </AbsenceOptionBtnsList>
-      </div>
-      <div className="half-day-off__container">
-        {isHalfDayOffShow && (
-          <HalfDayOffTimeOpenBtn
-            onClick={() => {
-              toggleHandler(isHalfDayOffOptionOpen, setIsHalfDayOffOptionOpen);
-            }}
-          >
-            <Option>{selectedTime}</Option>
-            <p className="material-symbols-outlined">arrow_drop_down</p>
-          </HalfDayOffTimeOpenBtn>
+        {isAbsenceOptionOpen && (
+          <AbsenceOptionList>
+            {absenceOptions.map((list, index) => (
+              <li key={index}>
+                <AbsenceOptionBtn
+                  onClick={() => {
+                    setSelectedAbsence(list);
+                  }}
+                >
+                  {list}
+                </AbsenceOptionBtn>
+              </li>
+            ))}
+          </AbsenceOptionList>
         )}
-        <TimeBtnsList $isopen={isHalfDayOffOptionOpen}>
-          {halfDayOffOptions.map((list, index) => (
+      </AbsenceContainer>
+      <HDOOptionContainer>
+      <HDOTimeListOpenBtn $isshow = {isHDOOpenBtnShow}
+          onClick={() => {
+            toggleHandler(isHDOOptionOpen, setIsHDOOptionOpen);
+          }}
+        >
+          <Option>{selectedTime}</Option>
+          <p className="material-symbols-outlined">arrow_drop_down</p>
+        </HDOTimeListOpenBtn>
+        {isHDOOptionOpen && <HDOOptionList>
+          {HDOOptions.map((list, index) => (
             <li key={index}>
-              <TimeSelectBtn
+              <TimeOptionBtn
                 onClick={() => {
                   setSelectedTime(list);
-                  setIsHalfDayOffOptionOpen(false);
+                  setIsHDOOptionOpen(false);
                 }}
               >
                 {list}
-              </TimeSelectBtn>
+              </TimeOptionBtn>
             </li>
           ))}
-        </TimeBtnsList>
-      </div>
+        </HDOOptionList>
+}
+      </HDOOptionContainer>
     </BtnFlexContainer>
   );
 }
 export default ChoiceAbsenceOption;
+
+const BtnFlexContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
 
 const AbsenceOptionsOpenBtn = styled.button`
   width: 194px;
@@ -92,36 +98,41 @@ const AbsenceOptionsOpenBtn = styled.button`
   align-items: center;
 `;
 
+const AbsenceContainer = styled.div`
+  position: relative;
+`;
+
 const Option = styled.span`
   margin-left: 0.5em;
 `;
 
-const AbsenceOptionBtnsList = styled.ul`
-  width: 194px;
+const AbsenceOptionList = styled.ul`
+  width: 100%;
   border: 1px solid #b6c2e2;
   border-radius: 10px;
-  margin-top: 3px;
   font-size: 14px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  opacity: ${(props) => (props.$isopen ? "1" : "0")};
-  visibility: ${(props) => (props.$isopen ? "visible" : "hidden")};
-  transition: 0.5s;
+  overflow: hidden;
+  position: absolute;
+  top: 2.5em;
+  z-index: 5;
 `;
 
-const OptionBtn = styled.button`
+const AbsenceOptionBtn = styled.button`
   width: 100%;
   height: 32px;
-  background-color: transparent;
 
   &:hover {
     background-color: #b6c2e2;
     color: white;
   }
 `;
-
-const HalfDayOffTimeOpenBtn = styled.button`
+const HDOOptionContainer = styled.div`
+  position: relative;
+`;
+const HDOTimeListOpenBtn = styled.button`
   width: 194px;
   height: 34px;
   border: 1px solid #b6c2e2;
@@ -130,9 +141,11 @@ const HalfDayOffTimeOpenBtn = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  opacity: ${prop => prop.$isshow ? 1 : 0};
+  visibility: ${prop => prop.$isshow ? "visible" : "hidden"};;
 `;
-const TimeBtnsList = styled.ul`
-  width: 194px;
+const HDOOptionList = styled.ul`
+  width: 100%;
   border: 1px solid #b6c2e2;
   border-radius: 10px;
   margin-top: 3px;
@@ -140,22 +153,19 @@ const TimeBtnsList = styled.ul`
   display: flex;
   flex-direction: column;
   text-align: center;
-  opacity: ${(props) => (props.$isopen ? 1 : 0)};
-  visibility: ${(props) => (props.$isopen ? "visible" : "hidden")};
-  transition: 0.5s;
+
+  overflow: hidden;
+  position: absolute;
+  top: 2rem;
+  z-index: 5;
 `;
 
-const TimeSelectBtn = styled.button`
+const TimeOptionBtn = styled.button`
   width: 100%;
   height: 32px;
-  background-color: transparent;
 
   &:hover {
     background-color: #b6c2e2;
     color: white;
   }
-`;
-
-const BtnFlexContainer = styled.div`
-  display: flex;
 `;

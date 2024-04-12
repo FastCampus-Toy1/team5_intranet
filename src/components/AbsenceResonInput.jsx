@@ -16,7 +16,7 @@ function AbsenceInput() {
 export default AbsenceInput;
 
 const Container = styled.div`
-  width: 550px;
+  width: 100%;
   height: 235px;
   border: 1px solid #c8cce5;
   display: flex;
@@ -25,12 +25,12 @@ const Container = styled.div`
   border-radius: 10px;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
   height: 45px;
-  border-radius: 9px;
   position: absolute;
   top: 0;
   display: flex;

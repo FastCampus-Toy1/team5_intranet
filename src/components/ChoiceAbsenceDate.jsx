@@ -27,7 +27,6 @@ function ChoiceAbsenceDate() {
 
   return (
     <DateSettingContainer>
-      <Description>휴가기간</Description>
       <InputDateContainer>
         <InputDate
           className="start__absence__date"
@@ -36,11 +35,9 @@ function ChoiceAbsenceDate() {
           onChange={(e) => {
             setCurrentTime(new Date());
             setStartDate(new Date(e.target.value));
-            console.log(currentTime);
-            console.log(startDate);
           }}
         ></InputDate>
-        <> ~ </>
+        <span>  ~  </span>
         <InputDate
           className="end__absence__date"
           type="date"
@@ -50,17 +47,32 @@ function ChoiceAbsenceDate() {
             setEndDate(new Date(e.target.value));
           }}
         ></InputDate>
-        <ValidAbsence>{isValidAbsence}</ValidAbsence>
       </InputDateContainer>
+      <ValidAbsence>{isValidAbsence}</ValidAbsence>
     </DateSettingContainer>
   );
 }
 
 export default ChoiceAbsenceDate;
 
-const DateSettingContainer = styled.div``;
-const Description = styled.span``;
+const DateSettingContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 1em 0;
+gap: 1em;
 
-const InputDateContainer = styled.div``;
+`;
+
+
+const InputDateContainer = styled.div`
+width:100%;
+display: flex;
+justify-content: space-around;
+
+`;
 const InputDate = styled.input``;
-const ValidAbsence = styled.div``;
+const ValidAbsence = styled.div`
+
+text-align: center`;
