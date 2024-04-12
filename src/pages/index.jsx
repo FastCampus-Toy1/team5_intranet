@@ -1,10 +1,14 @@
-import ChoiceAbsenceButton from "../components/ChoiceAbsenceButton";
-
+import ChoiceAbsenceButton from "../components/ChoiceAbsenceOption";
+import ChoiceDateContainer from "../components/ChoiceAbsenceDate";
+import SubmitAbsenceContainer from "../components/SubmitAbsenceContainer";
 import React from 'react'
 
 function MainPage() {
   return (
-    <ChoiceAbsenceButton/>
+    // <ChoiceAbsenceButton/>
+    // <ChoiceDateContainer/>
+    // <SubmitAbsenceContainer/>
+    <SubmitAbsenceContainer/>
   )
 }
 
