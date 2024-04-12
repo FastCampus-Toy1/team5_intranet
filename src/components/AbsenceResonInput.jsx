@@ -50,4 +50,5 @@ const AbsenceReasonInput = styled.textarea`
   border-radius: 10px;
   z-index: 3;
   outline: none;
+  resize: none;
 `;

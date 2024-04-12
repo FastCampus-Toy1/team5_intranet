@@ -1,23 +1,30 @@
-import AbsenceInput from "./AbsenceInput";
+import AbsenceInput from "./AbsenceResonInput";
 import ChoiceAbsenceDate from "./ChoiceAbsenceDate";
 import ChoiceAbsenceOption from "./ChoiceAbsenceOption";
-import React from 'react'
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 
 function SubmitAbsenceContainer() {
   return (
     <AbsenceContainer>
-    <ChoiceAbsenceOption/>
-    <ChoiceAbsenceDate/>
-    <AbsenceInput/>
+      <Inner>
+        <ChoiceAbsenceOption />
+        <ChoiceAbsenceDate />
+        <AbsenceInput />
+      </Inner>
     </AbsenceContainer>
-  )
+  );
 }
 
-export default SubmitAbsenceContainer
+export default SubmitAbsenceContainer;
 
 const AbsenceContainer = styled.section`
-width: 585px;
-height: 70%;
-border: 2px solid #C8CCE5;
-`
+  width: 585px;
+  height: 70%;
+  border: 2px solid #c8cce5;
+`;
+const Inner = styled.div`
+  width: 90%;
+  height: 90%;
+
+`;
