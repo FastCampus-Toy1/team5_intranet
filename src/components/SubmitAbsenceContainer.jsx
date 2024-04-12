@@ -9,15 +9,25 @@ function SubmitAbsenceContainer() {
   const [startAbsenceDate, setStartAbsenceDate] = useState();
   const [endAbsenceDate, setEndAbsenceDate] = useState();
   const [absenceReason, setAbsenceReason] = useState("");
-
+  const [isValidAbsence, setIsValidAbsence] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   return (
-    <AbsenceContainer>
-      <Inner>
-        <ChoiceAbsenceOption />
-        <ChoiceAbsenceDate />
-        <AbsenceInput />
-      </Inner>
-    </AbsenceContainer>
+    <>
+      <AbsenceContainer>
+        <Inner>
+          <ChoiceAbsenceOption setValue={setAbsence} />
+          <ChoiceAbsenceDate
+            setValue={[setStartAbsenceDate, setEndAbsenceDate, setIsValidAbsence]}
+          />
+          <AbsenceInput setValue={[setIsSubmit, setAbsenceReason]} />
+        </Inner>
+      </AbsenceContainer>
+      <div>{absence}</div>
+      <div>{startAbsenceDate}</div>
+      <div>{endAbsenceDate}</div>
+      <div>{absenceReason}</div>
+      <div>{isSubmit.toString()}</div>
+    </>
   );
 }
 

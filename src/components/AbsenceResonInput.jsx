@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-function AbsenceInput() {
+function AbsenceInput({ setValue }) {
   return (
     <Container>
-      <SubmitButton>
+      <SubmitButton
+        onClick={() => {
+          setValue[0](true);
+        }}
+      >
         <span>제출하기</span>
         <span></span>
       </SubmitButton>
-      <AbsenceReasonInput></AbsenceReasonInput>
+      <AbsenceReasonInput
+        onChange={(e) => {
+          setValue[1](e.target.value);
+        }}
+      ></AbsenceReasonInput>
     </Container>
   );
 }

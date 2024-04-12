@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChoiceAbsenceOption() {
+function ChoiceAbsenceOption({setValue}) {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
   const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
   const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);
@@ -20,6 +20,7 @@ function ChoiceAbsenceOption() {
       setIsHDOOptionOpen(false);
     }
     setIsAbsenceOptionOpen(false);
+    setValue(selectedAbsence);
   }, [selectedAbsence]);
 
   const absenceOptions = ["반차", "연차", "조퇴"];
@@ -53,7 +54,8 @@ function ChoiceAbsenceOption() {
         )}
       </AbsenceContainer>
       <HDOOptionContainer>
-      <HDOTimeListOpenBtn $isshow = {isHDOOpenBtnShow}
+        <HDOTimeListOpenBtn
+          $isshow={isHDOOpenBtnShow}
           onClick={() => {
             toggleHandler(isHDOOptionOpen, setIsHDOOptionOpen);
           }}
@@ -61,21 +63,22 @@ function ChoiceAbsenceOption() {
           <Option>{selectedTime}</Option>
           <p className="material-symbols-outlined">arrow_drop_down</p>
         </HDOTimeListOpenBtn>
-        {isHDOOptionOpen && <HDOOptionList>
-          {HDOOptions.map((list, index) => (
-            <li key={index}>
-              <TimeOptionBtn
-                onClick={() => {
-                  setSelectedTime(list);
-                  setIsHDOOptionOpen(false);
-                }}
-              >
-                {list}
-              </TimeOptionBtn>
-            </li>
-          ))}
-        </HDOOptionList>
-}
+        {isHDOOptionOpen && (
+          <HDOOptionList>
+            {HDOOptions.map((list, index) => (
+              <li key={index}>
+                <TimeOptionBtn
+                  onClick={() => {
+                    setSelectedTime(list);
+                    setIsHDOOptionOpen(false);
+                  }}
+                >
+                  {list}
+                </TimeOptionBtn>
+              </li>
+            ))}
+          </HDOOptionList>
+        )}
       </HDOOptionContainer>
     </BtnFlexContainer>
   );
@@ -141,8 +144,8 @@ const HDOTimeListOpenBtn = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  opacity: ${prop => prop.$isshow ? 1 : 0};
-  visibility: ${prop => prop.$isshow ? "visible" : "hidden"};;
+  opacity: ${(prop) => (prop.$isshow ? 1 : 0)};
+  visibility: ${(prop) => (prop.$isshow ? "visible" : "hidden")};
 `;
 const HDOOptionList = styled.ul`
   width: 100%;

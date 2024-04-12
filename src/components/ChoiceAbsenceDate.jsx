@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-function ChoiceAbsenceDate() {
+function ChoiceAbsenceDate({ setValue }) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [startDate, setStartDate] = useState(currentTime);
   const [endDate, setEndDate] = useState(currentTime);
   const [isValidAbsence, setIsValidAbsence] = useState("");
   let usedVacation;
-
+  const dateToString = (dateObj) => {
+    return dateObj.toISOString().slice(0, 10);
+  };
   useEffect(() => {
     if (
       startDate.getFullYear() === currentTime.getFullYear() &&
@@ -22,6 +24,9 @@ function ChoiceAbsenceDate() {
     } else if (endDate >= startDate) {
       usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
       setIsValidAbsence(`휴가 ${usedVacation}일 사용`);
+      setValue[0](dateToString(startDate));
+      setValue[1](dateToString(endDate));
+      setValue[2](true);
     }
   }, [startDate, endDate]);
 
@@ -37,11 +42,11 @@ function ChoiceAbsenceDate() {
             setStartDate(new Date(e.target.value));
           }}
         ></InputDate>
-        <span>  ~  </span>
+        <span> ~ </span>
         <InputDate
           className="end__absence__date"
           type="date"
-          value={endDate.toISOString().slice(0, 10)}
+          value={dateToString(endDate)}
           onChange={(e) => {
             setCurrentTime(new Date());
             setEndDate(new Date(e.target.value));
@@ -56,23 +61,20 @@ function ChoiceAbsenceDate() {
 export default ChoiceAbsenceDate;
 
 const DateSettingContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-margin: 1em 0;
-gap: 1em;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0;
+  gap: 1em;
 `;
 
-
 const InputDateContainer = styled.div`
-width:100%;
-display: flex;
-justify-content: space-around;
-
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 `;
 const InputDate = styled.input``;
 const ValidAbsence = styled.div`
-
-text-align: center`;
+  text-align: center;
+`;
