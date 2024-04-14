@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import UserProfile from "./pages";
 
 function App() {
   return (
-    <Link to="/"></Link>
+    <UserProfile />
   )
 }
 
