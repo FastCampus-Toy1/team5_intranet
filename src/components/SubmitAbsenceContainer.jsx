@@ -14,24 +14,6 @@ function SubmitAbsenceContainer() {
   const [isValidAbsence, setIsValidAbsence] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
-  // useEffect(() => {
-  //   async function setData() {
-  //     await setDoc(doc(db, "Members", "test5"), {
-  //       teststartdate: startAbsenceDate,
-  //       testenddate: endAbsenceDate,
-  //       testreason: absenceReason,
-  //       teststatus: "신청 중",
-  //       testvalue: absence,
-  //     });
-  //   };
-
-  //   console.log(isValidAbsence);
-  //   console.log(isSubmit);
-  //   if (isValidAbsence && isSubmit) {
-  //     setData();
-  //     setIsSubmit(false);
-  //   }
-  // },[isValidAbsence,isSubmit]);
   useEffect(() => {
     async function setData() {
       try {
@@ -52,8 +34,6 @@ function SubmitAbsenceContainer() {
         console.error('Failed to set document:', error);
       }
     };
-    console.log(isValidAbsence);
-    console.log(isSubmit);
     if (isValidAbsence && isSubmit) {
       setData();
       setIsSubmit(false);
