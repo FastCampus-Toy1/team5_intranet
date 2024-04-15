@@ -55,11 +55,6 @@ function SubmitAbsenceContainer() {
           <AbsenceInput setValue={[setIsSubmit, setAbsenceReason]} />
         </Inner>
       </AbsenceContainer>
-      {/* <div>{absence}</div>
-      <div>{startAbsenceDate}</div>
-      <div>{endAbsenceDate}</div>
-      <div>{absenceReason}</div>
-      <div>{isSubmit.toString()}</div> */}
     </>
   );
 }
