@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import {db} from '../core/firebase.js';
-import { doc, setDoc, getDocs, collection, orderBy, limit, query, serverTimestamp } from "firebase/firestore";
+import { db } from '../core/firebase.js';
+import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -55,6 +55,7 @@ const NoticeImgDiv = styled.div`
   background-position-x: center;
   border-radius: 6%;
   position: relative;
+  box-shadow: 5px 5px rgba(0,0,0,.1);
 `;
 
 const NoticeContentDiv = styled.div`
@@ -84,26 +85,9 @@ const NoticeContent = styled.div`
 `;
 
 
-export default function NoticeForMain () {
+export default function Main_Notice () {
 
   const [noticeList, setNoitceList] = useState([]);
-
-  // useEffect(() => {
-  //   async function setData (){
-  //     await setDoc(doc(db, NOTICE_COLLECTION, "5"), {  
-  //       title: 'test123',
-  //       content: 'test123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏ',
-  //       img_url: 'https://firebasestorage.googleapis.com/v0/b/toyproject-team5.appspot.com/o/%E1%84%8B%E1%85%AE%E1%84%89%E1%85%AE%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AF%E1%86%AB.jpg?alt=media&token=a84b7555-f875-4eac-af2b-032c0ef2a3b2',
-  //       timestamp: serverTimestamp()
-  //   })
-  // } 
-  // setData();
-  // }, []);
-
-// let querySnapshot = [];
-
- 
-
 
   // 리스트 가져오기  
   useEffect(() => {

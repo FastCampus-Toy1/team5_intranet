@@ -39,6 +39,7 @@ const NoticeImgDiv = styled.div`
   background-position-x: center;
   border-radius: 6%;
   position: relative;
+  box-shadow: 5px 5px rgba(0,0,0,.1);
 `;
 
 const NoticeContentDiv = styled.div`
