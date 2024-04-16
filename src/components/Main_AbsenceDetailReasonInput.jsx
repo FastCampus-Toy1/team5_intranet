@@ -1,27 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 
-function AbsenceInput({ setValue }) {
+function AbsenceDetailReasonInput({ props }) {
   return (
     <Container>
       <SubmitButton
         onClick={() => {
-          setValue[0](true);
+          props.setIsSubmit(true);
         }}
       >
         <span>제출하기</span>
         <span></span>
       </SubmitButton>
       <AbsenceReasonInput
+        placeholder="상세정보를 적어주세요."
         onChange={(e) => {
-          setValue[1](e.target.value);
+          props.setAbsenceReason(e.target.value);
         }}
       ></AbsenceReasonInput>
     </Container>
   );
 }
 
-export default AbsenceInput;
+export default AbsenceDetailReasonInput;
 
 const Container = styled.div`
   width: 100%;

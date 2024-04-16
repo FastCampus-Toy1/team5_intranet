@@ -8,19 +8,19 @@ import { getDocs, collection } from "firebase/firestore";
 function AbsenceSubmitHistory() {
   const [upComingAbsenceList, setUpcomingAbsenceList] = useState([]);
   const [futureAbsenceList, setFutureAbsenceList] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const [currentIdx, setCurrentIdx] = useState(4);
 
   const dateDifferenceCalc = (absenceStartDate) => {
-    const today = new Date().getTime();
-    const gap = new Date(absenceStartDate).getTime() - today;
-    return Math.floor(gap / (1000 * 60 * 60 * 24)) + 1;
+    const TODAY = new Date().getTime();
+    const UNTIL_DDAY = new Date(absenceStartDate).getTime() - TODAY;
+    return Math.floor(UNTIL_DDAY / (1000 * 60 * 60 * 24)) + 1;
   };
 
   async function LoadAbsence() {
-    const MEMBER_COLLECTION = "Members";
+    const ABSENCE_COLLECTION = "Absence";
     const newLoadAbsence = [];
     try {
-      const querySnapshot = await getDocs(collection(db, MEMBER_COLLECTION));
+      const querySnapshot = await getDocs(collection(db, ABSENCE_COLLECTION));
       querySnapshot.forEach((doc) => {
         newLoadAbsence.push({
           startDate: doc.data().startDate,
@@ -37,7 +37,9 @@ function AbsenceSubmitHistory() {
     );
     setUpcomingAbsenceList(
       newLoadAbsence.filter(
-        (absence) => dateDifferenceCalc(absence.startDate) > 0 && dateDifferenceCalc(absence.startDate) <= 14
+        (absence) =>
+          dateDifferenceCalc(absence.startDate) > 0 &&
+          dateDifferenceCalc(absence.startDate) <= 14
       )
     );
     setFutureAbsenceList(
@@ -50,15 +52,15 @@ function AbsenceSubmitHistory() {
     LoadAbsence();
   }, []);
 
-  useEffect(() => {
-    let time = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
-    }, 2000);
+  // useEffect(() => {
+  //   let time = setInterval(() => {
+  //     setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
+  //   }, 2000);
 
-    return () => {
-      clearInterval(time);
-    };
-  }, [upComingAbsenceList.length]);
+  //   return () => {
+  //     clearInterval(time);
+  //   };
+  // }, [upComingAbsenceList.length]);
 
   return (
     <AbsenceHistoryContainer>
@@ -68,14 +70,28 @@ function AbsenceSubmitHistory() {
           {upComingAbsenceList[currentIdx] ? (
             <>
               <StartDate>
-                <DDay>D - {dateDifferenceCalc(new Date(upComingAbsenceList[currentIdx].startDate).getTime())}</DDay>
+                <DDay>
+                  D -{" "}
+                  {dateDifferenceCalc(
+                    new Date(
+                      upComingAbsenceList[currentIdx].startDate
+                    ).getTime()
+                  )}
+                </DDay>
                 {upComingAbsenceList[currentIdx].startDate}
               </StartDate>
-              <span>~</span>
-              <EndDate>{upComingAbsenceList[currentIdx].endDate}</EndDate>
+              {upComingAbsenceList[currentIdx].endDate && (
+                <>
+                  <span>~</span>
+                  <EndDate>
+                    <span>{upComingAbsenceList[currentIdx].endDate}</span>
+                    </EndDate>
+                  <span>{upComingAbsenceList[currentIdx].absenceOption}</span>
+                </>
+              )}
             </>
           ) : (
-            <span></span>
+            <span>앞으로 휴가는 없으니 열심히 일하세요.</span>
           )}
         </UpcomingDate>
       </UpcomingAbsence>
@@ -83,8 +99,12 @@ function AbsenceSubmitHistory() {
         {futureAbsenceList.map((list, index) => (
           <FutureAbsence key={index}>
             <span>{list.startDate}</span>
-            <span>~</span>
-            <span>{list.endDate}</span>
+            {list.endDate && (
+              <>
+                <span>~</span>
+                <span>{list.endDate}</span>
+              </>
+            )}
             <span>{list.absenceOption}</span>
           </FutureAbsence>
         ))}
@@ -125,9 +145,9 @@ const Description = styled.span`
 `;
 
 const UpcomingDate = styled.div`
-  margin-right: 30px;
+  margin-right: .5em;
   display: flex;
-  gap: 2em;
+  gap: 1em;
   font-size: 20px;
 `;
 const StartDate = styled.div`
@@ -153,16 +173,17 @@ const FutureAbsenceHistoryList = styled.ul`
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 85px;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1.5rem;
   gap: 2rem;
 `;
 
 const FutureAbsence = styled.li`
-  width: 100%;
+  
   display: flex;
   justify-content: space-around;
   font-size: 1.5rem;

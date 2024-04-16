@@ -2,17 +2,22 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChoiceAbsenceOption({ setValue }) {
+function ChoiceAbsenceOption({props}) {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
   const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
   const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);
-  const [selectedAbsence, setSelectedAbsence] = useState("휴가 선택");
+  const [selectedAbsence, setSelectedAbsence] = useState("사유 선택");
   const [selectedTime, setSelectedTime] = useState("시간 선택");
   const toggleHandler = (isOn, setIsOn) => {
     setIsOn(!isOn);
   };
 
   useEffect(() => {
+    if(selectedAbsence === "연차") {
+      props.setUseVacation(true);
+    } else {
+      props.setUseVacation(false);
+    }
     if (selectedAbsence === "반차") {
       setIsHDOOpenBtnShow(true);
     } else {
@@ -20,11 +25,14 @@ function ChoiceAbsenceOption({ setValue }) {
       setIsHDOOptionOpen(false);
     }
     setIsAbsenceOptionOpen(false);
-    setValue(selectedAbsence);
-  }, [selectedAbsence]);
+    props.setAbsenceOption(`${selectedAbsence}` +
+        (selectedAbsence === "반차" ? `(${selectedTime})` : "")
+    );
+    
+  }, [selectedAbsence, selectedTime]);
 
-  const absenceOptions = ["반차", "연차", "조퇴"];
-  const HDOOptions = ["오전", "오후"];
+  const ABSENCE_OPTIONS = ["반차", "연차", "외출", "조퇴", "병가", "예비군"];
+  const HDO_OPTIONS = ["오전", "오후"];
 
   return (
     <BtnFlexContainer>
@@ -39,7 +47,7 @@ function ChoiceAbsenceOption({ setValue }) {
         </AbsenceOptionsOpenBtn>
         {isAbsenceOptionOpen && (
           <AbsenceOptionList>
-            {absenceOptions.map((list, index) => (
+            {ABSENCE_OPTIONS.map((list, index) => (
               <li key={index}>
                 <AbsenceOptionBtn
                   onClick={() => {
@@ -65,16 +73,15 @@ function ChoiceAbsenceOption({ setValue }) {
         </HDOTimeListOpenBtn>
         {isHDOOptionOpen && (
           <HDOOptionList>
-            {HDOOptions.map((list, index) => (
-              <li key={index}>
-                <TimeOptionBtn
-                  onClick={() => {
-                    setSelectedTime(list);
-                    setIsHDOOptionOpen(false);
-                  }}
-                >
-                  {list}
-                </TimeOptionBtn>
+            {HDO_OPTIONS.map((list, index) => (
+              <li
+                key={index}
+                onClick={() => {
+                  setSelectedTime(list);
+                  setIsHDOOptionOpen(false);
+                }}
+              >
+                <TimeOptionBtn>{list}</TimeOptionBtn>
               </li>
             ))}
           </HDOOptionList>

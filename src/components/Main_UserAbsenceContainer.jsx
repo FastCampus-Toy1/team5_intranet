@@ -1,19 +1,20 @@
-import AbsenceInput from "./Main_AbsenceResonInput";
+import AbsenceDetailResonInput from "./Main_AbsenceDetailReasonInput";
 import ChoiceAbsenceDate from "./Main_ChoiceAbsenceDate";
 import ChoiceAbsenceOption from "./Main_ChoiceAbsenceOption";
+import AbsenceSubmitHistory from "./Main_AbsenceSubmitHistory";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../core/firebase";
-import AbsenceSubmitHistory from "./Main_AbsenceSubmitHistory";
 
 function UserAbsenceContainer() {
-  const [absence, setAbsence] = useState();
+  const [absenceOption, setAbsenceOption] = useState();
   const [startAbsenceDate, setStartAbsenceDate] = useState();
   const [endAbsenceDate, setEndAbsenceDate] = useState();
   const [absenceReason, setAbsenceReason] = useState("");
   const [isValidAbsence, setIsValidAbsence] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [useVacation, setUseVacation] = useState(false);
 
   useEffect(() => {
     async function setData() {
@@ -23,12 +24,17 @@ function UserAbsenceContainer() {
           console.error("Database is not defined");
           return;
         }
-        await setDoc(doc(db, "Members", "test5"), {
-          teststartdate: startAbsenceDate,
-          testenddate: endAbsenceDate,
-          testreason: absenceReason,
-          teststatus: "신청 중",
-          testvalue: absence,
+        await addDoc(collection(db, "Absence"), {
+          startDate: startAbsenceDate,
+          absenceOption: absenceOption,
+          status: "신청 중",
+          reason: absenceReason,
+          userId: "testid",
+          ...(absenceOption.includes("반차") ||
+          absenceOption === "조퇴" ||
+          absenceOption === "외출"
+            ? { endDate: "" }
+            : { endDate: endAbsenceDate }),
         });
       } catch (error) {
         // setDoc 함수가 실패하면 오류를 출력합니다.
@@ -45,15 +51,11 @@ function UserAbsenceContainer() {
     <>
       <AbsenceContainer>
         <Inner>
-          <ChoiceAbsenceOption setValue={setAbsence} />
+          <ChoiceAbsenceOption props={{setAbsenceOption, setUseVacation}} />
           <ChoiceAbsenceDate
-            setValue={[
-              setStartAbsenceDate,
-              setEndAbsenceDate,
-              setIsValidAbsence,
-            ]}
+            props = {{setStartAbsenceDate, setEndAbsenceDate, setIsValidAbsence, useVacation}}
           />
-          <AbsenceInput setValue={[setIsSubmit, setAbsenceReason]} />
+          <AbsenceDetailResonInput props={{setIsSubmit, setAbsenceReason}} />
           <AbsenceSubmitHistory />
         </Inner>
       </AbsenceContainer>
