@@ -65,8 +65,6 @@ const DateSettingContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1em 0;
-  gap: 1em;
 `;
 
 const InputDateContainer = styled.div`
@@ -74,7 +72,8 @@ const InputDateContainer = styled.div`
   display: flex;
   justify-content: space-around;
 `;
-const InputDate = styled.input``;
+const InputDate = styled.input`
+`;
 const ValidAbsence = styled.div`
   text-align: center;
 `;

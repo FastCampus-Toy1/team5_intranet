@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChoiceAbsenceOption({setValue}) {
+function ChoiceAbsenceOption({ setValue }) {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
   const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
   const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);

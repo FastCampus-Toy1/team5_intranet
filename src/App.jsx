@@ -4,8 +4,8 @@ import MainPage from "./pages";
 function App() {
   return (
     // <Link to="/"></Link>
-    <MainPage/>
-  )
+    <MainPage />
+  );
 }
 
-export default App
+export default App;

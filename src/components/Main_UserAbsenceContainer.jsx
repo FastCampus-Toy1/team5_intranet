@@ -1,12 +1,13 @@
-import AbsenceInput from "./AbsenceResonInput";
-import ChoiceAbsenceDate from "./ChoiceAbsenceDate";
-import ChoiceAbsenceOption from "./ChoiceAbsenceOption";
+import AbsenceInput from "./Main_AbsenceResonInput";
+import ChoiceAbsenceDate from "./Main_ChoiceAbsenceDate";
+import ChoiceAbsenceOption from "./Main_ChoiceAbsenceOption";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../core/firebase";
+import AbsenceSubmitHistory from "./Main_AbsenceSubmitHistory";
 
-function SubmitAbsenceContainer() {
+function UserAbsenceContainer() {
   const [absence, setAbsence] = useState();
   const [startAbsenceDate, setStartAbsenceDate] = useState();
   const [endAbsenceDate, setEndAbsenceDate] = useState();
@@ -19,7 +20,7 @@ function SubmitAbsenceContainer() {
       try {
         // db가 정의되어 있는지 확인합니다.
         if (!db) {
-          console.error('Database is not defined');
+          console.error("Database is not defined");
           return;
         }
         await setDoc(doc(db, "Members", "test5"), {
@@ -31,9 +32,9 @@ function SubmitAbsenceContainer() {
         });
       } catch (error) {
         // setDoc 함수가 실패하면 오류를 출력합니다.
-        console.error('Failed to set document:', error);
+        console.error("Failed to set document:", error);
       }
-    };
+    }
     if (isValidAbsence && isSubmit) {
       setData();
       setIsSubmit(false);
@@ -53,13 +54,14 @@ function SubmitAbsenceContainer() {
             ]}
           />
           <AbsenceInput setValue={[setIsSubmit, setAbsenceReason]} />
+          <AbsenceSubmitHistory />
         </Inner>
       </AbsenceContainer>
     </>
   );
 }
 
-export default SubmitAbsenceContainer;
+export default UserAbsenceContainer;
 
 const AbsenceContainer = styled.section`
   width: 585px;
@@ -73,4 +75,9 @@ const AbsenceContainer = styled.section`
 const Inner = styled.div`
   width: 80%;
   height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* gap: 10px; */
 `;
