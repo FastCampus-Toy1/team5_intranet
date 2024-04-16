@@ -20,10 +20,7 @@ function ChoiceAbsenceDate({ props }) {
     return dateStr;
   };
   useEffect(() => {
-    console.log(props.useVacation);
-    if (props.useVacation === false) {
-      setIsValidAbsence("-");
-    } else if (
+    if (
       startDate.getFullYear() === currentTime.getFullYear() &&
       startDate.getMonth() === currentTime.getMonth() &&
       startDate.getDate() === currentTime.getDate()
@@ -39,6 +36,9 @@ function ChoiceAbsenceDate({ props }) {
       props.setStartAbsenceDate(dateToString(startDate));
       props.setEndAbsenceDate(dateToString(endDate));
       props.setIsValidAbsence(true);
+    }
+    if (props.useVacation === false) {
+      setIsValidAbsence("-");
     }
   }, [startDate, endDate, props.useVacation]);
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChoiceAbsenceOption({props}) {
+function ChoiceAbsenceOption({ props }) {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
   const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
   const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);
@@ -13,7 +13,7 @@ function ChoiceAbsenceOption({props}) {
   };
 
   useEffect(() => {
-    if(selectedAbsence === "연차") {
+    if (selectedAbsence === "연차") {
       props.setUseVacation(true);
     } else {
       props.setUseVacation(false);
@@ -25,10 +25,10 @@ function ChoiceAbsenceOption({props}) {
       setIsHDOOptionOpen(false);
     }
     setIsAbsenceOptionOpen(false);
-    props.setAbsenceOption(`${selectedAbsence}` +
+    props.setAbsenceOption(
+      `${selectedAbsence}` +
         (selectedAbsence === "반차" ? `(${selectedTime})` : "")
     );
-    
   }, [selectedAbsence, selectedTime]);
 
   const ABSENCE_OPTIONS = ["반차", "연차", "외출", "조퇴", "병가", "예비군"];

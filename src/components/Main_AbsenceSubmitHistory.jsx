@@ -3,12 +3,12 @@ import styled from "styled-components";
 import React from "react";
 import { useEffect, useState } from "react";
 import { db } from "../core/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, where } from "firebase/firestore";
 
 function AbsenceSubmitHistory() {
   const [upComingAbsenceList, setUpcomingAbsenceList] = useState([]);
   const [futureAbsenceList, setFutureAbsenceList] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(4);
+  const [currentIdx, setCurrentIdx] = useState(0);
 
   const dateDifferenceCalc = (absenceStartDate) => {
     const TODAY = new Date().getTime();
@@ -19,8 +19,14 @@ function AbsenceSubmitHistory() {
   async function LoadAbsence() {
     const ABSENCE_COLLECTION = "Absence";
     const newLoadAbsence = [];
+    const USER_ID = sessionStorage.getItem("userId")
+      ? sessionStorage.getItem("userId")
+      : "testid";
     try {
-      const querySnapshot = await getDocs(collection(db, ABSENCE_COLLECTION));
+      const querySnapshot = await getDocs(
+        collection(db, ABSENCE_COLLECTION),
+        where("userID", "==", USER_ID)
+      );
       querySnapshot.forEach((doc) => {
         newLoadAbsence.push({
           startDate: doc.data().startDate,
@@ -61,14 +67,15 @@ function AbsenceSubmitHistory() {
   //     clearInterval(time);
   //   };
   // }, [upComingAbsenceList.length]);
-
   return (
     <AbsenceHistoryContainer>
-      <UpcomingAbsence>
-        <Description>UpComing</Description>
-        <UpcomingDate>
-          {upComingAbsenceList[currentIdx] ? (
+      {upComingAbsenceList[0] || futureAbsenceList[0] ? (
+        <>
+          <UpcomingAbsence>
+          {upComingAbsenceList[0] ? (
             <>
+            <Description>UpComing</Description>
+            <UpcomingDate>
               <StartDate>
                 <DDay>
                   D -{" "}
@@ -85,30 +92,33 @@ function AbsenceSubmitHistory() {
                   <span>~</span>
                   <EndDate>
                     <span>{upComingAbsenceList[currentIdx].endDate}</span>
-                    </EndDate>
+                  </EndDate>
                   <span>{upComingAbsenceList[currentIdx].absenceOption}</span>
                 </>
               )}
+            </UpcomingDate>
             </>
-          ) : (
-            <span>앞으로 휴가는 없으니 열심히 일하세요.</span>
-          )}
-        </UpcomingDate>
-      </UpcomingAbsence>
-      <FutureAbsenceHistoryList>
-        {futureAbsenceList.map((list, index) => (
-          <FutureAbsence key={index}>
-            <span>{list.startDate}</span>
-            {list.endDate && (
-              <>
-                <span>~</span>
-                <span>{list.endDate}</span>
-              </>
-            )}
-            <span>{list.absenceOption}</span>
-          </FutureAbsence>
-        ))}
-      </FutureAbsenceHistoryList>
+          ):(<Caution>2주간 휴가는 없습니다.</Caution>)}
+            
+          </UpcomingAbsence>
+          <FutureAbsenceHistoryList>
+            {futureAbsenceList.map((list, index) => (
+              <FutureAbsence key={index}>
+                <span>{list.startDate}</span>
+                {list.endDate && (
+                  <>
+                    <span>~</span>
+                    <span>{list.endDate}</span>
+                  </>
+                )}
+                <span>{list.absenceOption}</span>
+              </FutureAbsence>
+            ))}
+          </FutureAbsenceHistoryList>
+        </>
+      ) : (
+        <Caution>앞으로 휴가는 없으니 열심히 일하세요.</Caution>
+      )}
     </AbsenceHistoryContainer>
   );
 }
@@ -145,11 +155,12 @@ const Description = styled.span`
 `;
 
 const UpcomingDate = styled.div`
-  margin-right: .5em;
+  margin-right: 0.5em;
   display: flex;
   gap: 1em;
   font-size: 20px;
 `;
+
 const StartDate = styled.div`
   position: relative;
 `;
@@ -183,8 +194,14 @@ const FutureAbsenceHistoryList = styled.ul`
 `;
 
 const FutureAbsence = styled.li`
-  
   display: flex;
   justify-content: space-around;
   font-size: 1.5rem;
+`;
+
+const Caution = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

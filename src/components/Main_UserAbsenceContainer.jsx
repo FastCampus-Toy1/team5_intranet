@@ -27,7 +27,6 @@ function UserAbsenceContainer() {
         await addDoc(collection(db, "Absence"), {
           startDate: startAbsenceDate,
           absenceOption: absenceOption,
-          status: "신청 중",
           reason: absenceReason,
           userId: "testid",
           ...(absenceOption.includes("반차") ||
@@ -37,10 +36,10 @@ function UserAbsenceContainer() {
             : { endDate: endAbsenceDate }),
         });
       } catch (error) {
-        // setDoc 함수가 실패하면 오류를 출력합니다.
         console.error("Failed to set document:", error);
       }
     }
+
     if (isValidAbsence && isSubmit) {
       setData();
       setIsSubmit(false);
@@ -51,11 +50,16 @@ function UserAbsenceContainer() {
     <>
       <AbsenceContainer>
         <Inner>
-          <ChoiceAbsenceOption props={{setAbsenceOption, setUseVacation}} />
+          <ChoiceAbsenceOption props={{ setAbsenceOption, setUseVacation }} />
           <ChoiceAbsenceDate
-            props = {{setStartAbsenceDate, setEndAbsenceDate, setIsValidAbsence, useVacation}}
+            props={{
+              setStartAbsenceDate,
+              setEndAbsenceDate,
+              setIsValidAbsence,
+              useVacation,
+            }}
           />
-          <AbsenceDetailResonInput props={{setIsSubmit, setAbsenceReason}} />
+          <AbsenceDetailResonInput props={{ setIsSubmit, setAbsenceReason }} />
           <AbsenceSubmitHistory />
         </Inner>
       </AbsenceContainer>
@@ -81,5 +85,4 @@ const Inner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* gap: 10px; */
 `;
