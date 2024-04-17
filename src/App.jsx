@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import UserProfile from "./pages";
-
+App.jsx
+import { Link } from 'react-router-dom';
+import MainPage from './pages';
 function App() {
   return (
-    <UserProfile />
-  )
+    // <Link to=“/”></Link>
+    <MainPage />
+  );
 }
-
-export default App
+export default App;

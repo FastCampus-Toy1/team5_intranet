@@ -1,9 +1,11 @@
-import React from 'react'
-import UserProfile from "../components/UserProfile"
+import React from 'react';
+import Main_UserProfile from "../components/Main_UserProfile";
+// import Main_UserInfo from "../components/Main_UserInfo";
+// import Main_UserInfoModal from "../components/Main_UserInfoModal";
 
 function App() {
   return (
-    <UserProfile />
+    <Main_UserProfile />
   )
 }
 

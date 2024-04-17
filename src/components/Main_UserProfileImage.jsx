@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import profileImg from '../assets/profileImg.png/'
+import profileImg from '../assets/profileImg.png/';
 
 const UserProfileImg = styled.img`
   width: 200px;
@@ -8,10 +8,10 @@ const UserProfileImg = styled.img`
   border-radius: 100px;
 `;
 
-function UserProfileImage() {
+function Main_UserProfileImage() {
   return (
     <UserProfileImg src={profileImg}></UserProfileImg>
   )
-}
+};
 
-export default UserProfileImage;
+export default Main_UserProfileImage;
