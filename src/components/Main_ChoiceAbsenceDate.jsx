@@ -43,6 +43,7 @@ function ChoiceAbsenceDate({ props }) {
     }
     if (props.isVacation === false) {
       setIsValidAbsence("-");
+      props.setUseVacation(0);
     }
   }, [startDate, endDate, props.isVacation]);
 

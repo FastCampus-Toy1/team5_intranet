@@ -26,8 +26,8 @@ function UserAbsenceContainer() {
   const [isVacation, setIsVacation] = useState(false);
 
   // 연차 사용 관련
-  const [useVacation, setUseVacation] = useState(0);
-  const [clientRemainingVacation, setClientRemainingVacation] = useState(10);
+  const [usingVacation, setUseVacation] = useState(0);
+  const [remainingVacation, setRemainingVacation] = useState(0);
 
   const USER_ID = sessionStorage.getItem("userID")
     ? sessionStorage.getItem("userID")
@@ -40,21 +40,13 @@ function UserAbsenceContainer() {
         where("userID", "==", USER_ID)
       );
       const docRef = querySnapshot.docs[0].ref;
-      const serverRemainingVacation = querySnapshot.docs[0].data().clientRemainingVacation
+      const serverRemainingVacation = Number(querySnapshot.docs[0].data().remainingVacation);
 
-      // 연차를 사용하느냐 아니냐에 따라 
-      // 남아있는 연차(serverRemainingVacation) - 사용하는 연차(useVacation)
-      if(isVacation) {
-        setClientRemainingVacation(serverRemainingVacation - useVacation)
-      } else {
-        // 연차를 사용하지 않을 경우 그냥 남아있는 연차를 웹에 띄운다.
-         setClientRemainingVacation(serverRemainingVacation)
-      }
-      // 계산결과를 서버에 저장
-       updateDoc(docRef, {
-        clientRemainingVacation: `${clientRemainingVacation}`,
+      console.log(usingVacation);
+      await updateDoc(docRef, {
+        remainingVacation: serverRemainingVacation - usingVacation
       });
-
+      setRemainingVacation(serverRemainingVacation - usingVacation);
   }
   useEffect(() => {
     updateRemainingVacation();
@@ -88,38 +80,12 @@ function UserAbsenceContainer() {
     }
   }, [isValidAbsence, isSubmit]);
 
-  // async function updateRemainingVacation() {
-  //   const USER_ID = sessionStorage.getItem("userID")
-  // ? sessionStorage.getItem("userID")
-  // : "testid";
-  //     const USER_COLLECTION = collection(db,"USER");
-
-  //     const q = query(USER_COLLECTION, and(
-  //       where("userID", "==", USER_ID),
-  //       where("absenceOption", "==", "병가"),
-  //       where("startDate", "==", "2024-07-11")
-  //     ));
-  //     const querySnapshot = await getDocs(q);
-  //     // 검색된 문서들 중에서 첫 번째 문서 선택
-  //     const docRef = querySnapshot.docs[0];
-  //     console.log(docRef)
-  //     await updateDoc(docRef, {
-  //       remainigVaction: "13"
-  //     });
-
-  //     try{
-  //     console.log("Document updated successfully");
-  //   } catch (error) {
-  //     console.log("update Failed: ", error);
-  //   }
-  // }
-
   return (
     <>
       <AbsenceContainer>
         <Inner>
-          <ChoiceAbsenceOption props={{ setAbsenceOption, setIsVacation, clientRemainingVacation }} />
-          <RemaingVacation>남은 휴가 : {clientRemainingVacation}</RemaingVacation>
+          <ChoiceAbsenceOption props={{ setAbsenceOption, setIsVacation, remainingVacation }} />
+          <RemaingVacation>남은 휴가 : {remainingVacation}</RemaingVacation>
           <ChoiceAbsenceDate
             props={{
               setStartAbsenceDate,
