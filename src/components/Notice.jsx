@@ -96,8 +96,21 @@ export default function Notice () {
     };
   },[currentPage]);
 
+  async function getListAll() { 
+    const allList = [];
+    const documentSnapshots = await getDocs(collection(db, NOTICE_COLLECTION),orderBy("timestamp", "desc"));
+    documentSnapshots.forEach((doc) => {
+      allList.push({
+        id : doc.id,
+        img_url : doc.data().img_url,
+        title : doc.data().title,
+        content: doc.data().content
+      });
+    })
+    return allList;
+  }
   //검색기능
-  function handleSearch(keyword) {
+  async function handleSearch(keyword) {
 
     // 검색어 넣었다가 지웠을경우
     if (!keyword) {
@@ -106,9 +119,10 @@ export default function Notice () {
       return;
     }
     const searchedList = [];
-    let searchKey = new RegExp(keyword,'i');
+    const allList = await getListAll();
+    const searchKey = new RegExp(keyword,'i');
 
-    noticeList.filter(notice => {
+    allList.filter(notice => {
       if (searchKey.test(notice.title)) {
         searchedList.push(notice);
       } else if (searchKey.test(notice.content))   {
@@ -117,8 +131,6 @@ export default function Notice () {
     })
     setDisplayList(searchedList);
   }
-
-
 
   return (
     <NoticeSection>
