@@ -5,79 +5,8 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { styled } from 'styled-components';
 import Button from './Button.jsx';
+import Message from './Notice_Message.jsx';
 
-
-const Section = styled.section`
-  border: solid 2px #C8CCE5;
-  border-radius: 10px;
-  width: 700px;
-  height: 500px;
-  padding: 10px;
-  margin: auto;
-  margin-top: 70px;
-  position: relative;
-`;
-
-const Header = styled.h2`
-  font-size: 25px;
-  margin-right: auto;
-  text-align: center;
-  margin-top: 15px;
-`;
-
-const AddForm = styled.div`
-  display: block;
-  width: 650px;
-  margin-top: 30px;
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-`;
-
-const Subtitle = styled.div`
-  width: 50px;
-  font-size: 18px;
-`;
-
-const InputForm = styled.input`
-  width : 580px;
-  height: 25px;
-  display: block;
-  margin-left: 10px;
-`;
-
-const Textarea = styled.textarea`
-  width : 580px;
-  height: 200px;
-  display: block;
-  margin-left: 10px;
-`;
-
-const TitleLine = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-`;
-const ContentLine = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-`;
-
-const FileLine = styled.div`
-display: flex;
-margin-bottom: 10px;
-`;
-const ButtonLine = styled.div`
-text-align: center;
-margin-top: 30px;
-`;
-
-const MessageDiv = styled.div`
-  color : red;
-  font-size : 15px;
-  text-align: center;
-  margin-top: 15px;
-`;
 
 // 컬렉션이름
 const NOTICE_COLLECTION = "Notice";
@@ -147,14 +76,76 @@ export default function Notice_Add () {
       <Subtitle>이미지 </Subtitle>
       <InputForm type="file" onChange={(e) => setImgFile(e.target.files[0])} accept=".png, .jpeg, .jpg, .webp" ></InputForm>
     </FileLine>
-    {message && <MessageDiv>{message}</MessageDiv>}
+    {message && <Message>{message}</Message>}
     <ButtonLine>
       <Button onClick={handleAddData}>등록</Button>
     </ButtonLine>
     </AddForm>
     </Section>
   );
-
-
-
 }
+
+const Section = styled.section`
+  border: solid 2px #C8CCE5;
+  border-radius: 10px;
+  width: 700px;
+  height: 500px;
+  padding: 10px;
+  margin: auto;
+  margin-top: 70px;
+  position: relative;
+`;
+
+const Header = styled.h2`
+  font-size: 25px;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 15px;
+`;
+
+const AddForm = styled.div`
+  display: block;
+  width: 650px;
+  margin-top: 30px;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+`;
+
+const Subtitle = styled.div`
+  width: 50px;
+  font-size: 18px;
+`;
+
+const InputForm = styled.input`
+  width : 580px;
+  height: 25px;
+  display: block;
+  margin-left: 10px;
+`;
+
+const Textarea = styled.textarea`
+  width : 580px;
+  height: 200px;
+  display: block;
+  margin-left: 10px;
+`;
+
+const TitleLine = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+`;
+const ContentLine = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+`;
+
+const FileLine = styled.div`
+display: flex;
+margin-bottom: 10px;
+`;
+const ButtonLine = styled.div`
+text-align: center;
+margin-top: 30px;
+`;

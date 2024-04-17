@@ -4,8 +4,66 @@ import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import  Button  from './Button.jsx';
+import  Message from './Notice_Message.jsx';
 
 const NOTICE_COLLECTION = "Notice";
+
+export default function Main_Notice () {
+
+  const [noticeList, setNoitceList] = useState([]);
+  const [message, setMessage] = useState('');
+
+  try{
+    // 리스트 가져오기  
+    useEffect(() => {
+      // 복사
+      const newNoticeList = [...noticeList];
+
+      async function getList() {
+
+        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
+
+        const querySnapshot = await getDocs(q); 
+      
+        querySnapshot.forEach((doc) => {
+
+          newNoticeList.push({
+            id : doc.id,
+            img_url : doc.data().img_url,
+            title : doc.data().title,
+            content: doc.data().content
+          });
+        })
+        setNoitceList(newNoticeList);
+      }
+      getList();  
+    },[])
+  } catch (e) {
+    setMessage('리스트를 가져오는데 실패했습니다.', e);
+  }
+
+  return (
+  <NoticeSection>
+    <NoticeHeader>
+      <NoticeH2>공지사항</NoticeH2>
+      <Link to="/notice"><Button>더보기</Button></Link>
+    </NoticeHeader>
+    <NoitceList>
+  {noticeList.map(notice => {
+   return( 
+    <NoticeImgDiv $url={notice.img_url} key={notice.id}>
+        <NoticeContentDiv>
+          <NoticeTitle>{notice.title}</NoticeTitle>
+          <NoticeContent>{notice.content}</NoticeContent>
+        </NoticeContentDiv>
+      </NoticeImgDiv>
+    )
+  })}
+    </NoitceList> 
+    {message && <Message>{message}</Message>}
+  </NoticeSection>
+  );
+}
 
 
 const NoticeSection = styled.section`
@@ -76,66 +134,4 @@ const NoticeContent = styled.div`
   -webkit-box-orient: vertical;
 `;
 
-const MessageDiv = styled.div`
-  color : red;
-  font-size : 15px;
-  text-align: center;
-`;
 
-
-export default function Main_Notice () {
-
-  const [noticeList, setNoitceList] = useState([]);
-  const [message, setMessage] = useState('');
-
-  try{
-    // 리스트 가져오기  
-    useEffect(() => {
-      // 복사
-      const newNoticeList = [...noticeList];
-
-      async function getList() {
-
-        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
-
-        const querySnapshot = await getDocs(q); 
-      
-        querySnapshot.forEach((doc) => {
-
-          newNoticeList.push({
-            id : doc.id,
-            img_url : doc.data().img_url,
-            title : doc.data().title,
-            content: doc.data().content
-          });
-        })
-        setNoitceList(newNoticeList);
-      }
-      getList();  
-    },[])
-  } catch (e) {
-    setMessage('리스트를 가져오는데 실패했습니다.', e);
-  }
-
-  return (
-  <NoticeSection>
-    <NoticeHeader>
-      <NoticeH2>공지사항</NoticeH2>
-      <Link to="/notice"><Button>더보기</Button></Link>
-    </NoticeHeader>
-    <NoitceList>
-  {noticeList.map(notice => {
-   return( 
-    <NoticeImgDiv $url={notice.img_url} key={notice.id}>
-        <NoticeContentDiv>
-          <NoticeTitle>{notice.title}</NoticeTitle>
-          <NoticeContent>{notice.content}</NoticeContent>
-        </NoticeContentDiv>
-      </NoticeImgDiv>
-    )
-  })}
-    </NoitceList> 
-    {message && <MessageDiv>{message}</MessageDiv>}
-  </NoticeSection>
-  );
-}

@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import App from './App.jsx'
-import Notice from './components/Notice.jsx';
-import Notice_Add from './components/Notice_Add.jsx'
-// import Login from './components/Login.jsx'
+import Notice from './pages/Notice.jsx';
+import Notice_Add from './pages/Notice_Add.jsx'
+// import Login from './pages/Login.jsx'
 import "./App.scss"
 import { Reset } from 'styled-reset'
 
