@@ -3,6 +3,7 @@ import { db } from '../core/firebase.js';
 import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
+import  Button  from './Button.jsx';
 
 const NOTICE_COLLECTION = "Notice";
 
@@ -27,15 +28,6 @@ const NoticeH2 = styled.h2`
   margin-right: auto;
 `;
 
-const MoreBtn = styled.button`
-  width: 100px;
-  height: 35px;
-  text-decoration: none;
-  border: solid 1px #C8CCE5;
-  border-radius: 10px;
-  background-color: transparent;
-  cursor: pointer;
-`;
 
 const NoitceList = styled.div`
   margin: auto;
@@ -84,43 +76,52 @@ const NoticeContent = styled.div`
   -webkit-box-orient: vertical;
 `;
 
+const MessageDiv = styled.div`
+  color : red;
+  font-size : 15px;
+  text-align: center;
+`;
+
 
 export default function Main_Notice () {
 
   const [noticeList, setNoitceList] = useState([]);
+  const [message, setMessage] = useState('');
 
-  // 리스트 가져오기  
-  useEffect(() => {
-    // 복사
-    const newNoticeList = [...noticeList];
-    async function getList() {
+  try{
+    // 리스트 가져오기  
+    useEffect(() => {
+      // 복사
+      const newNoticeList = [...noticeList];
 
-      const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
+      async function getList() {
 
-      const querySnapshot = await getDocs(q); 
-    
-      querySnapshot.forEach((doc) => {
+        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
 
-        newNoticeList.push({
-          id : doc.id,
-          img_url : doc.data().img_url,
-          title : doc.data().title,
-          content: doc.data().content
-        });
-      })
-      setNoitceList(newNoticeList);
+        const querySnapshot = await getDocs(q); 
+      
+        querySnapshot.forEach((doc) => {
+
+          newNoticeList.push({
+            id : doc.id,
+            img_url : doc.data().img_url,
+            title : doc.data().title,
+            content: doc.data().content
+          });
+        })
+        setNoitceList(newNoticeList);
+      }
+      getList();  
+    },[])
+  } catch (e) {
+    setMessage('리스트를 가져오는데 실패했습니다.', e);
   }
-  getList();
-
-},[])
-
-
 
   return (
   <NoticeSection>
     <NoticeHeader>
       <NoticeH2>공지사항</NoticeH2>
-      <Link to="/notice"><MoreBtn>더보기</MoreBtn></Link>
+      <Link to="/notice"><Button>더보기</Button></Link>
     </NoticeHeader>
     <NoitceList>
   {noticeList.map(notice => {
@@ -134,6 +135,7 @@ export default function Main_Notice () {
     )
   })}
     </NoitceList> 
+    {message && <MessageDiv>{message}</MessageDiv>}
   </NoticeSection>
   );
 }

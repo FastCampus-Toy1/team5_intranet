@@ -1,7 +1,9 @@
 import { db } from '../core/firebase.js';
-import { doc, setDoc, getDocs, collection, orderBy, query, serverTimestamp, limit, startAfter } from "firebase/firestore";
+import { getDocs, collection, orderBy, query, limit, startAfter } from "firebase/firestore";
 import { useState, useEffect, useRef } from 'react';
+import { Link } from "react-router-dom";
 import { styled } from 'styled-components';
+import  Button  from './Button.jsx';
 // 컬렉션이름
 const NOTICE_COLLECTION = "Notice";
 const DATA_CNT_PER_PAGES = 3;
@@ -15,11 +17,17 @@ const NoticeSection = styled.section`
   padding: 20px;
   margin:auto;
 `;
+const NoticeHeader = styled.div`
+  display: flex;
+  margin: 20px;
+  flex-grow: 1;
+`;
 
 const NoticeH2 = styled.h2`
   font-size: 40px;
   margin-left: 20px;
   margin-bottom: 20px;
+  margin-right: auto;
 `;
 
 const NoitceList = styled.div`
@@ -63,10 +71,16 @@ const NoticeContent = styled.div`
   line-height: 1.5;
   overflow: hidden;
   word-wrap: break-word;
-  text-aling: left;
+  text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 2 ;
   -webkit-box-orient: vertical;
+`;
+
+const MessageDiv = styled.div`
+  color : red;
+  font-size : 15px;
+  text-align: center;
 `;
 
 export default function Notice () {
@@ -74,114 +88,117 @@ export default function Notice () {
   const [noticeList, setNoitceList] = useState([]);
   const [lastVisible, setLastVisible] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [message, setMessage] = useState('');
   const observerTarget = useRef(null);
-
-
-  // useEffect(() => {
-  //   async function setData (){
-  //     await setDoc(doc(db, NOTICE_COLLECTION, "5"), {  
-  //       title: 'test123',
-  //       content: 'test123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏtest123아주길게해보려구테스트를하는데이게어떤지모르겠네아아아아아아아아아하기시러놀러가고싶다ㅏㅏㅏㅏㅏㅏ',
-  //       img_url: 'https://firebasestorage.googleapis.com/v0/b/toyproject-team5.appspot.com/o/%E1%84%8B%E1%85%AE%E1%84%89%E1%85%AE%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AF%E1%86%AB.jpg?alt=media&token=a84b7555-f875-4eac-af2b-032c0ef2a3b2',
-  //       timestamp: serverTimestamp()
-  //   })
-  // } 
-  // setData();
-  // }, []);
 
   async function getList() {
 
-    let q;
-    // 첫번째 페이지
-    if (!lastVisible) {
-      q = query(
-        collection(db, NOTICE_COLLECTION), 
-        orderBy("timestamp", "desc"),
-        limit(DATA_CNT_PER_PAGES)
-      );
-    } else {  
-      q = query(
-        collection(db, NOTICE_COLLECTION), 
-        orderBy("timestamp", "desc"),
-        startAfter(lastVisible),
-        limit(DATA_CNT_PER_PAGES)
-      );
+    try {
+      let q;
+      // 첫번째 페이지
+      if (!lastVisible) {
+        q = query(
+          collection(db, NOTICE_COLLECTION), 
+          orderBy("timestamp", "desc"),
+          limit(DATA_CNT_PER_PAGES)
+        );
+      } else {  
+        q = query(
+          collection(db, NOTICE_COLLECTION), 
+          orderBy("timestamp", "desc"),
+          startAfter(lastVisible),
+          limit(DATA_CNT_PER_PAGES)
+        );
+      }
+      // 복사
+      const newNoticeList = [...noticeList];
+      const documentSnapshots = await getDocs(q);
+  
+      if (documentSnapshots.size === 0) {
+        if (currentPage < 1) {
+          setMessage('등록된 공지사항이 없습니다.');
+        } 
+        return;
+      }
+  
+      setCurrentPage(prev => prev + 1 );
+      setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length-1]);
+  
+      documentSnapshots.forEach((doc) => {
+        newNoticeList.push({
+          id : doc.id,
+          img_url : doc.data().img_url,
+          title : doc.data().title,
+          content: doc.data().content
+        });
+      })
+      setNoitceList(newNoticeList);
+
+
+    } catch (e) {
+      setMessage('리스트를 가져오는데 실패했습니다.', e);
     }
-    // 복사
-    const newNoticeList = [...noticeList];
-    const documentSnapshots = await getDocs(q);
-
-    if (documentSnapshots.size === 0) return;
-    
-    setCurrentPage(prev => prev + 1 );
-    setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length-1]);
-
-    documentSnapshots.forEach((doc) => {
-      newNoticeList.push({
-        id : doc.id,
-        img_url : doc.data().img_url,
-        title : doc.data().title,
-        content: doc.data().content
-      });
-    })
-    setNoitceList(newNoticeList);
   }
 
   // 첫리스트 가져오기  
   useEffect(() => {
     getList();
-},[])
+  },[])
 
 
-useEffect(() => {
-const io = new IntersectionObserver((entries) => {   
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => {   
 
-  entries.forEach(async entry => {  
-    
-    if (entry.isIntersecting) {
-      getList();
+      entries.forEach(async entry => {  
       
-      io.observe(observerTarget?.current);  
-     }
-    });
-  }, {threshold: 0.99}); 
+        if (entry.isIntersecting) {
+          getList();
+          
+          io.observe(observerTarget?.current);  
+        }
+      });
+    }, {threshold: 1}); 
 
-  if (observerTarget.current) io.observe(observerTarget.current); 
+    if (observerTarget.current) io.observe(observerTarget.current); 
 
-return () => {
-  io.disconnect(); 
-};
-},[currentPage]);
+    return () => {
+      io.disconnect(); 
+    };
+  },[currentPage]);
 
 
 
   return (
   <NoticeSection>
-    <NoticeH2>공지사항</NoticeH2>
+    <NoticeHeader>
+      <NoticeH2>공지사항</NoticeH2> 
+      <Link to="/noticeAdd"><Button>글쓰기</Button></Link>
+    </NoticeHeader>
     <NoitceList>
     { noticeList.map((notice, index) => {    
       // 마지막 요소
       if( noticeList.length === index + 1 ) {
-      return (  
-      <NoticeImgDiv $url={notice.img_url} ref={observerTarget} key={notice.id}>
-        <NoticeContentDiv>
-        <NoticeTitle>{notice.title}</NoticeTitle>
-        <NoticeContent>{notice.content}</NoticeContent>
-      </NoticeContentDiv>
-      </NoticeImgDiv>
-      );
+        return (  
+          <NoticeImgDiv $url={notice.img_url} ref={observerTarget} key={notice.id}>
+            <NoticeContentDiv>
+            <NoticeTitle>{notice.title}</NoticeTitle>
+            <NoticeContent>{notice.content}</NoticeContent>
+          </NoticeContentDiv>
+          </NoticeImgDiv>
+        );
       } else {
-      return (  
-      <NoticeImgDiv $url={notice.img_url} key={notice.id}>
-        <NoticeContentDiv>
-        <NoticeTitle>{notice.title}</NoticeTitle>
-        <NoticeContent>{notice.content}</NoticeContent>
-      </NoticeContentDiv>
-      </NoticeImgDiv>
-      );
+        return (  
+          <NoticeImgDiv $url={notice.img_url} key={notice.id}>
+            <NoticeContentDiv>
+            <NoticeTitle>{notice.title}</NoticeTitle>
+            <NoticeContent>{notice.content}</NoticeContent>
+          </NoticeContentDiv>
+          </NoticeImgDiv>
+        );
       }
   })}
     </NoitceList> 
+    {message && <MessageDiv>{message}</MessageDiv>}
   </NoticeSection>
   );
 }
