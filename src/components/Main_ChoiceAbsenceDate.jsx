@@ -20,7 +20,11 @@ function ChoiceAbsenceDate({ props }) {
     return dateStr;
   };
   useEffect(() => {
-    if (
+    const usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
+    if(props.remainingVacation < usedVacation) {
+      setIsValidAbsence("보유한 연차보다 쉬는날이 많습니다.");
+    }
+    else if (
       startDate.getFullYear() === currentTime.getFullYear() &&
       startDate.getMonth() === currentTime.getMonth() &&
       startDate.getDate() === currentTime.getDate()
@@ -31,16 +35,16 @@ function ChoiceAbsenceDate({ props }) {
     } else if (endDate < startDate) {
       setIsValidAbsence("휴가 시작 날보다 끝나는 날이 이릅니다");
     } else if (endDate >= startDate) {
-      const usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
       setIsValidAbsence(`휴가 ${usedVacation}일 사용`);
+      props.setUseVacation(usedVacation);
       props.setStartAbsenceDate(dateToString(startDate));
       props.setEndAbsenceDate(dateToString(endDate));
       props.setIsValidAbsence(true);
     }
-    if (props.useVacation === false) {
+    if (props.isVacation === false) {
       setIsValidAbsence("-");
     }
-  }, [startDate, endDate, props.useVacation]);
+  }, [startDate, endDate, props.isVacation]);
 
   return (
     <DateSettingContainer>

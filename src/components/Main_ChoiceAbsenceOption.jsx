@@ -14,9 +14,9 @@ function ChoiceAbsenceOption({ props }) {
 
   useEffect(() => {
     if (selectedAbsence === "연차") {
-      props.setUseVacation(true);
+      props.setIsVacation(true);
     } else {
-      props.setUseVacation(false);
+      props.setIsVacation(false);
     }
     if (selectedAbsence === "반차") {
       setIsHDOOpenBtnShow(true);

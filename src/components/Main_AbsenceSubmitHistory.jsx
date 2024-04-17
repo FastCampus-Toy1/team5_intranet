@@ -17,14 +17,14 @@ function AbsenceSubmitHistory() {
   };
 
   async function LoadAbsence() {
-    const ABSENCE_COLLECTION = "Absence";
+    const ABSENCE_COLLECTION = collection(db, "Absence");
     const newLoadAbsence = [];
-    const USER_ID = sessionStorage.getItem("userId")
-      ? sessionStorage.getItem("userId")
+    const USER_ID = sessionStorage.getItem("userID")
+      ? sessionStorage.getItem("userID")
       : "testid";
     try {
       const querySnapshot = await getDocs(
-        collection(db, ABSENCE_COLLECTION),
+        ABSENCE_COLLECTION,
         where("userID", "==", USER_ID)
       );
       querySnapshot.forEach((doc) => {
