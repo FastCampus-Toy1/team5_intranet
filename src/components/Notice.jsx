@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import  Button  from './Button.jsx';
 // 컬렉션이름
 const NOTICE_COLLECTION = "Notice";
-const DATA_CNT_PER_PAGES = 3;
+const DATA_CNT_PER_PAGES = 5;
 
 
 const NoticeSection = styled.section`
@@ -28,6 +28,13 @@ const NoticeH2 = styled.h2`
   margin-left: 20px;
   margin-bottom: 20px;
   margin-right: auto;
+`;
+
+const SearchInput = styled.input`
+  width: 250px;
+  height: 30px;
+  margin-top: 2px;
+  margin-right: 20px;
 `;
 
 const NoitceList = styled.div`
@@ -86,9 +93,11 @@ const MessageDiv = styled.div`
 export default function Notice () {
 
   const [noticeList, setNoitceList] = useState([]);
+  const [displayList, setDisplayList] = useState([]);
   const [lastVisible, setLastVisible] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [message, setMessage] = useState('');
+  // const [keyword, setKeyword] = useState('');
   const observerTarget = useRef(null);
 
   async function getList() {
@@ -133,6 +142,7 @@ export default function Notice () {
         });
       })
       setNoitceList(newNoticeList);
+      setDisplayList(newNoticeList);
 
 
     } catch (e) {
@@ -153,7 +163,6 @@ export default function Notice () {
       
         if (entry.isIntersecting) {
           getList();
-          
           io.observe(observerTarget?.current);  
         }
       });
@@ -166,18 +175,41 @@ export default function Notice () {
     };
   },[currentPage]);
 
+  //검색기능
+  function handleSearch(keyword) {
+
+    // 검색어 넣었다가 지웠을경우
+    if (!keyword) {
+      setDisplayList(noticeList);
+      setCurrentPage(1);
+      return;
+    }
+    const searchedList = [];
+    let searchKey = new RegExp(keyword,'i');
+
+    noticeList.filter(notice => {
+      if (searchKey.test(notice.title)) {
+        searchedList.push(notice);
+      } else if (searchKey.test(notice.content))   {
+        searchedList.push(notice);
+      } 
+    })
+    setDisplayList(searchedList);
+  }
+
 
 
   return (
   <NoticeSection>
     <NoticeHeader>
       <NoticeH2>공지사항</NoticeH2> 
+      <SearchInput placeholder="검색" onChange={(e) => handleSearch(e.target.value)}></SearchInput>
       <Link to="/noticeAdd"><Button>글쓰기</Button></Link>
     </NoticeHeader>
     <NoitceList>
-    { noticeList.map((notice, index) => {    
+    { displayList.map((notice, index) => {    
       // 마지막 요소
-      if( noticeList.length === index + 1 ) {
+      if( displayList.length === index + 1 ) {
         return (  
           <NoticeImgDiv $url={notice.img_url} ref={observerTarget} key={notice.id}>
             <NoticeContentDiv>

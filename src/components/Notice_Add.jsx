@@ -10,13 +10,12 @@ import Button from './Button.jsx';
 const Section = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 697px;
-  height: 458px;
+  width: 700px;
+  height: 500px;
   padding: 10px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 70px;
   position: relative;
-
 `;
 
 const Header = styled.h2`
@@ -71,6 +70,13 @@ margin-bottom: 10px;
 const ButtonLine = styled.div`
 text-align: center;
 margin-top: 30px;
+`;
+
+const MessageDiv = styled.div`
+  color : red;
+  font-size : 15px;
+  text-align: center;
+  margin-top: 15px;
 `;
 
 // 컬렉션이름
@@ -141,10 +147,10 @@ export default function Notice_Add () {
       <Subtitle>이미지 </Subtitle>
       <InputForm type="file" onChange={(e) => setImgFile(e.target.files[0])} accept=".png, .jpeg, .jpg, .webp" ></InputForm>
     </FileLine>
+    {message && <MessageDiv>{message}</MessageDiv>}
     <ButtonLine>
       <Button onClick={handleAddData}>등록</Button>
     </ButtonLine>
-    {message}
     </AddForm>
     </Section>
   );
