@@ -58,48 +58,52 @@ function AbsenceSubmitHistory() {
     LoadAbsence();
   }, []);
 
-  // useEffect(() => {
-  //   let time = setInterval(() => {
-  //     setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
-  //   }, 2000);
+  useEffect(() => {
+    let time = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
+    }, 2000);
 
-  //   return () => {
-  //     clearInterval(time);
-  //   };
-  // }, [upComingAbsenceList.length]);
+    return () => {
+      clearInterval(time);
+    };
+  }, [upComingAbsenceList.length]);
+
   return (
     <AbsenceHistoryContainer>
       {upComingAbsenceList[0] || futureAbsenceList[0] ? (
         <>
           <UpcomingAbsence>
-          {upComingAbsenceList[0] ? (
-            <>
-            <Description>UpComing</Description>
-            <UpcomingDate>
-              <StartDate>
-                <DDay>
-                  D -{" "}
-                  {dateDifferenceCalc(
-                    new Date(
-                      upComingAbsenceList[currentIdx].startDate
-                    ).getTime()
+            {upComingAbsenceList[0] ? (
+              <>
+                <Description>UpComing</Description>
+                <UpcomingDate>
+                  <StartDate>
+                    <DDay>
+                      D -{" "}
+                      {dateDifferenceCalc(
+                        new Date(
+                          upComingAbsenceList[currentIdx].startDate
+                        ).getTime()
+                      )}
+                    </DDay>
+                    {upComingAbsenceList[currentIdx].startDate}
+                  </StartDate>
+                  {upComingAbsenceList[currentIdx].endDate && (
+                    <>
+                      <span>~</span>
+                      <EndDate>
+                        <span>{upComingAbsenceList[currentIdx].endDate}</span>
+                      </EndDate>
+                      <span>
+                        {upComingAbsenceList[currentIdx].absenceOption}
+                      </span>
+                    </>
                   )}
-                </DDay>
-                {upComingAbsenceList[currentIdx].startDate}
-              </StartDate>
-              {upComingAbsenceList[currentIdx].endDate && (
-                <>
-                  <span>~</span>
-                  <EndDate>
-                    <span>{upComingAbsenceList[currentIdx].endDate}</span>
-                  </EndDate>
-                  <span>{upComingAbsenceList[currentIdx].absenceOption}</span>
-                </>
-              )}
-            </UpcomingDate>
-            </>
-          ):(<Caution>2주간 휴가는 없습니다.</Caution>)}
-            
+                </UpcomingDate>
+              </>
+            ) : (
+              <Caution>2주간 휴가는 없습니다.</Caution>
+            )}
           </UpcomingAbsence>
           <FutureAbsenceHistoryList>
             {futureAbsenceList.map((list, index) => (

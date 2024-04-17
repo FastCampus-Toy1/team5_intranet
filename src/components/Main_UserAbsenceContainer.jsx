@@ -6,11 +6,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   addDoc,
-  and,
   collection,
-  doc,
   getDocs,
-  query,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -34,19 +31,21 @@ function UserAbsenceContainer() {
     : "testid";
 
   async function updateRemainingVacation() {
-      const USER_COLLECTION = collection(db, "User");
-      const querySnapshot = await getDocs(
-        USER_COLLECTION,
-        where("userID", "==", USER_ID)
-      );
-      const docRef = querySnapshot.docs[0].ref;
-      const serverRemainingVacation = Number(querySnapshot.docs[0].data().remainingVacation);
+    const USER_COLLECTION = collection(db, "User");
+    const querySnapshot = await getDocs(
+      USER_COLLECTION,
+      where("userID", "==", USER_ID)
+    );
+    const docRef = querySnapshot.docs[0].ref;
+    const serverRemainingVacation = Number(
+      querySnapshot.docs[0].data().remainingVacation
+    );
 
-      console.log(usingVacation);
-      await updateDoc(docRef, {
-        remainingVacation: serverRemainingVacation - usingVacation
-      });
-      setRemainingVacation(serverRemainingVacation - usingVacation);
+    console.log(usingVacation);
+    await updateDoc(docRef, {
+      remainingVacation: serverRemainingVacation - usingVacation,
+    });
+    setRemainingVacation(serverRemainingVacation - usingVacation);
   }
   useEffect(() => {
     updateRemainingVacation();
@@ -84,7 +83,9 @@ function UserAbsenceContainer() {
     <>
       <AbsenceContainer>
         <Inner>
-          <ChoiceAbsenceOption props={{ setAbsenceOption, setIsVacation, remainingVacation }} />
+          <ChoiceAbsenceOption
+            props={{ setAbsenceOption, setIsVacation, remainingVacation }}
+          />
           <RemaingVacation>남은 휴가 : {remainingVacation}</RemaingVacation>
           <ChoiceAbsenceDate
             props={{
@@ -93,6 +94,7 @@ function UserAbsenceContainer() {
               setIsValidAbsence,
               setUseVacation,
               isVacation,
+              remainingVacation,
             }}
           />
           <AbsenceDetailResonInput props={{ setIsSubmit, setAbsenceReason }} />

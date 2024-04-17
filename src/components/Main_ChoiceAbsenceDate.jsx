@@ -21,10 +21,10 @@ function ChoiceAbsenceDate({ props }) {
   };
   useEffect(() => {
     const usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
-    if(props.remainingVacation < usedVacation) {
+
+    if (props.remainingVacation < usedVacation) {
       setIsValidAbsence("보유한 연차보다 쉬는날이 많습니다.");
-    }
-    else if (
+    } else if (
       startDate.getFullYear() === currentTime.getFullYear() &&
       startDate.getMonth() === currentTime.getMonth() &&
       startDate.getDate() === currentTime.getDate()
