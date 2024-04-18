@@ -1,15 +1,16 @@
 import styled from "styled-components";
-
+import Button from "./Button";
 import React from "react";
 import { useEffect, useState } from "react";
 import { db } from "../core/firebase";
 import { getDocs, collection, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function AbsenceSubmitHistory() {
   const [upComingAbsenceList, setUpcomingAbsenceList] = useState([]);
   const [futureAbsenceList, setFutureAbsenceList] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
-
+  const navigate = useNavigate();
   const dateDifferenceCalc = (absenceStartDate) => {
     const TODAY = new Date().getTime();
     const UNTIL_DDAY = new Date(absenceStartDate).getTime() - TODAY;
@@ -75,7 +76,15 @@ function AbsenceSubmitHistory() {
           <UpcomingAbsence>
             {upComingAbsenceList[0] ? (
               <>
-                <Description>UpComing</Description>
+                  <Description>UpComing
+                  <Button
+                    onClick={() => {
+                      navigate("/attendance");
+                    }}
+                  >
+                    더보기
+                  </Button>
+                  </Description>
                 <UpcomingDate>
                   <StartDate>
                     <DDay>
