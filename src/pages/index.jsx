@@ -1,12 +1,18 @@
 import React from 'react';
 import Main_UserProfile from "../components/Main_UserProfile";
-// import Main_UserInfo from "../components/Main_UserInfo";
-// import Main_UserInfoModal from "../components/Main_UserInfoModal";
+import UserAbsenceContainer from "../components/Main_UserAbsenceContainer";
+import Notice from '../components/Main_Notice.jsx';
+import Attendance from "../pages/Attendance/Attendance.jsx";
 
-function App() {
+function MainPage() {
   return (
-    <Main_UserProfile />
-  )
+    <>
+      <Notice />
+      <Attendance />
+      <UserAbsenceContainer />
+      <Main_UserProfile />
+    </>
+  );
 }
 
-export default App
+export default MainPage;
