@@ -8,6 +8,7 @@ import Attendance from './pages/Attendance/Attendance.jsx'
 import Notice from './pages/Notice.jsx';
 import Notice_Add from './pages/Notice_Add.jsx'
 import LoginPage from './pages/Login.jsx';
+import Logout from './components/Logout.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/notice" element={<Notice/>}></Route>
         <Route path="/noticeAdd" element={<Notice_Add/>}></Route>
         <Route path="/login" element={<LoginPage/>}></Route>
+        <Route path="/logout" element={<Logout/>}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
