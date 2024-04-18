@@ -1,12 +1,13 @@
-// import UserAbsenceContainer from “../components/UserAbsenceContainer”;
 import Notice from '../components/Main_Notice.jsx';
-// import React from “react”;
+import Attendance from "../pages/Attendance/Attendance.jsx";
+import React from "react";
+
 function MainPage() {
   return (
     <>
-      {/* <UserAbsenceContainer /> */}
       <Notice />
+      <Attendance />
     </>
-  );
-}
+   )}
+
 export default MainPage;
