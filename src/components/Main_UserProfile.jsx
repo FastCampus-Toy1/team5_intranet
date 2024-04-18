@@ -50,10 +50,6 @@ const SectionBox1 = styled.div`
   align-items: center;
 `;
 
-const SectionP = styled.p`
-
-`;
-
 const Backdrop = styled.div`
   position: absolute;
   top: 0;

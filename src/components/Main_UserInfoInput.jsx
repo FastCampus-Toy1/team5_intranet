@@ -21,7 +21,7 @@ const ProfileInput = styled.input`
   padding: 0 10px;
 `;
 
-function Main_UserInfoInput({ labelText, placeholderText, value, readOnly }) {
+function Main_UserInfoInput({ labelText, placeholderText, value, disabled }) {
   const [placeholder, setPlaceholder] = useState(placeholderText);
 
   return (
@@ -33,7 +33,7 @@ function Main_UserInfoInput({ labelText, placeholderText, value, readOnly }) {
         onFocus={() => setPlaceholder('')}
         onBlur={() => setPlaceholder(placeholderText)}
         value={value}
-        readOnly={readOnly} />
+        disabled={disabled} />
     </InputWrap>
   );
 }

@@ -95,8 +95,8 @@ function Main_UserInfo() {
       </SectionBox1>
       <SectionBox2>
         <SectionH2>계정</SectionH2>
-        <Main_UserInfoInput labelText="이메일" value="test@test.com" readOnly={true}></Main_UserInfoInput>
-        <Main_UserInfoInput labelText="이름" value="신콩이" readOnly={true}></Main_UserInfoInput>
+        <Main_UserInfoInput labelText="이메일" value="test@test.com" disabled={true}></Main_UserInfoInput>
+        <Main_UserInfoInput labelText="이름" value="신콩이" disabled={true}></Main_UserInfoInput>
       </SectionBox2>
       <SectionBox3>
         <SectionH2>비밀번호 변경</SectionH2>
