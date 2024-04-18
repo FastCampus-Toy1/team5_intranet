@@ -6,12 +6,14 @@ import { db } from '../core/firebase';
 import {collection, updateDoc, query, getDocs, addDoc, where, serverTimestamp, doc, and } from 'firebase/firestore';
 
 const Section = styled.div`
-  width: 239px;
-  height: 110.15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  width: 239px;
+  height: 110.15px;
+
   font-family: 'Pretendard-Regular';
 `;
 
@@ -21,12 +23,13 @@ const InfoContainer = styled.div`
 `;
 
 const InfoSection = styled.div`
-  width: 75px;
-  height: 57px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
+  width: 75px;
+  height: 57px;
 `;
 
 const InfoTitle = styled.h1`
@@ -36,19 +39,22 @@ const InfoTitle = styled.h1`
 `;
 
 const Seperator = styled.p`
-  width: 40px;
   display: flex;
   justify-content: center;
+  
+  width: 40px;
   height: 24px;
+  
   font-size: 24px;
   color: #98A2B3;
 `;
 
 const InfoStatusSection = styled.div`
-  width: 67px;
-  height: 19px;
   display: flex;
   align-items: center;
+  
+  width: 67px;
+  height: 19px;
 `;
 
 const InfoStatus = styled.div`
@@ -59,7 +65,7 @@ const InfoStatus = styled.div`
 `;
 
 const InfoContent = styled.p`
-  width: 65px;
+  width: 70px;
   height: 17px;
   text-align: center;
 `;
@@ -125,32 +131,27 @@ function Main_TimeTable() {
       date = new Date(docDate);
     }
 
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
+    let [hour, minutes] = [date.getHours(), date.getMinutes()];
     const ampm = hour >= 12 ? 'PM' : 'AM';
     hour = hour % 12 === 0 ? 12 : hour % 12;
     minutes = minutes < 10 ? '0' + minutes : minutes;
+
     return `${ampm} ${hour}:${minutes}`;
   }
 
-  function getTime(doc) {
-    let startTime = null;
+  const getTime = (doc) => {
+    let time = null;
 
     if(doc === undefined) {
-      startTime = formatTime();
+      time = formatTime();
     } else {
-      const startDate = doc.toDate();
-      startTime = formatTime(startDate);
+      const Date = doc.toDate();
+      time = formatTime(Date);
     }
 
-    return startTime;
+    return time;
   }
 
-  function clickStartButton() {
-    openModal();
-  }
-
-  // 모달 열기 함수
   const openModal = () => {
     setModalOpen(true);
   };
@@ -159,17 +160,20 @@ function Main_TimeTable() {
     setModalOpen(false);
   }
 
-  function changeStatus(time) {
-    if(workingStatus === true) {
-      setWorkingStatus(false);
-      setWorkingTime(time);
-    } else {
-      setWorkingStatus(true);
-      setWorkingTime(time);
-    }
+  const clickModalButton = () => {
+    openModal();
   }
 
-  async function WorkProcess() {
+  const changeStatus = (time) => {
+    if(workingStatus === true) {
+      setWorkingStatus(false);
+    } else {
+      setWorkingStatus(true);
+    }
+    setWorkingTime(time);
+  }
+
+  const WorkProcess = async() => {
     const userID = getUserID();
     const todayDate = getDateInfo();
     const q = query(collection(db, "Attendance"), 
@@ -180,43 +184,55 @@ function Main_TimeTable() {
     if(querySnapshot.empty) {
       setInfo(userID, todayDate);
       changeStatus(getTime());
-    } else {
+    }
+    else {
       querySnapshot.forEach((document) => {
-        if(document.data().end_time !== undefined ) {
+        const endTime = document.data().end_time;
+
+        if(endTime !== undefined ) {
           alert("오늘은 더이상 출근이 불가능합니다.");
         } else {
           updateInfo(doc(db, "Attendance", document.id), document.data());
-          changeStatus(getTime(document.data().end_time));
+          changeStatus(getTime(endTime));
         }
       });
     }
+    // 모달 닫기
     closeModal();
-    };
+  };
 
-    async function initComponent() {
-      const userID = getUserID();
-      const todayDate = getDateInfo();
-      const q = query(collection(db, "Attendance"), 
-      and( where("userID", "==", userID),
-      where("date", "==", todayDate)));
-      const querySnapshot = await getDocs(q);
+  const initComponent = async() => {
+    const userID = getUserID();
+    const todayDate = getDateInfo();
+    const q = query(collection(db, "Attendance"), 
+    and( where("userID", "==", userID),
+    where("date", "==", todayDate)));
+    const querySnapshot = await getDocs(q);
 
-      if(!querySnapshot.empty) {
-        querySnapshot.forEach((document) => {
-          if(document.data().end_time !== undefined && document.data().startTime === undefined) {
-            setWorkingTime(getTime(document.data().end_time));
-          } 
-          else if(document.data().end_time !== undefined && document.data().startTime !== undefined){
-            setWorkingTime(getTime(document.data().end_time));
-          } else {
-            changeStatus(getTime(document.data().start_time));
-          }
-        });
-      }
+    if(!querySnapshot.empty) {
+      querySnapshot.forEach((document) => {
+        const endTime = document.data().end_time;
+        const startTime = document.data().start_time;
+
+        if(startTime !== undefined && endTime !== undefined) {
+          return setWorkingTime(getTime(endTime));
+        }
+        if(startTime !== undefined && endTime === undefined) {
+          return changeStatus(getTime(startTime));
+        }
+      });
+    } else {
+      querySnapshot.forEach((document) => {
+        const startTime = document.data().start_time;
+
+        return setWorkingTime(getTime(startTime));
+      })
     }
-    useEffect(() => {
-      initComponent();
-    }, []);
+  };
+
+  useEffect(() => {
+    initComponent();
+  }, []);
 
   return(
     <div>
@@ -235,7 +251,7 @@ function Main_TimeTable() {
           </InfoStatusSection>
         </InfoSection>
       </InfoContainer>
-      <Button onClick={clickStartButton}>{!workingStatus ? "근무 시작" : "근무 종료"}</Button>
+      <Button onClick={clickModalButton}>{!workingStatus ? "근무 시작" : "근무 종료"}</Button>
     </Section>
     <Main_WorkingModal isOpen={modalOpen} status={workingStatus} onClick={WorkProcess} time={getTime()}></Main_WorkingModal>
     </div>
