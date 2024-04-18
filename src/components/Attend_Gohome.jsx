@@ -1,13 +1,16 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
 const Gohome = () => {
   return (
-    <Btn>
+    <Link to="/">
+      <Btn>
       <div>
         <p>Home</p>
       </div>
-    </Btn>
+      </Btn>
+    </Link>
   );
 };
 
