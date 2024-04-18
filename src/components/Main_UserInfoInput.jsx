@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputWrap = styled.div`
-  width: 415px;
+  width: 390px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,10 +14,11 @@ const InputLabel = styled.p`
 `;
 
 const ProfileInput = styled.input`
-  width: 250px;
+  width: 220px;
   height: 40px;
   border-radius: 10px;
   border: 1px solid #C8CCE5;
+  padding: 0 10px;
 `;
 
 function Main_UserInfoInput({ labelText, placeholderText, value, readOnly }) {

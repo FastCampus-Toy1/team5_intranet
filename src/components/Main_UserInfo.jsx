@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Main_UserProfileImage from './Main_UserProfileImage';
 import Main_UserInfoInput from './Main_UserInfoInput';
@@ -26,14 +26,8 @@ const Header = styled.div`
   font-weight: bold;
 `;
 
-const SectionH1 = styled.h1`
-  display: flex;
-  font-size: 30px;
-  font-weight: bold;
-`;
-
 const SectionH2 = styled.h2`
-  width: 520px;
+  width: 480px;
   display: block;
   margin-bottom: 20px;  
   font-size: 20px;
@@ -74,7 +68,6 @@ const SectionBox3 = styled.div`
 `;
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 컴포넌트 받으면 지울 거 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 const TempoBtn = styled.div`
   width: 100px;
   height: 40px;
@@ -85,9 +78,11 @@ const TempoBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
-
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 컴포넌트 받으면 지울 거 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
 
 function Main_UserInfo() {
   return (
