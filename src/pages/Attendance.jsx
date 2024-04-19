@@ -5,10 +5,14 @@ import Select from '../components/Attend_Select';
 import Search from '../components/Attend_Search';
 import Header from '../components/Header';
 import Datafield from '../components/Attend_Datafield';
+import checkLogin from '../components/CheckLogin.jsx';
 import { createGlobalStyle } from 'styled-components';
 import "../style.scss";
 
 const Attendance = () => {
+
+  // 로그인여부체크
+  checkLogin();
 
   const [selectedLabel, setSelectedLabel] = useState(null);
   const [searchInput, setSearchInput] = useState('');
