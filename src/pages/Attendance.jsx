@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import Datafield from '../components/Attend_Datafield';
 import checkLogin from '../components/CheckLogin.jsx';
 import { createGlobalStyle } from 'styled-components';
-import "../style.scss";
 
 const Attendance = () => {
   // 로그인여부체크

@@ -61,7 +61,6 @@ function AbsenceDate({ props }) {
           onChange={(e) => {
             setCurrentTime(new Date());
             setStartDate(new Date(e.target.value));
-            console.log(new Date(e.target.value))
           }}
         ></InputAbsenceDate>
         <span> ~ </span>
