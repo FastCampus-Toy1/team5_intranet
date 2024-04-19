@@ -36,7 +36,7 @@ function AbsenceOption({ props }) {
 
   return (
     <BtnFlexContainer>
-      <AbsenceContainer className="absence__container">
+      <AbsenceContainer>
         <AbsenceOptionOpenBtn
           onClick={() => {
             toggleHandler(isAbsenceOptionOpen, setIsAbsenceOptionOpen);

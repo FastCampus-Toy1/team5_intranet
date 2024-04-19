@@ -21,8 +21,6 @@ function AbsenceDate({ props }) {
   };
   useEffect(() => {
     const usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
-    console.log(absenceGuide);
-    console.log(props.isVacation);
     if (startDate < currentTime) {
       setAbsenceGuide("오늘보다 이릅니다");
     } else if (!props.isVacation) {
@@ -52,24 +50,23 @@ function AbsenceDate({ props }) {
       props.setEndAbsenceDate(dateToString(endDate));
       props.setIsValidAbsence(true);
     }
-  }, [startDate, endDate, props.isVacation]);
+  }, [startDate, endDate, props.isVacation, props.isSubmit]);
 
   return (
     <DateSettingContainer>
       <InputDateContainer>
         <InputAbsenceDate
-          className="start__absence__date"
           type="date"
           value={dateToString(startDate)}
           onChange={(e) => {
             setCurrentTime(new Date());
             setStartDate(new Date(e.target.value));
+            console.log(new Date(e.target.value))
           }}
         ></InputAbsenceDate>
         <span> ~ </span>
         <InputAbsenceDate
           disabled={!props.isVacation}
-          className="end__absence__date"
           type="date"
           value={dateToString(props.isVacation ? endDate : startDate)}
           onChange={(e) => {

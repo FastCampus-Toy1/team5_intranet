@@ -95,10 +95,11 @@ function UserAbsenceContainer() {
               setUseVacation,
               isVacation,
               remainingVacation,
+              isSubmit,
             }}
           />
           <AbsenceReason props={{ setIsSubmit, setAbsenceReason }} />
-          <AbsenceSubmitHistory />
+          <AbsenceSubmitHistory props={{ isSubmit }} />
         </Inner>
       </AbsenceContainer>
     </>

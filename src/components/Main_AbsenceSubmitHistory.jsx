@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import React from "react";
 
-function AbsenceSubmitHistory() {
+function AbsenceSubmitHistory(props) {
   const [upComingAbsenceList, setUpcomingAbsenceList] = useState([]);
   const [futureAbsenceList, setFutureAbsenceList] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -23,7 +23,7 @@ function AbsenceSubmitHistory() {
   );
 
   const status = (num) => {
-    return num >= 14 ? "승인 전" : num >= 7 ? "승인" : "거절";
+    return num < 1 ? "거절" : num < 7 ? "승인" : "승인전";
   };
 
   async function LoadAbsence() {
@@ -53,30 +53,29 @@ function AbsenceSubmitHistory() {
     );
     setUpcomingAbsenceList(
       newLoadAbsence.filter(
-        (absence) =>
-          dateDifferenceCalc(absence.startDate) > 0 &&
-          dateDifferenceCalc(absence.startDate) <= 14
+        (absence) => dateDifferenceCalc(absence.startDate) < 7
       )
     );
     setFutureAbsenceList(
       newLoadAbsence.filter(
-        (absence) => dateDifferenceCalc(absence.startDate) > 14
+        (absence) => dateDifferenceCalc(absence.startDate) >= 7
       )
     );
   }
+
   useEffect(() => {
     LoadAbsence();
-  }, []);
+  }, [props.isSubmit]);
 
-  // useEffect(() => {
-  //   let time = setInterval(() => {
-  //     setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
-  //   }, 2000);
+  useEffect(() => {
+    let updateUpcoming = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
+    }, 2000);
 
-  //   return () => {
-  //     clearInterval(time);
-  //   };
-  // }, [upComingAbsenceList.length]);
+    return () => {
+      clearInterval(updateUpcoming);
+    };
+  }, [upComingAbsenceList]);
 
   return (
     <AbsenceHistoryContainer>
@@ -113,20 +112,18 @@ function AbsenceSubmitHistory() {
               <Caution>2주간 휴가는 없습니다.</Caution>
             )}
           </UpcomingAbsence>
-          <FutureAbsenceHistoryList>
+          <FutureAbsenceList>
             {futureAbsenceList.map((list, index) => (
               <FutureAbsence key={index}>
+                <>
                 <span>{list.startDate}</span>
-                {list.endDate && (
-                  <>
                     <span>~</span>
                     <span>{list.endDate}</span>
-                  </>
-                )}
+                    </>
                 <span>{list.absenceOption}</span>
               </FutureAbsence>
             ))}
-          </FutureAbsenceHistoryList>
+          </FutureAbsenceList>
         </>
       ) : (
         <Caution>앞으로 휴가는 없으니 열심히 일하세요.</Caution>
@@ -170,9 +167,9 @@ const AbsenceOption = styled.span`
 
 const SubmitStatus = styled.span`
   background-image: ${(props) =>
-    +props.untilDDay >= 14
+    +props.untilDDay < 7
       ? "linear-gradient(3deg, #2E90FA, #175CD3)"
-      : +props.untilDDay >= 7
+      : +props.untilDDay < 1
       ? "linear-gradient(3deg, #32D583, #039855)"
       : "linear-gradient(3deg, #F97066, #D92D20)"};
   border-radius: 10px;
@@ -209,7 +206,7 @@ const DDay = styled.div`
   text-align: center;
 `;
 
-const FutureAbsenceHistoryList = styled.ul`
+const FutureAbsenceList = styled.ul`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -223,6 +220,7 @@ const FutureAbsenceHistoryList = styled.ul`
 `;
 
 const FutureAbsence = styled.li`
+  width: 100%;
   display: flex;
   justify-content: space-around;
   font-size: 1.5rem;
