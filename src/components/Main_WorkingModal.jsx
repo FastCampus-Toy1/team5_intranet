@@ -11,6 +11,12 @@ const ModalContainer = styled.div`
   height: 332px;
   border-radius: 20px;
   border: 1px solid #C8CCE5;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const TimeInfo = styled.h1`

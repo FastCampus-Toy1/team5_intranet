@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Main_UserProfileImage from './Main_UserProfileImage';
 import Main_UserInfoInput from './Main_UserInfoInput';
+import Button from './Button';
 
 const UserInfo = styled.div`
   width: 570px;
@@ -14,11 +15,15 @@ const UserInfo = styled.div`
   align-items: center;
   font-family: 'Pretendard';
   background-color: white;
-  z-index: 1;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Header = styled.div`
-  width: 550px;
+  width: 100%;
   height: 38px;
   margin-top: 13px;
   margin-left: 15px;
@@ -67,31 +72,14 @@ const SectionBox3 = styled.div`
   box-sizing: border-box;
 `;
 
-// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 컴포넌트 받으면 지울 거 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-const TempoBtn = styled.div`
-  width: 100px;
-  height: 40px;
-  margin: 25px;
-  border: 1px solid #C8CCE5;
-  border-radius: 10px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 컴포넌트 받으면 지울 거 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
-
-
 function Main_UserInfo() {
   return (
     <UserInfo>
       <Header>회원 정보 수정</Header>
       <Main_UserProfileImage></Main_UserProfileImage>
       <SectionBox1>
-        <TempoBtn>변경</TempoBtn>
-        <TempoBtn>삭제</TempoBtn>
+        <Button>변경</Button>
+        <Button>삭제</Button>
       </SectionBox1>
       <SectionBox2>
         <SectionH2>계정</SectionH2>
@@ -103,7 +91,7 @@ function Main_UserInfo() {
         <Main_UserInfoInput labelText="비밀번호" placeholderText="새 비밀번호를 입력하세요."></Main_UserInfoInput>
         <Main_UserInfoInput labelText="비밀번호 확인" placeholderText="새 비밀번호를 한번 더 입력하세요."></Main_UserInfoInput>
       </SectionBox3>
-      <TempoBtn>등록</TempoBtn>
+      <Button>등록</Button>
     </UserInfo>
   )
 };

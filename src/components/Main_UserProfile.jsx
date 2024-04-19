@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import settingImage from '../assets/settingIcon.png/';
 import Main_UserProfileImage from './Main_UserProfileImage';
 import Main_UserInfo from './Main_UserInfo';
+import Main_TimeTable from './Main_TimeTable.jsx';
+import settingImage from '../assets/settingIcon.png/';
 
 const Section = styled.div`
-  width: 697px;
+  width: 700px;
   height: 445px;
-  border-radius: 10px;
+  background-color: #FFFFFF;
   border: 2px solid #C8CCE5;
+  border-radius: 10px;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -26,13 +28,16 @@ const Header = styled.div`
 
 const HeaderH1 = styled.h1`
   font-size: 30px;
-  font-family: 'Pretendard';
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 const HeaderH2 = styled.h2`
+  font-size: 26px;
+  font-weight: 700;
+`;
+
+const HeaderH3 = styled.h3`
   font-size: 20px;
-  font-family: 'Pretendard';
   color: gray;
 `;
 
@@ -42,7 +47,7 @@ const HeaderSetting = styled.img`
   cursor: pointer;
 `;
 
-const SectionBox1 = styled.div`
+const SectionBox = styled.div`
   width: 180px;
   height: 70px;
   display: flex;
@@ -57,8 +62,8 @@ const Backdrop = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 0; /* 모달(1)보다 아래에 위치 */
-  display: ${({ showModal }) => (showModal ? 'block' : 'none')}; /* showModal 상태에 따라 표시 여부 설정 */
+  z-index: 1; /* 모달(2)보다 아래에 위치 */
+  display: ${({ $showModal }) => ($showModal ? 'block' : 'none')}; /* showModal 상태에 따라 표시 여부 설정 */
 `;
 
 function Main_UserProfile() {
@@ -81,13 +86,13 @@ return (
     </Header>
 
     <Main_UserProfileImage></Main_UserProfileImage>
-    <SectionBox1>
-      <HeaderH1>신콩이</HeaderH1>
-      <HeaderH2>Frontend</HeaderH2>
-    </SectionBox1>
-
-    <Backdrop showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
-    {showModal && <Main_UserInfo closeModal={closeModal} />}
+    <SectionBox>
+      <HeaderH2>신콩이</HeaderH2>
+      <HeaderH3>Frontend</HeaderH3>
+    </SectionBox>
+    <Main_TimeTable></Main_TimeTable>
+    <Backdrop $showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
+      {showModal && <Main_UserInfo closeModal={closeModal} />}
   </Section>
 );
 }

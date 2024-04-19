@@ -7,10 +7,11 @@ import Attendance from "../pages/Attendance/Attendance.jsx";
 function MainPage() {
   return (
     <>
+      <Main_UserProfile />
       <Notice />
       <Attendance />
       <UserAbsenceContainer />
-      <Main_UserProfile />
+
     </>
   );
 }
