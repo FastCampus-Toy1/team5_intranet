@@ -94,6 +94,7 @@ const Section = styled.section`
   height: 500px;
   padding: 10px;
   margin: auto;
+  margin-top: 15px;
   position: relative;
   background-color: #FFFFFF;
 `;
@@ -137,10 +138,12 @@ const Textarea = styled.textarea`
 const TitleLine = styled.div`
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 `;
 const ContentLine = styled.div`
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 `;
 
 const FileLine = styled.div`
