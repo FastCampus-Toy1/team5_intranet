@@ -6,9 +6,9 @@ import Notice from '../components/Main_Notice.jsx';
 function MainPage() {
   return (
     <>
-      <Notice />
+      {/* <Notice /> */}
       <UserAbsenceContainer />
-      <Main_UserProfile />
+      {/* <Main_UserProfile /> */}
     </>
   );
 }

@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Attendname from '../../components/Attend_Name';
-import Select from '../../components/Attend_Select';
-import Search from '../../components/Attend_Search';
-import Gohome from '../../components/Attend_Gohome';
-import Datafield from '../../components/Attend_Datafield';
-import { createGlobalStyle } from 'styled-components';
-import "../../style.scss";
+import React, { useState } from "react";
+import styled from "styled-components";
+import Attendname from "../../components/Attend_Name";
+import Select from "../../components/Attend_Select";
+import Search from "../../components/Attend_Search";
+import Gohome from "../../components/Attend_Gohome";
+import Datafield from "../../components/Attend_Datafield";
+import { createGlobalStyle } from "styled-components";
 
 const Attendance = () => {
-
   const [selectedLabel, setSelectedLabel] = useState(null);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <>
       <GlobalStyle />
-          <Gohome />
-          <Container>
-            <Attendname />
-            <Select setSelectedLabel={setSelectedLabel} />
-            <Search setSearchInput={setSearchInput}/>
-            <Datafield selectedLabel={selectedLabel} results={searchInput}/>
-          </Container>
-      </>
+      <Gohome />
+      <Container>
+        <Attendname />
+        <Select setSelectedLabel={setSelectedLabel} />
+        <Search setSearchInput={setSearchInput} />
+        <Datafield selectedLabel={selectedLabel} results={searchInput} />
+      </Container>
+    </>
   );
 };
 
@@ -36,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: #EAECF5;
   }
-`
+`;
 
 const Container = styled.div`
   position: relative;
@@ -49,9 +47,8 @@ const Container = styled.div`
   top: 15px;
   padding: 10px 100px 50px 100px;
   margin: 0px 50px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 10px;
-  border: 1px solid #C8CCE5;
+  border: 1px solid #c8cce5;
   top: 20px;
-`
-
+`;

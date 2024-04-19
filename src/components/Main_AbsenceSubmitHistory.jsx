@@ -1,20 +1,29 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { db } from "../core/firebase";
+import { getDocs, collection, where } from "firebase/firestore";
 import styled from "styled-components";
 import Button from "./Button";
 import React from "react";
-import { useEffect, useState } from "react";
-import { db } from "../core/firebase";
-import { getDocs, collection, where } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 
 function AbsenceSubmitHistory() {
   const [upComingAbsenceList, setUpcomingAbsenceList] = useState([]);
   const [futureAbsenceList, setFutureAbsenceList] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const navigate = useNavigate();
+
   const dateDifferenceCalc = (absenceStartDate) => {
-    const TODAY = new Date().getTime();
-    const UNTIL_DDAY = new Date(absenceStartDate).getTime() - TODAY;
-    return Math.floor(UNTIL_DDAY / (1000 * 60 * 60 * 24)) + 1;
+    const today = new Date().getTime();
+    const gap = new Date(absenceStartDate).getTime() - today;
+    return Math.floor(gap / (1000 * 60 * 60 * 24)) + 1;
+  };
+
+  const untilDDay = dateDifferenceCalc(
+    new Date(upComingAbsenceList[currentIdx]?.startDate).getTime()
+  );
+
+  const status = (num) => {
+    return num >= 14 ? "승인 전" : num >= 7 ? "승인" : "거절";
   };
 
   async function LoadAbsence() {
@@ -59,15 +68,15 @@ function AbsenceSubmitHistory() {
     LoadAbsence();
   }, []);
 
-  useEffect(() => {
-    let time = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
-    }, 2000);
+  // useEffect(() => {
+  //   let time = setInterval(() => {
+  //     setCurrentIdx((prev) => (prev + 1) % upComingAbsenceList.length);
+  //   }, 2000);
 
-    return () => {
-      clearInterval(time);
-    };
-  }, [upComingAbsenceList.length]);
+  //   return () => {
+  //     clearInterval(time);
+  //   };
+  // }, [upComingAbsenceList.length]);
 
   return (
     <AbsenceHistoryContainer>
@@ -76,39 +85,29 @@ function AbsenceSubmitHistory() {
           <UpcomingAbsence>
             {upComingAbsenceList[0] ? (
               <>
-                  <Description>UpComing
-                  <Button
-                    onClick={() => {
-                      navigate("/attendance");
-                    }}
-                  >
-                    더보기
-                  </Button>
-                  </Description>
+                <AbsenceOption>
+                  {upComingAbsenceList[currentIdx].absenceOption}
+                  <SubmitStatus props={untilDDay}>
+                    {status(untilDDay)}
+                  </SubmitStatus>
+                </AbsenceOption>
                 <UpcomingDate>
-                  <StartDate>
-                    <DDay>
-                      D -{" "}
-                      {dateDifferenceCalc(
-                        new Date(
-                          upComingAbsenceList[currentIdx].startDate
-                        ).getTime()
-                      )}
-                    </DDay>
-                    {upComingAbsenceList[currentIdx].startDate}
-                  </StartDate>
+                  {upComingAbsenceList[currentIdx].startDate}
                   {upComingAbsenceList[currentIdx].endDate && (
                     <>
                       <span>~</span>
-                      <EndDate>
-                        <span>{upComingAbsenceList[currentIdx].endDate}</span>
-                      </EndDate>
-                      <span>
-                        {upComingAbsenceList[currentIdx].absenceOption}
-                      </span>
+                      <span>{upComingAbsenceList[currentIdx].endDate}</span>
                     </>
                   )}
+                  <DDay>D - {untilDDay}</DDay>
                 </UpcomingDate>
+                <Button
+                  onClick={() => {
+                    navigate("/attendance");
+                  }}
+                >
+                  더보기
+                </Button>
               </>
             ) : (
               <Caution>2주간 휴가는 없습니다.</Caution>
@@ -149,33 +148,52 @@ const AbsenceHistoryContainer = styled.div`
 `;
 
 const UpcomingAbsence = styled.div`
-  width: 101%;
+  width: 100%;
   height: 85px;
-  border: 2px solid #c8cce5;
+  border-bottom: 2px solid #c8cce5;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  left: -0.5%;
-  top: -2px;
+  left: 0;
+  top: 0;
+  padding: 0 4%;
   box-sizing: border-box;
 `;
 
-const Description = styled.span`
-  font-size: 40px;
-  margin-left: 10px;
+const AbsenceOption = styled.span`
+  position: relative;
+  width: 7rem;
+  text-align: center;
+`;
+
+const SubmitStatus = styled.span`
+  background-image: ${(props) =>
+    +props.untilDDay >= 14
+      ? "linear-gradient(3deg, #2E90FA, #175CD3)"
+      : +props.untilDDay >= 7
+      ? "linear-gradient(3deg, #32D583, #039855)"
+      : "linear-gradient(3deg, #F97066, #D92D20)"};
+  border-radius: 10px;
+  width: 2.4rem;
+  height: 0.7rem;
+  font-size: 0.5rem;
+  padding-top: 0.3rem;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const UpcomingDate = styled.div`
-  margin-right: 0.5em;
   display: flex;
+  align-items: center;
+  position: relative;
   gap: 1em;
   font-size: 20px;
-`;
-
-const StartDate = styled.div`
-  position: relative;
 `;
 
 const DDay = styled.div`
@@ -190,8 +208,6 @@ const DDay = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
 `;
-
-const EndDate = styled.div``;
 
 const FutureAbsenceHistoryList = styled.ul`
   width: 100%;
