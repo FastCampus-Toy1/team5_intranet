@@ -1,4 +1,3 @@
-import "./App.scss"
 import { Reset } from 'styled-reset'
 import React from 'react'
 import ReactDOM from 'react-dom/client'

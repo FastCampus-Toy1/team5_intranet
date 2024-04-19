@@ -87,8 +87,7 @@ const NoticeHeader = styled.div`
 const NoticeH2 = styled.h2`
   font-size: 30px;
   margin-right: auto;
-  font-family: 'Pretendard';
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 
