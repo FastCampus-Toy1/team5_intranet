@@ -164,6 +164,17 @@ function Main_TimeTable() {
     openModal();
   }
 
+  const clickOutsideOfModal = (ref, e) => {
+    console.log(ref.current);
+    console.log(e.target);
+    
+    if (ref.current === e.target) {
+      // console.log(ref.current);
+      // console.log(e.target);
+      setModalOpen(false);
+    }
+  }
+
   const changeStatus = (time) => {
     if(workingStatus === true) {
       setWorkingStatus(false);
@@ -253,7 +264,7 @@ function Main_TimeTable() {
       </InfoContainer>
       <Button onClick={clickModalButton}>{!workingStatus ? "근무 시작" : "근무 종료"}</Button>
     </Section>
-    <Main_WorkingModal isOpen={modalOpen} status={workingStatus} onClick={WorkProcess} time={getTime()}></Main_WorkingModal>
+    <Main_WorkingModal isOpen={modalOpen} status={workingStatus} onClick={WorkProcess} time={getTime()} clickOutsideOfModal={clickOutsideOfModal}></Main_WorkingModal>
     </div>
   );
 }
