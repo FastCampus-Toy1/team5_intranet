@@ -16,6 +16,7 @@ const NOTICE_DUMMY_IMG = 'https://firebasestorage.googleapis.com/v0/b/toyproject
 
 export default function Notice_Add () {
 
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imgFile, setImgFile] = useState('');

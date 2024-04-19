@@ -69,21 +69,26 @@ export default function Main_Notice () {
 const NoticeSection = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 697px;
-  height: 458px;
+  width: 45%;
+  height: 45%;
+  min-width: 600px;
   padding: 10px;
-  margin:auto;
+  margin: auto;
+  background-color: #FFFFFF;
 `;
 
 const NoticeHeader = styled.div`
   display: flex;
-  margin: 20px;
+  margin: 5px 20px;
   flex-grow: 1;
+  align-items: center;
 `;
 
 const NoticeH2 = styled.h2`
   font-size: 30px;
   margin-right: auto;
+  font-family: 'Pretendard';
+  font-weight: bold;
 `;
 
 
@@ -92,15 +97,16 @@ const NoitceList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  gap: 20px;
+  gap: 10px;
+  margin-bottom: 10px;
 `;
 
 const NoticeImgDiv = styled.div`
   border: solid 1px #C8CCE5;
-  min-width: 300px;
-  height: 350px;
+  width: 230px;
+  height: 270px;
   background-image: url(${({$url}) => $url});
-  background-size: 300px 250px;
+  background-size: 230px 190px;
   background-repeat: no-repeat;
   background-position-x: center;
   border-radius: 6%;
@@ -109,7 +115,7 @@ const NoticeImgDiv = styled.div`
 `;
 
 const NoticeContentDiv = styled.div`
-  height: 100px;
+  height: 80px;
   width: 100%;
   background-color: transparent;
   position: absolute;
@@ -119,13 +125,13 @@ const NoticeContentDiv = styled.div`
 
 const NoticeTitle = styled.div`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 17px;
   margin: 10px;
 `;
 
 const NoticeContent = styled.div`
   margin: 10px;
-  line-height: 1.5;
+  line-height: 1.3;
   overflow: hidden;
   word-wrap: break-word;
   text-align: left;
