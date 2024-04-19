@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import App from './App.jsx'
-import Attendance from './pages/Attendance/Attendance.jsx'
+import Attendance from './pages/Attendance.jsx'
 import Notice from './pages/Notice.jsx';
 import Notice_Add from './pages/Notice_Add.jsx'
 import LoginPage from './pages/Login.jsx';

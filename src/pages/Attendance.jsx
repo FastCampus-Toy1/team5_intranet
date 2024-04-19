@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Attendname from '../../components/Attend_Name';
-import Select from '../../components/Attend_Select';
-import Search from '../../components/Attend_Search';
-import Gohome from '../../components/Attend_Gohome';
-import Datafield from '../../components/Attend_Datafield';
+import Attendname from '../components/Attend_Name';
+import Select from '../components/Attend_Select';
+import Search from '../components/Attend_Search';
+import Header from '../components/Header';
+import Datafield from '../components/Attend_Datafield';
 import { createGlobalStyle } from 'styled-components';
-import "../../style.scss";
+import "../style.scss";
 
 const Attendance = () => {
 
@@ -16,7 +16,7 @@ const Attendance = () => {
   return (
     <>
       <GlobalStyle />
-          <Gohome />
+          <Header />
           <Container>
             <Attendname />
             <Select setSelectedLabel={setSelectedLabel} />
