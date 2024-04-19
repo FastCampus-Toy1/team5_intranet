@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 import '../style.scss';
 
 const ClockH1 = styled.h1`
-  width: 396px;
+  /* width: 396px; */
+  width: 343px;
   height: 24px;
   font-size: 30px;
   font-family: 'Pretendard-Regular';

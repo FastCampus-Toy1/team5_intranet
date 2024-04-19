@@ -115,8 +115,8 @@ export default function Login() {
       <LoginAttribute>
         <LoginTitle>로그인</LoginTitle>
         <form>
-          <InputBox required value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="ID"></InputBox>
-          <InputBox required type="password" autoComplete="on" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="비밀번호"></InputBox>
+          <InputBox required value={userId} onChange={(e) => setUserId((e.target.value).trim())} placeholder="ID"></InputBox>
+          <InputBox required type="password" autoComplete="on" value={pw} onChange={(e) => setPw((e.target.value).trim())} placeholder="비밀번호"></InputBox>
           <LoginBtn onClick={handleLogin}>로그인</LoginBtn>
         </form>
         {errMsg && <ErrorDiv>{errMsg}</ErrorDiv>}

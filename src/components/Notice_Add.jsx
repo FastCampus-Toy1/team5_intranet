@@ -92,7 +92,6 @@ const Section = styled.section`
   height: 500px;
   padding: 10px;
   margin: auto;
-  margin-top: 70px;
   position: relative;
 `;
 
