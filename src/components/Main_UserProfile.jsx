@@ -86,7 +86,7 @@ return (
       <HeaderH2>Frontend</HeaderH2>
     </SectionBox1>
 
-    <Backdrop showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
+    <Backdrop $showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
     {showModal && <Main_UserInfo closeModal={closeModal} />}
   </Section>
 );
