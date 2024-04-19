@@ -89,11 +89,13 @@ export default function Notice_Add () {
 const Section = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 700px;
+  min-width: 600px;
+  width: 60%;
   height: 500px;
   padding: 10px;
   margin: auto;
   position: relative;
+  background-color: #FFFFFF;
 `;
 
 const Header = styled.h2`
