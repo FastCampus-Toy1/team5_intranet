@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChoiceAbsenceOption({ props }) {
+function AbsenceOption({ props }) {
   const [isAbsenceOptionOpen, setIsAbsenceOptionOpen] = useState(false);
   const [isHDOOpenBtnShow, setIsHDOOpenBtnShow] = useState(false);
   const [isHDOOptionOpen, setIsHDOOptionOpen] = useState(false);
@@ -36,29 +36,29 @@ function ChoiceAbsenceOption({ props }) {
 
   return (
     <BtnFlexContainer>
-      <AbsenceContainer className="absence__container">
-        <AbsenceOptionsOpenBtn
+      <AbsenceContainer>
+        <AbsenceOptionOpenBtn
           onClick={() => {
             toggleHandler(isAbsenceOptionOpen, setIsAbsenceOptionOpen);
           }}
         >
           <Option>{selectedAbsence}</Option>
           <div className="material-symbols-outlined">arrow_drop_down</div>
-        </AbsenceOptionsOpenBtn>
+        </AbsenceOptionOpenBtn>
         {isAbsenceOptionOpen && (
-          <AbsenceOptionList>
+          <OptionList>
             {ABSENCE_OPTIONS.map((list, index) => (
               <li key={index}>
-                <AbsenceOptionBtn
+                <OptionBtn
                   onClick={() => {
                     setSelectedAbsence(list);
                   }}
                 >
                   {list}
-                </AbsenceOptionBtn>
+                </OptionBtn>
               </li>
             ))}
-          </AbsenceOptionList>
+          </OptionList>
         )}
       </AbsenceContainer>
       <HDOOptionContainer>
@@ -72,7 +72,7 @@ function ChoiceAbsenceOption({ props }) {
           <p className="material-symbols-outlined">arrow_drop_down</p>
         </HDOTimeListOpenBtn>
         {isHDOOptionOpen && (
-          <HDOOptionList>
+          <OptionList>
             {HDO_OPTIONS.map((list, index) => (
               <li
                 key={index}
@@ -81,26 +81,30 @@ function ChoiceAbsenceOption({ props }) {
                   setIsHDOOptionOpen(false);
                 }}
               >
-                <TimeOptionBtn>{list}</TimeOptionBtn>
+                <OptionBtn>{list}</OptionBtn>
               </li>
             ))}
-          </HDOOptionList>
+          </OptionList>
         )}
       </HDOOptionContainer>
+
     </BtnFlexContainer>
   );
 }
-export default ChoiceAbsenceOption;
+export default AbsenceOption;
 
 const BtnFlexContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  width:100%;
+  box-sizing: border-box;
 `;
 
-const AbsenceOptionsOpenBtn = styled.button`
-  width: 194px;
-  height: 34px;
+const AbsenceOptionOpenBtn = styled.button`
+  width: 12rem;
+  height: 2rem;
   border: 1px solid #b6c2e2;
+  background-color: white;
   border-radius: 10px;
   font-size: 14px;
   display: flex;
@@ -116,7 +120,7 @@ const Option = styled.span`
   margin-left: 0.5em;
 `;
 
-const AbsenceOptionList = styled.ul`
+const OptionList = styled.ul`
   width: 100%;
   border: 1px solid #b6c2e2;
   border-radius: 10px;
@@ -124,15 +128,18 @@ const AbsenceOptionList = styled.ul`
   display: flex;
   flex-direction: column;
   text-align: center;
-  overflow: hidden;
   position: absolute;
-  top: 2.5em;
+  top: 110%;
   z-index: 5;
+  background-color: white;
+  overflow:hidden;
 `;
 
-const AbsenceOptionBtn = styled.button`
+const OptionBtn = styled.button`
   width: 100%;
   height: 32px;
+  background-color: transparent;
+  border: none;
 
   &:hover {
     background-color: #b6c2e2;
@@ -143,39 +150,16 @@ const HDOOptionContainer = styled.div`
   position: relative;
 `;
 const HDOTimeListOpenBtn = styled.button`
-  width: 194px;
-  height: 34px;
+  width: 12rem;
+  height: 2rem;
   border: 1px solid #b6c2e2;
   border-radius: 10px;
   font-size: 14px;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: -1px;
   opacity: ${(prop) => (prop.$isshow ? 1 : 0)};
   visibility: ${(prop) => (prop.$isshow ? "visible" : "hidden")};
-`;
-const HDOOptionList = styled.ul`
-  width: 100%;
-  border: 1px solid #b6c2e2;
-  border-radius: 10px;
-  margin-top: 3px;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  overflow: hidden;
-  position: absolute;
-  top: 2rem;
-  z-index: 5;
-`;
-
-const TimeOptionBtn = styled.button`
-  width: 100%;
-  height: 32px;
-
-  &:hover {
-    background-color: #b6c2e2;
-    color: white;
-  }
 `;
