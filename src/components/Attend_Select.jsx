@@ -37,6 +37,11 @@ const Select = (props) => {
           <Content>
             <Sessg>
               <Bdlss>
+              <Bdli onClick={() => { window.location.reload(); }} >
+                  <Content2>
+                    <Label>모두</Label>
+                  </Content2>
+                </Bdli>
                 <Bdli onClick={() => {setLabel('연차'), toggleDropdown(), props.setSelectedLabel('연차')}} >
                   <Content2>
                     <Label>연차</Label>
