@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-import '../style.scss';
 
 const ClockH1 = styled.h1`
   /* width: 396px; */

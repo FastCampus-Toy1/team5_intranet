@@ -7,15 +7,13 @@ import Header from '../components/Header';
 import Datafield from '../components/Attend_Datafield';
 import checkLogin from '../components/CheckLogin.jsx';
 import { createGlobalStyle } from 'styled-components';
-import "../style.scss";
 
 const Attendance = () => {
-
   // 로그인여부체크
   checkLogin();
 
   const [selectedLabel, setSelectedLabel] = useState(null);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <>
@@ -40,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: #EAECF5;
   }
-`
+`;
 
 const Container = styled.div`
   position: relative;
@@ -53,8 +51,8 @@ const Container = styled.div`
   overflow-x: hidden;
   padding: 10px 100px 50px 100px;
   margin: 0px 50px;
+  background-color: #ffffff;
   border-radius: 10px;
-  border: 1px solid #C8CCE5;
-  background-color: #FFFFFF;
-`
-
+  border: 1px solid #c8cce5;
+  top: 20px;
+`;

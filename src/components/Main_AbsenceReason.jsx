@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function AbsenceDetailReasonInput({ props }) {
+function AbsenceReason({ props }) {
   return (
     <Container>
       <SubmitButton
@@ -22,7 +22,7 @@ function AbsenceDetailReasonInput({ props }) {
   );
 }
 
-export default AbsenceDetailReasonInput;
+export default AbsenceReason;
 
 const Container = styled.div`
   width: 100%;
@@ -39,7 +39,9 @@ const Container = styled.div`
 
 const SubmitButton = styled.button`
   width: 100%;
-  height: 45px;
+  height: 15%;
+  background-color: transparent;
+  border: transparent;
   position: absolute;
   top: 0;
   display: flex;
