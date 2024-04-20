@@ -15,25 +15,32 @@ const Datafield = ({selectedLabel, results}) => {
       const uid = sessionStorage.getItem('user.id');
       const hdoOption = doc.data().hdoOption; // hdoOption 변수 선언
       const startDate = new Date(doc.data().startDate);
+      const absenceOption = doc.data().absenceOption;
       const now = new Date();
       const diffInDays = Math.ceil((startDate - now) / (1000 * 60 * 60 * 24));
-    let status;
+      let status;
 
-    if (diffInDays <= 7) {
-      status = '승인';
-    }
-      else if (diffInDays < 1) {
-        status = '거절';
+      let endDate;
+      if (doc.data().endDate) {
+        endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
+      } else {
+        endDate = '미선택 '; // 또는 원하는 다른 값
       }
-     else {
-      status = '승인 전';
-    } 
+    
+      if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택") {
+        status = '거절';
+      } else if (diffInDays <= 7) {
+        status = '승인';
+      } else {
+        status = '승인 전';
+      }
+
       newmemberList.push({
         id : doc.data().userID,// uid ? uid : Math.random().toString(36).substring(2, 11), // uid가 null이면 랜덤한 값을 사용
         absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
         hdoOption: hdoOption,
         startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
-        endDate: new Date(doc.data().endDate).toLocaleDateString('ko-KR'),
+        endDate: endDate,
         reason: doc.data().reason,
         status: status,
       });
@@ -102,7 +109,8 @@ const Datafield = ({selectedLabel, results}) => {
                         : member.absenceOption === '조퇴' ? '🎒 ' + member.absenceOption
                         : member.absenceOption === '연차' ? '🏖️ ' + member.absenceOption
                         : member.absenceOption === '반차' ? '🕧 ' + member.absenceOption
-                        : member.absenceOption === '기타' ? '❓ ' + member.absenceOption
+                        : member.absenceOption === '사유 선택' ? '❌ '
+                        : member.absenceOption === '반차(시간 선택)' ? '❌ '
                         : member.absenceOption}
               </AbsenceOptionwrap>
             </AbsenceOption>
@@ -231,7 +239,8 @@ const AbsenceOptionwrap = styled.div`
           : props.value == '조퇴' ? '55px' 
           : props.value == '외출' ? '55px'
           : props.value == '병가' ? '55px'
-          : props.value == '기타' ? '55px'
+          : props.value == '사유 선택' ? '55px'
+          : props.value == '반차(시간 선택)' ? '70px'
           : 'none')};
 
   height:  ${props => (props.value == '연차' ? '18px'
@@ -242,7 +251,8 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '조퇴' ? '18px'
             : props.value == '외출' ? '18px' 
             : props.value == '병가' ? '18px'
-            : props.value == '기타' ? '18px' 
+            : props.value == '사유 선택' ? '18px' 
+            : props.value == '반차(시간 선택)' ? '18px' 
             : 'none')};
   
   padding: ${props => (props.value == '연차' ? '8px 8px 4px 3px'
@@ -253,7 +263,8 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '조퇴' ? '8px 8px 4px 3px'
             : props.value == '외출' ? '8px 8px 4px 3px'
             : props.value == '병가' ? '8px 8px 4px 3px'
-            : props.value == '기타' ? '8px 8px 4px 3px'
+            : props.value == '사유 선택' ? '8px 8px 4px 3px'
+            : props.value == '반차(시간 선택)' ? '8px 8px 4px 3px'
             : 'none')};
 
   background-image: ${props => (props.value == '연차' ? 'linear-gradient(3deg, #9B8AFB, #DD2590)'
@@ -264,7 +275,6 @@ const AbsenceOptionwrap = styled.div`
                                 : props.value == '조퇴' ? 'linear-gradient(3deg, #717BBC, #363F72)'
                                 : props.value == '외출' ? 'linear-gradient(3deg, #851651, #510B24)'
                                 : props.value == '병가' ? 'linear-gradient(3deg, #717BBC, #363F72)' 
-                                : props.value == '기타' ? 'linear-gradient(3deg, #717BBC, #363F72)'
                                 : 'none')};
 `
 

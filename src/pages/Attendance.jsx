@@ -54,5 +54,4 @@ const Container = styled.div`
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid #c8cce5;
-  top: 20px;
 `;
