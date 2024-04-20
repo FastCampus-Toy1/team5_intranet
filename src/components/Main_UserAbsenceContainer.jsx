@@ -114,6 +114,7 @@ const AbsenceContainer = styled.section`
   height: 70%;
   border: 2px solid #c8cce5;
   border-radius: 10px;
+  background-color: #FFFFFF;
   padding-top: 1rem;
   display: flex;
   justify-content: center;
@@ -121,7 +122,7 @@ const AbsenceContainer = styled.section`
 `;
 
 const Inner = styled.div`
-  width: 80%;
+  /* width: 90%; */
   display: flex;
   flex-direction: column;
   justify-content: center;

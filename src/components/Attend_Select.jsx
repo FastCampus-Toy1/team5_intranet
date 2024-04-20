@@ -147,7 +147,7 @@ const Field = styled.div`
   padding: 8px 12px 8px 12px;
   border-radius: 6px;
   border-style: solid;
-  border-color: #1656fd);
+  border-color: #1656fd;
   border-width: 1px;
   gap: 8px;
   background: #FFFFFF;

@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
-import { styled } from 'styled-components';
+import { useState, useEffect } from "react";
+import { styled } from "styled-components";
 
 const ClockH1 = styled.h1`
   /* width: 396px; */
-  width: 343px;
-  height: 24px;
+  /* width: 343px; */
+  /* width: 100%; */
+  /* height: 24px; */
   font-size: 30px;
-  font-family: 'Pretendard-Regular';
-`
+  font-family: "Pretendard-Regular";
+`;
 
 function HeaderClock() {
   const [timer, setTimer] = useState("");
@@ -16,7 +17,7 @@ function HeaderClock() {
     const date = new Date();
 
     return `${date.toLocaleString()}`;
-  }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,10 +26,7 @@ function HeaderClock() {
 
     return () => clearInterval(timer);
   }, []);
-  return(
-    <ClockH1>{timer}</ClockH1>
-    
-  );
+  return <ClockH1>{timer}</ClockH1>;
 }
 
 export default HeaderClock;
