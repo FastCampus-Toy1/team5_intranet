@@ -12,7 +12,7 @@ const Datafield = ({selectedLabel, results}) => {
     const newmemberList = []; // 빈 배열로 초기화
     const querySnapshot = await getDocs(collection(db, MEMBER_COLLECTION));
     querySnapshot.forEach((doc) => {
-      const uid = sessionStorage.getItem('user.id');
+      const userName = sessionStorage.getItem('userName');
       const hdoOption = doc.data().hdoOption; // hdoOption 변수 선언
       const startDate = new Date(doc.data().startDate);
       const absenceOption = doc.data().absenceOption;
@@ -39,7 +39,7 @@ const Datafield = ({selectedLabel, results}) => {
       }
 
       newmemberList.push({
-        id : doc.data().userID,// uid ? uid : Math.random().toString(36).substring(2, 11), // uid가 null이면 랜덤한 값을 사용
+        id : userName,
         absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
         hdoOption: hdoOption,
         startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
@@ -207,9 +207,6 @@ const Members = styled.div`
   transition-duration: 0.1s;
 
   &:active {
-    position: relative;
-    left: 2px;
-    top: 2px;
     box-shadow: none;
 
   &:hover {
