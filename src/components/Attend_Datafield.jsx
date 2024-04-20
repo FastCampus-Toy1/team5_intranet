@@ -21,11 +21,14 @@ const Datafield = ({selectedLabel, results}) => {
       let status;
 
       let endDate;
-      if (doc.data().endDate) {
-        endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
-      } else {
-        endDate = '미선택 '; // 또는 원하는 다른 값
-      }
+        if (['반차(오전)', '반차(오후)', '조퇴', '외출'].includes(absenceOption)) {
+          endDate = new Date(doc.data().startDate).toLocaleDateString('ko-KR');
+        } else if (doc.data().endDate) {
+          endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
+        }
+        else {
+          endDate = '미선택 '; 
+        }
     
       if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택") {
         status = '거절';
