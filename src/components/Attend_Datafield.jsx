@@ -23,28 +23,12 @@ const Datafield = ({ selectedLabel, results }) => {
       let status;
 
       let endDate;
-<<<<<<< HEAD
-        if (['반차(오전)', '반차(오후)', '조퇴', '외출'].includes(absenceOption)) {
-          endDate = new Date(doc.data().startDate).toLocaleDateString('ko-KR');
-        } else if (doc.data().endDate) {
-          endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
-        }
-        else {
-          endDate = '미선택 '; 
-        }
-    
-      if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택" || diffInDays < 1) {
-        status = '거절';
-      } else if (diffInDays <= 7) {
-        status = '승인';
-=======
       if (
         ["반차(오전)", "반차(오후)", "조퇴", "외출"].includes(absenceOption)
       ) {
         endDate = new Date(doc.data().startDate).toLocaleDateString("ko-KR");
       } else if (doc.data().endDate) {
         endDate = new Date(doc.data().endDate).toLocaleDateString("ko-KR");
->>>>>>> temp
       } else {
         endDate = "미선택 ";
       }
@@ -56,37 +40,33 @@ const Datafield = ({ selectedLabel, results }) => {
         absenceOption == "사유 선택"
       ) {
         status = "거절";
-      } else if (diffInDays <= 7) {
-        status = "승인";
-      } else {
-        status = "승인 전";
-      }
+        if (
+          ["반차(오전)", "반차(오후)", "조퇴", "외출"].includes(absenceOption)
+        ) {
+          endDate = new Date(doc.data().startDate).toLocaleDateString("ko-KR");
+        } else if (doc.data().endDate) {
+          endDate = new Date(doc.data().endDate).toLocaleDateString("ko-KR");
+        } else {
+          endDate = "미선택 ";
+        }
 
-      if (userID == docUserID) {
-        newmemberList.push({
-          id: userName,
-          absenceOption: hdoOption
-            ? hdoOption + " " + doc.data().absenceOption
-            : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
-          hdoOption: hdoOption,
-          startDate: new Date(doc.data().startDate).toLocaleDateString("ko-KR"),
-          endDate: endDate,
-          reason: doc.data().reason,
-          status: status,
-        });
-      } else {
-        // Profile 컬렉션에서 userID가 docUserID와 같은 문서를 찾습니다.
-        const profileQuery = query(
-          collection(db, "Profile"),
-          where("userID", "==", docUserID)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
+        if (
+          hdoOption == "(시간 선택)" ||
+          !startDate ||
+          endDate == "미선택 " ||
+          absenceOption == "사유 선택" ||
+          diffInDays < 1
+        ) {
+          status = "거절";
+        } else if (diffInDays <= 7) {
+          status = "승인";
+        } else {
+          status = "승인 전";
+        }
 
-        // 문서가 있다면 그 문서의 name 값을 id로 사용합니다.
-        if (!profileSnapshot.empty) {
-          const profileDoc = profileSnapshot.docs[0];
+        if (userID == docUserID) {
           newmemberList.push({
-            id: profileDoc.data().name,
+            id: userName,
             absenceOption: hdoOption
               ? hdoOption + " " + doc.data().absenceOption
               : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
@@ -98,121 +78,150 @@ const Datafield = ({ selectedLabel, results }) => {
             reason: doc.data().reason,
             status: status,
           });
+        } else {
+          // Profile 컬렉션에서 userID가 docUserID와 같은 문서를 찾습니다.
+          const profileQuery = query(
+            collection(db, "Profile"),
+            where("userID", "==", docUserID)
+          );
+          const profileSnapshot = await getDocs(profileQuery);
+
+          // 문서가 있다면 그 문서의 name 값을 id로 사용합니다.
+          if (!profileSnapshot.empty) {
+            const profileDoc = profileSnapshot.docs[0];
+            newmemberList.push({
+              id: profileDoc.data().name,
+              absenceOption: hdoOption
+                ? hdoOption + " " + doc.data().absenceOption
+                : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
+              hdoOption: hdoOption,
+              startDate: new Date(doc.data().startDate).toLocaleDateString(
+                "ko-KR"
+              ),
+              endDate: endDate,
+              reason: doc.data().reason,
+              status: status,
+            });
+          }
         }
       }
+
+      // startDate 값에 따라 정렬
+      newmemberList.sort((a, b) => {
+        const dateAStart = new Date(a.startDate);
+        const dateBStart = new Date(b.startDate);
+        const dateAEnd = new Date(a.endDate);
+        const dateBEnd = new Date(b.endDate);
+
+        if (dateAStart.getTime() !== dateBStart.getTime()) {
+          return dateAStart.getTime() - dateBStart.getTime();
+        } else {
+          return dateAEnd.getTime() - dateBEnd.getTime();
+        }
+      });
+
+      setMemberList(newmemberList);
     }
 
-    // startDate 값에 따라 정렬
-    newmemberList.sort((a, b) => {
-      const dateAStart = new Date(a.startDate);
-      const dateBStart = new Date(b.startDate);
-      const dateAEnd = new Date(a.endDate);
-      const dateBEnd = new Date(b.endDate);
+    useEffect(() => {
+      getList();
+    }, []);
 
-      if (dateAStart.getTime() !== dateBStart.getTime()) {
-        return dateAStart.getTime() - dateBStart.getTime();
-      } else {
-        return dateAEnd.getTime() - dateBEnd.getTime();
-      }
-    });
+    const handleMembersClick = (index) => {
+      setIsReasonVisible((prevState) => {
+        const newState = [...prevState];
+        newState[index] = !newState[index];
+        return newState;
+      });
+    };
 
-    setMemberList(newmemberList);
-  }
+    useEffect(() => {
+      setIsReasonVisible(memberList.map(() => false));
+    }, [memberList]);
 
-  useEffect(() => {
-    getList();
-  }, []);
-
-  const handleMembersClick = (index) => {
-    setIsReasonVisible((prevState) => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-  };
-
-  useEffect(() => {
-    setIsReasonVisible(memberList.map(() => false));
-  }, [memberList]);
-
-  return (
-    <Datafd>
-      <ListName>
-        <Name>이름</Name>
-        <Value>휴가 종류</Value>
-        <Start>휴가 시작</Start>
-        <End>휴가 종료</End>
-        <SubStatus>신청 상태</SubStatus>
-      </ListName>
-      {memberList.map(
-        (member, index) =>
-          (!selectedLabel || member.absenceOption == selectedLabel) &&
-          (!results ||
-            member.id.includes(results) ||
-            member.absenceOption.includes(results) ||
-            member.reason.includes(results) ||
-            member.startDate.includes(results) ||
-            member.endDate.includes(results) ||
-            member.status.includes(results)) && (
-            <MembersWrapper
-              key={index}
-              onClick={() => handleMembersClick(index)}
-            >
-              <Members>
-                <Id>{member.id}</Id>
-                <AbsenceOption>
-                  <AbsenceOptionwrap value={member.absenceOption}>
-                    {member.absenceOption === "예비군"
-                      ? "🪖 " + member.absenceOption
-                      : member.absenceOption === "외출"
-                      ? "🏃🏻‍♂️ " + member.absenceOption
-                      : member.absenceOption === "병가"
-                      ? "💊 " + member.absenceOption
-                      : member.absenceOption === "조퇴"
-                      ? "🎒 " + member.absenceOption
-                      : member.absenceOption === "연차"
-                      ? "🏖️ " + member.absenceOption
-                      : member.absenceOption === "반차"
-                      ? "🕧 " + member.absenceOption
-                      : member.absenceOption === "사유 선택"
-                      ? "❌ "
-                      : member.absenceOption === "반차(시간 선택)"
-                      ? "❌ "
-                      : member.absenceOption}
-                  </AbsenceOptionwrap>
-                </AbsenceOption>
-                <StartDate>
-                  {member.startDate && member.startDate.slice(0, -1)}
-                </StartDate>
-                <EndDate>
-                  {member.endDate && member.endDate.slice(0, -1)}
-                </EndDate>
-                <Status>
-                  <Statuswrap value={member.status}>{member.status}</Statuswrap>
-                </Status>
-              </Members>
-              <ReasonWrap
-                style={{
-                  maxHeight: isReasonVisible[index] ? "120px" : "0",
-                  transition: "max-height 0.5s ease-in-out",
-                  overflow: "hidden",
-                  borderBottom: isReasonVisible[index]
-                    ? "1px solid #C8CCE5"
-                    : "",
-                  borderLeft: isReasonVisible[index] ? "1px solid #C8CCE5" : "",
-                  borderRight: isReasonVisible[index]
-                    ? "1px solid #C8CCE5"
-                    : "",
-                }}
+    return (
+      <Datafd>
+        <ListName>
+          <Name>이름</Name>
+          <Value>휴가 종류</Value>
+          <Start>휴가 시작</Start>
+          <End>휴가 종료</End>
+          <SubStatus>신청 상태</SubStatus>
+        </ListName>
+        {memberList.map(
+          (member, index) =>
+            (!selectedLabel || member.absenceOption == selectedLabel) &&
+            (!results ||
+              member.id.includes(results) ||
+              member.absenceOption.includes(results) ||
+              member.reason.includes(results) ||
+              member.startDate.includes(results) ||
+              member.endDate.includes(results) ||
+              member.status.includes(results)) && (
+              <MembersWrapper
+                key={index}
+                onClick={() => handleMembersClick(index)}
               >
-                <ReasonContent>상세 사유 : </ReasonContent>
-                <Reason>{member.reason}</Reason>
-              </ReasonWrap>
-            </MembersWrapper>
-          )
-      )}
-    </Datafd>
-  );
+                <Members>
+                  <Id>{member.id}</Id>
+                  <AbsenceOption>
+                    <AbsenceOptionwrap value={member.absenceOption}>
+                      {member.absenceOption === "예비군"
+                        ? "🪖 " + member.absenceOption
+                        : member.absenceOption === "외출"
+                        ? "🏃🏻‍♂️ " + member.absenceOption
+                        : member.absenceOption === "병가"
+                        ? "💊 " + member.absenceOption
+                        : member.absenceOption === "조퇴"
+                        ? "🎒 " + member.absenceOption
+                        : member.absenceOption === "연차"
+                        ? "🏖️ " + member.absenceOption
+                        : member.absenceOption === "반차"
+                        ? "🕧 " + member.absenceOption
+                        : member.absenceOption === "사유 선택"
+                        ? "❌ "
+                        : member.absenceOption === "반차(시간 선택)"
+                        ? "❌ "
+                        : member.absenceOption}
+                    </AbsenceOptionwrap>
+                  </AbsenceOption>
+                  <StartDate>
+                    {member.startDate && member.startDate.slice(0, -1)}
+                  </StartDate>
+                  <EndDate>
+                    {member.endDate && member.endDate.slice(0, -1)}
+                  </EndDate>
+                  <Status>
+                    <Statuswrap value={member.status}>
+                      {member.status}
+                    </Statuswrap>
+                  </Status>
+                </Members>
+                <ReasonWrap
+                  style={{
+                    maxHeight: isReasonVisible[index] ? "120px" : "0",
+                    transition: "max-height 0.5s ease-in-out",
+                    overflow: "hidden",
+                    borderBottom: isReasonVisible[index]
+                      ? "1px solid #C8CCE5"
+                      : "",
+                    borderLeft: isReasonVisible[index]
+                      ? "1px solid #C8CCE5"
+                      : "",
+                    borderRight: isReasonVisible[index]
+                      ? "1px solid #C8CCE5"
+                      : "",
+                  }}
+                >
+                  <ReasonContent>상세 사유 : </ReasonContent>
+                  <Reason>{member.reason}</Reason>
+                </ReasonWrap>
+              </MembersWrapper>
+            )
+        )}
+      </Datafd>
+    );
+  }
 };
 
 export default Datafield;
