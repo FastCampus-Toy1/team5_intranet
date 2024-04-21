@@ -11,7 +11,7 @@ function Main_UserProfileImage() {
 export default Main_UserProfileImage;
 
 const UserProfileImg = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   border-radius: 100px;
 `;

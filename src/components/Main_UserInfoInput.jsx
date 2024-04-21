@@ -26,17 +26,19 @@ const InputWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   
-  width: 390px;
+  width: 35vw;
+  min-width: 320px;
   margin-bottom: 10px;
 `;
 
 const InputLabel = styled.p`
-  margin-right: 37px;
+  min-width: 35px;
 `;
 
 const ProfileInput = styled.input`
-  width: 220px;
-  height: 40px;
+  width: 20vw;
+  min-width: 180px;
+  height: 35px;
   border-radius: 10px;
   border: 1px solid #C8CCE5;
   padding: 0 10px;

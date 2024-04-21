@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { db } from '../core/firebase.js';
-import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { styled } from 'styled-components';
-import  Button  from './Button.jsx';
-import  Message from './Notice_Message.jsx';
+import { db } from '../core/firebase.js';
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import Button from './Button.jsx';
+import Message from './Notice_Message.jsx';
 
 const NOTICE_COLLECTION = "Notice";
 
@@ -88,10 +88,10 @@ const NoticeHeader = styled.div`
 
 const NoticeH2 = styled.h2`
   font-size: 30px;
+  font-weight: 700;
   margin-right: auto;
   font-weight: 700;
 `;
-
 
 const NoitceList = styled.div`
   width: 100%;
@@ -116,7 +116,6 @@ const NoticeImgDiv = styled.div`
   border-radius: 6%;
   position: relative;
   box-shadow: 5px 5px rgba(0,0,0,.1);
-
 `;
 
 const NoticeContentDiv = styled.div`
