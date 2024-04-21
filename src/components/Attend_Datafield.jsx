@@ -230,9 +230,6 @@ const Members = styled.div`
   transition-duration: 0.1s;
   cursor: pointer;
 
-  &:active {
-    box-shadow: none;
-
   &:hover {
     border: 2px solid #0BA5EC;
   }
@@ -363,5 +360,4 @@ const Statuswrap = styled.div`
   : props.value == '승인' ? 'linear-gradient(3deg, #32D583, #039855)' 
   : props.value == '거절' ? 'linear-gradient(3deg, #F97066, #D92D20)': 'none')};
 `;
-
 
