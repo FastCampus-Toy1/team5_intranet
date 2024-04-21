@@ -76,10 +76,7 @@ background-color: #FFFFFF;
   } */
 `;
 
-
-
 const Right = styled.div`
 `;
-
 
 const AbsenceWrapper = styled.div``;
