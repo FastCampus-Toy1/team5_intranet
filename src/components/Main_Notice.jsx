@@ -10,7 +10,7 @@ const NOTICE_COLLECTION = "Notice";
 
 export default function Main_Notice () {
 
-  const [noticeList, setNoitceList] = useState([]);
+  const [noticeList, setNoticeList] = useState([]);
   const [message, setMessage] = useState('');
 
   try{
@@ -34,7 +34,7 @@ export default function Main_Notice () {
             content: doc.data().content
           });
         })
-        setNoitceList(newNoticeList);
+        setNoticeList(newNoticeList);
       }
       getList();  
     },[])
@@ -48,7 +48,7 @@ export default function Main_Notice () {
       <NoticeH2>공지사항</NoticeH2>
       <Link to="/notice"><Button>더보기</Button></Link>
     </NoticeHeader>
-    <NoitceList>
+    <NoticeList>
   {noticeList.map(notice => {
    return( 
     <NoticeImgDiv $url={notice.img_url} key={notice.id}>
@@ -59,7 +59,7 @@ export default function Main_Notice () {
       </NoticeImgDiv>
     )
   })}
-    </NoitceList> 
+    </NoticeList> 
     {message && <Message>{message}</Message>}
   </NoticeSection>
   );
@@ -95,16 +95,14 @@ const NoticeH2 = styled.h2`
   font-weight: 700;
 `;
 
-const NoitceList = styled.div`
+const NoticeList = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
   margin-bottom: 10px;
-  /* background-color: orange; */
 `;
 
 const NoticeImgDiv = styled.div`

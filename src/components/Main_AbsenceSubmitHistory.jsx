@@ -23,7 +23,7 @@ function AbsenceSubmitHistory(props) {
   );
 
   const status = (num) => {
-    return +num > 7 ? "승인 전" : (num <= 7 && num > 0? "승인" : "거절");
+    return +num > 7 ? "승인 전" : num <= 7 && num > 0 ? "승인" : "거절";
   };
 
   const LoadAbsence = async () => {
@@ -166,12 +166,13 @@ const AbsenceOption = styled.span`
 `;
 
 const SubmitStatus = styled.span`
-  background-image: ${props =>{
-    return +props.$untilDDay <= 7 && +props.$untilDDay>0
+  background-image: ${(props) => {
+    return +props.$untilDDay <= 7 && +props.$untilDDay > 0
       ? "linear-gradient(3deg, #2E90FA, #175CD3)"
-      :  +props.$untilDDay > 7
+      : +props.$untilDDay > 7
       ? "linear-gradient(3deg, #32D583, #039855)"
-      : "linear-gradient(3deg, #F97066, #D92D20)"}};
+      : "linear-gradient(3deg, #F97066, #D92D20)";
+  }};
   border-radius: 10px;
   width: 2.4rem;
   height: 0.7rem;

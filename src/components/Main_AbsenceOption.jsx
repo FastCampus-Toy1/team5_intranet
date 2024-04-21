@@ -27,8 +27,11 @@ function AbsenceOption({ props }) {
     setIsAbsenceOptionOpen(false);
     props.setAbsenceOption(
       `${selectedAbsence}` +
-        (selectedAbsence === "반차" ? selectedTime === "시간 선택"? "" : `(${selectedTime})`
-         : "")
+        (selectedAbsence === "반차"
+          ? selectedTime === "시간 선택"
+            ? ""
+            : `(${selectedTime})`
+          : "")
     );
   }, [selectedAbsence, selectedTime]);
 
@@ -88,7 +91,6 @@ function AbsenceOption({ props }) {
           </OptionList>
         )}
       </HDOOptionContainer>
-
     </BtnFlexContainer>
   );
 }
@@ -97,7 +99,7 @@ export default AbsenceOption;
 const BtnFlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
   box-sizing: border-box;
 `;
 
@@ -133,7 +135,7 @@ const OptionList = styled.ul`
   top: 110%;
   z-index: 5;
   background-color: white;
-  overflow:hidden;
+  overflow: hidden;
 `;
 
 const OptionBtn = styled.button`

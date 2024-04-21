@@ -58,7 +58,9 @@ function UserAbsenceContainer() {
         absenceOption: absenceOption,
         reason: absenceReason,
         userID: USER_ID,
-        ...(isVacation ? { endDate: endAbsenceDate } : {endDate: startAbsenceDate}),
+        ...(isVacation
+          ? { endDate: endAbsenceDate }
+          : { endDate: startAbsenceDate }),
       });
     } catch (error) {
       console.error("Failed to set document:", error);
@@ -104,8 +106,8 @@ export default UserAbsenceContainer;
 
 const AbsenceContainer = styled.section`
   width: 45%;
+  height: calc(100vh - 100px);
   min-width: 600px;
-  height: 70%;
   border: 2px solid #c8cce5;
   border-radius: 10px;
   background-color: #ffffff;
@@ -116,11 +118,12 @@ const AbsenceContainer = styled.section`
 `;
 
 const Inner = styled.div`
-  width: 95%;
+  width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 0.5em;
   font-size: 1.4em;
+  padding-bottom: 1rem;
 `;

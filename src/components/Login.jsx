@@ -1,30 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from '../core/firebase.js';
+import { db } from "../core/firebase.js";
 import { doc, getDoc } from "firebase/firestore";
 import { styled } from "styled-components";
 
-const USER_COLLECTION = 'User';
-const PROFILE_COLLECTION = 'Profile';
+const USER_COLLECTION = "User";
+const PROFILE_COLLECTION = "Profile";
 
 const LoginBox = styled.section`
   width: 350px;
   height: 300px;
-  border: solid 1px #D0D5DD;
+  border: solid 1px #d0d5dd;
   border-radius: 10px;
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const LoginAttribute = styled.div`
   width: 290px;
   height: 200px;
   position: absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const LoginTitle = styled.h2`
@@ -38,14 +38,14 @@ const InputBox = styled.input`
   width: 284px;
   height: 25px;
   margin: 15px 0;
-  border: solid 1px #D0D5DD;
+  border: solid 1px #d0d5dd;
 `;
 
 const LoginBtn = styled.button`
   width: 290px;
   height: 40px;
   margin-top: 10px;
-  background-color: #D0D5DD;
+  background-color: #d0d5dd;
   border: 0;
   font-size: 15px;
   cursor: pointer;
@@ -58,12 +58,10 @@ const ErrorDiv = styled.div`
   color: red;
 `;
 
-
 export default function Login() {
-
-  const [userId, setUserId] = useState('');
-  const [pw, setPw] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [userId, setUserId] = useState("");
+  const [pw, setPw] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const session = window.sessionStorage.getItem("isLoggedIn");
 
@@ -71,10 +69,10 @@ export default function Login() {
   const navigate = useNavigate();
 
   // 로그인 중인지 체크
-  if (isLoggedIn) { 
-    useEffect (() => {
+  if (isLoggedIn) {
+    useEffect(() => {
       navigate("/");
-    },[]);
+    }, []);
   }
 
   async function handleLogin(event) {
@@ -87,7 +85,7 @@ export default function Login() {
 
     // ID 입력오류
     if (!docUserSnap.data()) {
-      setErrMsg('ID가 존재하지 않습니다.');
+      setErrMsg("ID가 존재하지 않습니다.");
       return;
     }
 
@@ -100,27 +98,39 @@ export default function Login() {
         window.sessionStorage.setItem("userID", docUserSnap.id);
         window.sessionStorage.setItem("userName", docProfileSnap.data().name);
         setIsLoggedIn(true);
-        // 이동 
+        // 이동
         navigate("/");
       }
-    // PW 입력오류
+      // PW 입력오류
     } else {
-      setErrMsg('비밀번호를 확인해 주세요.');
+      setErrMsg("비밀번호를 확인해 주세요.");
       return;
     }
   }
 
-  return(
+  return (
     <LoginBox>
       <LoginAttribute>
         <LoginTitle>로그인</LoginTitle>
         <form>
-          <InputBox required value={userId} onChange={(e) => setUserId((e.target.value).trim())} placeholder="ID"></InputBox>
-          <InputBox required type="password" autoComplete="on" value={pw} onChange={(e) => setPw((e.target.value).trim())} placeholder="비밀번호"></InputBox>
+          <InputBox
+            required
+            value={userId}
+            onChange={(e) => setUserId(e.target.value.trim())}
+            placeholder="ID"
+          ></InputBox>
+          <InputBox
+            required
+            type="password"
+            autoComplete="on"
+            value={pw}
+            onChange={(e) => setPw(e.target.value.trim())}
+            placeholder="비밀번호"
+          ></InputBox>
           <LoginBtn onClick={handleLogin}>로그인</LoginBtn>
         </form>
         {errMsg && <ErrorDiv>{errMsg}</ErrorDiv>}
       </LoginAttribute>
     </LoginBox>
   );
-} 
+}
