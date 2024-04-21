@@ -21,7 +21,7 @@ export default function Main_Notice () {
 
       async function getList() {
 
-        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
+        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(3));
 
         const querySnapshot = await getDocs(q); 
       
@@ -67,34 +67,21 @@ export default function Main_Notice () {
 
 
 const NoticeSection = styled.section`
-  width: 100%;
-  min-height: 458px;
-  min-width: 200px;
-
-  background-color: #FFFFFF;
   border: solid 2px #C8CCE5;
-<<<<<<< Updated upstream
   border-radius: 10px;
-  /* width: 100%; */
-  height: 45%;
-  /* min-width: 600px; */
+  width: 50vw;
+  height: 48vh;
+  min-width: 600px;
+  min-height: 100px;
   padding: 10px;
-  /* margin: auto; */
+  margin: auto;
+  margin-top: 20px;
   background-color: #FFFFFF;
-=======
-  border-radius: 10px;  
->>>>>>> Stashed changes
 `;
 
 const NoticeHeader = styled.div`
   display: flex;
-<<<<<<< Updated upstream
-  margin: 5px 20px;
-=======
-
-  margin: 20px;
-
->>>>>>> Stashed changes
+  margin: 10px 20px;
   flex-grow: 1;
   align-items: center;
 `;
@@ -106,57 +93,51 @@ const NoticeH2 = styled.h2`
   font-weight: 700;
 `;
 
-
 const NoitceList = styled.div`
-<<<<<<< Updated upstream
-  /* width:50%; */
+  width: 100%;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
   margin-bottom: 10px;
-=======
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 20px;
-  margin: auto;  
->>>>>>> Stashed changes
+  /* background-color: orange; */
 `;
 
 const NoticeImgDiv = styled.div`
   border: solid 1px #C8CCE5;
-  width: 230px;
-  height: 270px;
+  width: 32%;
+  height: 80%;
   background-image: url(${({$url}) => $url});
-  background-size: 230px 190px;
+  background-size: 100% 75%;
   background-repeat: no-repeat;
   background-position-x: center;
   border-radius: 6%;
   position: relative;
   box-shadow: 5px 5px rgba(0,0,0,.1);
-
 `;
 
 const NoticeContentDiv = styled.div`
-  height: 80px;
+  height: 25%;
   width: 100%;
   background-color: transparent;
   position: absolute;
   bottom: 0;
   left:0;
+  border-top: solid 1px #C8CCE5;
 `;
 
 const NoticeTitle = styled.div`
   font-weight: 700;
-  font-size: 17px;
+  font-size: 13px;
   margin: 10px;
 `;
 
 const NoticeContent = styled.div`
   margin: 10px;
-  line-height: 1.3;
+  line-height: 1.2;
+  font-size: 12px;
   overflow: hidden;
   word-wrap: break-word;
   text-align: left;

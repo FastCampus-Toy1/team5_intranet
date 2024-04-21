@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Main_UserProfileImage from './Main_UserProfileImage';
 import Main_UserInfoInput from './Main_UserInfoInput';
+import Main_UserInfoPwChange from './Main_UserInfoPwChange';
 import Button from './Button';
 
 function Main_UserInfo() {
@@ -18,12 +19,7 @@ function Main_UserInfo() {
         <Main_UserInfoInput labelText="이메일" value="test@test.com" disabled={true}></Main_UserInfoInput>
         <Main_UserInfoInput labelText="이름" value="신콩이" disabled={true}></Main_UserInfoInput>
       </SectionBox2>
-      <SectionBox3>
-        <SectionH2>비밀번호 변경</SectionH2>
-        <Main_UserInfoInput labelText="비밀번호" placeholderText="새 비밀번호를 입력하세요."></Main_UserInfoInput>
-        <Main_UserInfoInput labelText="비밀번호 확인" placeholderText="새 비밀번호를 한번 더 입력하세요."></Main_UserInfoInput>
-      </SectionBox3>
-      <Button>등록</Button>
+      <Main_UserInfoPwChange></Main_UserInfoPwChange>
     </UserInfo>
   )
 };
