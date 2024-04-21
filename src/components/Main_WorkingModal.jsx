@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import Button from "./Button";
 import { useRef } from 'react';
-import '../style.scss';
 
 const Body = styled.div`
   width: 100vw;
