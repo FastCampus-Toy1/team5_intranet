@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { db } from '../core/firebase.js';
-import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { styled } from 'styled-components';
-import  Button  from './Button.jsx';
-import  Message from './Notice_Message.jsx';
+import { db } from '../core/firebase.js';
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import Button from './Button.jsx';
+import Message from './Notice_Message.jsx';
 
 const NOTICE_COLLECTION = "Notice";
 
@@ -67,7 +67,13 @@ export default function Main_Notice () {
 
 
 const NoticeSection = styled.section`
+  width: 100%;
+  min-height: 458px;
+  min-width: 200px;
+
+  background-color: #FFFFFF;
   border: solid 2px #C8CCE5;
+<<<<<<< Updated upstream
   border-radius: 10px;
   /* width: 100%; */
   height: 45%;
@@ -75,23 +81,34 @@ const NoticeSection = styled.section`
   padding: 10px;
   /* margin: auto; */
   background-color: #FFFFFF;
+=======
+  border-radius: 10px;  
+>>>>>>> Stashed changes
 `;
 
 const NoticeHeader = styled.div`
   display: flex;
+<<<<<<< Updated upstream
   margin: 5px 20px;
+=======
+
+  margin: 20px;
+
+>>>>>>> Stashed changes
   flex-grow: 1;
   align-items: center;
 `;
 
 const NoticeH2 = styled.h2`
   font-size: 30px;
+  font-weight: 700;
   margin-right: auto;
   font-weight: 700;
 `;
 
 
 const NoitceList = styled.div`
+<<<<<<< Updated upstream
   /* width:50%; */
   margin: auto;
   display: flex;
@@ -99,6 +116,13 @@ const NoitceList = styled.div`
   justify-content: space-evenly;
   gap: 10px;
   margin-bottom: 10px;
+=======
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin: auto;  
+>>>>>>> Stashed changes
 `;
 
 const NoticeImgDiv = styled.div`

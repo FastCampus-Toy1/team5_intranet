@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import Button from "./Button";
 import { useRef } from 'react';
-import '../style.scss';
 
 const Body = styled.div`
   width: 100vw;
@@ -12,7 +11,7 @@ const Body = styled.div`
   z-index: -1;
 `;
 
- const Blur = styled.div`
+const Blur = styled.div`
   background-color: rgba(0,0,0,.5);
   z-index: 1;
   width: 100vw;
@@ -20,7 +19,7 @@ const Body = styled.div`
   top: 0;
   left: 0;
   position: absolute;
- `;
+`;
 
 const ModalContainer = styled.div`
   display: flex;
