@@ -33,7 +33,7 @@ const Datafield = ({selectedLabel, results}) => {
           endDate = '미선택 '; 
         }
     
-      if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택") {
+      if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택" || diffInDays < 1) {
         status = '거절';
       } else if (diffInDays <= 7) {
         status = '승인';
