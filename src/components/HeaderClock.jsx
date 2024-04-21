@@ -6,12 +6,12 @@ const ClockH1 = styled.h1`
 `;
 
 function HeaderClock() {
-  const [timer, setTimer] = useState(currentTimer());
-
   const currentTimer = () => {
     const date = new Date();
     return `${date.toLocaleString()}`;
   };
+  
+  const [timer, setTimer] = useState(currentTimer());
 
   useEffect(() => {
     const timer = setInterval(() => {
