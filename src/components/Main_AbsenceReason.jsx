@@ -52,7 +52,7 @@ const SubmitButton = styled.button`
 `;
 const AbsenceReasonInput = styled.textarea`
   height: 30vh;
-  border: 1px solid #C8CCE5;
+  border: 1px solid #c8cce5;
   border-top: transparent;
   z-index: 3;
   outline: none;

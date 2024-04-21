@@ -21,14 +21,11 @@ function UserAbsenceContainer() {
   const [isValidAbsence, setIsValidAbsence] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [isVacation, setIsVacation] = useState(false);
-
   // 연차 사용 관련
   const [usingVacation, setUseVacation] = useState(0);
   const [remainingVacation, setRemainingVacation] = useState(0);
 
-  const USER_ID = sessionStorage.getItem("userID")
-    ? sessionStorage.getItem("userID")
-    : "testid";
+  const USER_ID = sessionStorage.getItem("userID") || "testid";
 
   async function updateRemainingVacation() {
     const USER_COLLECTION = collection(db, "User");
@@ -46,11 +43,13 @@ function UserAbsenceContainer() {
     });
     setRemainingVacation(serverRemainingVacation - usingVacation);
   }
+
   useEffect(() => {
     updateRemainingVacation();
   }, []);
 
   async function submitAbsence() {
+    console.log(isVacation);
     try {
       // db가 정의되어 있는지 확인합니다.
       const ABSENCE_COLLECTION = collection(db, "Absence");
@@ -59,11 +58,7 @@ function UserAbsenceContainer() {
         absenceOption: absenceOption,
         reason: absenceReason,
         userID: USER_ID,
-        ...(absenceOption.includes("반차") ||
-        absenceOption === "조퇴" ||
-        absenceOption === "외출"
-          ? {}
-          : { endDate: endAbsenceDate }),
+        ...(isVacation ? { endDate: endAbsenceDate } : {endDate: startAbsenceDate}),
       });
     } catch (error) {
       console.error("Failed to set document:", error);
@@ -95,7 +90,6 @@ function UserAbsenceContainer() {
               setUseVacation,
               isVacation,
               remainingVacation,
-              isSubmit,
             }}
           />
           <AbsenceReason props={{ setIsSubmit, setAbsenceReason }} />
@@ -114,7 +108,7 @@ const AbsenceContainer = styled.section`
   height: 70%;
   border: 2px solid #c8cce5;
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding-top: 1rem;
   display: flex;
   justify-content: center;
