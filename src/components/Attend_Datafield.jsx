@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../core/firebase';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, query, where } from 'firebase/firestore';
 import styled from 'styled-components';
 
 const Datafield = ({selectedLabel, results}) => {
@@ -11,14 +11,17 @@ const Datafield = ({selectedLabel, results}) => {
   async function getList() {
     const newmemberList = []; // 빈 배열로 초기화
     const querySnapshot = await getDocs(collection(db, MEMBER_COLLECTION));
-    querySnapshot.forEach((doc) => {
+    for (const doc of querySnapshot.docs) {
+      const userID = sessionStorage.getItem('userID');
       const userName = sessionStorage.getItem('userName');
+      const docUserID = doc.data().userID; // 데이터에서 userID를 가져오는 코드
       const hdoOption = doc.data().hdoOption; // hdoOption 변수 선언
       const startDate = new Date(doc.data().startDate);
       const absenceOption = doc.data().absenceOption;
       const now = new Date();
       const diffInDays = Math.ceil((startDate - now) / (1000 * 60 * 60 * 24));
       let status;
+      
 
       let endDate;
         if (['반차(오전)', '반차(오후)', '조퇴', '외출'].includes(absenceOption)) {
@@ -37,17 +40,37 @@ const Datafield = ({selectedLabel, results}) => {
       } else {
         status = '승인 전';
       }
-
-      newmemberList.push({
-        id : userName,
-        absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
-        hdoOption: hdoOption,
-        startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
-        endDate: endDate,
-        reason: doc.data().reason,
-        status: status,
-      });
-    });
+      
+      if (userID == docUserID) {
+        newmemberList.push({
+          id : userName,
+          absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
+          hdoOption: hdoOption,
+          startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
+          endDate: endDate,
+          reason: doc.data().reason,
+          status: status,
+        });
+      } else {
+        // Profile 컬렉션에서 userID가 docUserID와 같은 문서를 찾습니다.
+        const profileQuery = query(collection(db, 'Profile'), where('userID', '==', docUserID));
+        const profileSnapshot = await getDocs(profileQuery);
+  
+        // 문서가 있다면 그 문서의 name 값을 id로 사용합니다.
+        if (!profileSnapshot.empty) {
+          const profileDoc = profileSnapshot.docs[0];
+          newmemberList.push({
+            id : profileDoc.data().name,
+            absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
+            hdoOption: hdoOption,
+            startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
+            endDate: endDate,
+            reason: doc.data().reason,
+            status: status,
+          });
+        }
+      }
+    };
 
     // startDate 값에 따라 정렬
     newmemberList.sort((a, b) => {
@@ -117,8 +140,8 @@ const Datafield = ({selectedLabel, results}) => {
                         : member.absenceOption}
               </AbsenceOptionwrap>
             </AbsenceOption>
-            <StartDate>{member.startDate.slice(0, -1)}</StartDate>
-            <EndDate>{member.endDate.slice(0, -1)}</EndDate>
+            <StartDate>{member.startDate && member.startDate.slice(0, -1)}</StartDate>
+            <EndDate>{member.endDate && member.endDate.slice(0, -1)}</EndDate>
             <Status>
               <Statuswrap value={member.status}>
                 {member.status}
