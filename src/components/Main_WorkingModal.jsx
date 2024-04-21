@@ -48,9 +48,8 @@ const TimeInfo = styled.h1`
   height: 58px;
 
   margin-bottom:30px;
-  
+
   font-size: 30px;
-  font-family: 'Pretendard, sans-serif';
   text-align: center;
 `;
 
