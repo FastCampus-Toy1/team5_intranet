@@ -2,10 +2,6 @@ import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 
 const ClockH1 = styled.h1`
-  /* width: 396px; */
-  /* width: 343px; */
-  /* width: 100%; */
-  /* height: 24px; */
   font-size: 30px;
 `;
 

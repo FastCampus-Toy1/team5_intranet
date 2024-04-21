@@ -4,8 +4,6 @@ import checkLogin from "../components/CheckLogin.jsx";
 import { styled } from "styled-components";
 
 function NoticePage() {
-    
-  // 로그인여부 체크
   checkLogin();
 
   return (

@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const Search = ({ setSearchInput }) => {
-  const [localSearchInput, setLocalSearchInput] = useState('');
+  const [localSearchInput, setLocalSearchInput] = useState("");
 
   const handleInputChange = (event) => {
     setLocalSearchInput(event.target.value);
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       setSearchInput(localSearchInput);
     }
   };
 
   return (
     <Searchwrap>
-      <Input type="text" onChange={handleInputChange} onKeyDown={handleKeyDown} placeholder='검색하세요 !' />
+      <Input
+        type="text"
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder="검색하세요 !"
+      />
     </Searchwrap>
   );
 };
@@ -28,7 +33,7 @@ const Searchwrap = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 35px;
-`
+`;
 
 const Input = styled.input`
   position: relative;
@@ -42,5 +47,5 @@ const Input = styled.input`
   border-color: #1656fd;
   border-width: 1px;
   padding: 8px 12px 8px 12px;
-  background: #FFFFFF;
-`
+  background: #ffffff;
+`;

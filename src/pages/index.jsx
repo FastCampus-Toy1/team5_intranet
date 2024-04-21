@@ -7,76 +7,68 @@ import styled from "styled-components";
 import checkLogin from "../components/CheckLogin.jsx";
 
 function MainPage() {
-  // 로그인여부체크
   checkLogin();
 
   return (
-    <Screen>
-      <Header />
-      <Main>
-        <Left>
-          <ProfileWrapper>
-            <Main_UserProfile />
-          </ProfileWrapper>
-          <NoticeWrapper>
-            <Notice />
-          </NoticeWrapper>
-        </Left>
-        <Right>
-          <AbsenceWrapper>
-            <UserAbsenceContainer />
-          </AbsenceWrapper>
-        </Right>
-      </Main>
-    </Screen>
+    <BackGround>
+      <Screen>
+        <Header />
+        <Main>
+          <Left>
+            <ProfileWrapper>
+              <Main_UserProfile />
+            </ProfileWrapper>
+            <NoticeWrapper>
+              <Notice />
+            </NoticeWrapper>
+          </Left>
+          <Right>
+            <AbsenceWrapper>
+              <UserAbsenceContainer />
+            </AbsenceWrapper>
+          </Right>
+        </Main>
+      </Screen>
+    </BackGround>
   );
 }
 
 export default MainPage;
 
+const BackGround = styled.section`
+  width: 100vw;
+  height: 100vh;
+  background-color: #e7e8f0;
+`;
+
 const Screen = styled.section`
   display: flex;
   flex-direction: column;
-  width: 95vw;
+  width: 90vw;
   height: 98vh;
   border-radius: 10px;
-  margin: 0 auto;
-  background-color: #EAECF5;
+  background-color: #ebecf5;
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 `;
 
 const Main = styled.section`
-  /* width: 95%; */
-  height: 90vh;
-  /* min-width: 600px; */
   display: flex;
-  /* justify-content: center; */
-  /* flex-wrap: wrap; */
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 const Left = styled.div`
   flex-grow: 1;
 `;
 
-const ProfileWrapper = styled.div`
-  background-color: #FFFFFF;
-`;
+const ProfileWrapper = styled.div``;
 
 const NoticeWrapper = styled.div`
-margin-top: 1.5rem;
-background-color: #FFFFFF;
-  /* position: absolute; */
-  /* top: 60%; */
-  /* @media (max-width: 1350px) and (min-width: 600px) {
-    top: 83%;
-  } */
+  margin-top: 1.5rem;
 `;
 
-const Right = styled.div`
-`;
+const Right = styled.div``;
 
 const AbsenceWrapper = styled.div``;

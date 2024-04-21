@@ -23,13 +23,10 @@ export default function Header() {
 }
 
 const HeaderSection = styled.header`
-  /* width: 100%; */
-  /* width: 95%; */
   height: 40px;
   display: flex;
   padding: 10px 0;
   align-items: center;
-  /* gap: 10px; */
   gap: 1rem;
 `;
 
@@ -39,7 +36,6 @@ const GoBackWrapper = styled.div`
 
 const LogoutWrapper = styled.div``;
 const ClockWrapper = styled.div`
-  /* margin-right: 35px; */
 `;
 
 
