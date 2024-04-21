@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../core/firebase";
-import { getDocs, collection, where } from "firebase/firestore";
+import { getDocs, collection, where, query, and } from "firebase/firestore";
 import styled from "styled-components";
 import Button from "./Button";
 import React from "react";
@@ -29,13 +29,10 @@ function AbsenceSubmitHistory(props) {
   const LoadAbsence = async () => {
     const ABSENCE_COLLECTION = collection(db, "Absence");
     const newLoadAbsence = [];
-    const USER_ID = sessionStorage.getItem("userID") || "testid";
-
+    const USER_ID = sessionStorage.getItem("userID");
     try {
-      const querySnapshot = await getDocs(
-        ABSENCE_COLLECTION,
-        where("userID", "==", USER_ID)
-      );
+      const q = query(ABSENCE_COLLECTION, where("userID", "==", USER_ID));
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         newLoadAbsence.push({
           startDate: doc.data().startDate,
@@ -115,16 +112,16 @@ function AbsenceSubmitHistory(props) {
           <FutureAbsenceList>
             {futureAbsenceList.map((list, index) => (
               <FutureAbsence key={index}>
-                <span>{list.startDate}</span>
+                <Item1>{list.startDate}</Item1>
                 {list.endDate ? (
                   <>
-                    <span>~</span>
-                    <span>{list.endDate}</span>
+                    <Item2>~</Item2>
+                    <Item1>{list.endDate}</Item1>
                   </>
                 ) : (
                   []
                 )}
-                <span>{list.absenceOption}</span>
+                <Item1>{list.absenceOption}</Item1>
               </FutureAbsence>
             ))}
           </FutureAbsenceList>
@@ -156,6 +153,7 @@ const UpcomingAbsence = styled.div`
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  position:relative;
 `;
 
 const AbsenceOption = styled.span`
@@ -222,6 +220,13 @@ const FutureAbsence = styled.li`
   justify-content: space-around;
   font-size: 1.5rem;
 `;
+
+const Item1 = styled.span`
+  width:10rem;
+  text-align: center;
+`
+const Item2 = styled.span`
+`
 
 const Caution = styled.span`
   position: absolute;
