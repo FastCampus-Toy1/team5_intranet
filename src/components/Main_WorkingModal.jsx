@@ -13,7 +13,7 @@ const Body = styled.div`
 
  const Blur = styled.div`
   background-color: rgba(0,0,0,.5);
-  z-index: 1;
+  z-index: 2;
   width: 100vw;
   height: 100%;
   top: 0;
