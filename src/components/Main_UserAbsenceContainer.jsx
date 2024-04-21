@@ -122,7 +122,7 @@ const AbsenceContainer = styled.section`
 `;
 
 const Inner = styled.div`
-  /* width: 90%; */
+  width: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;

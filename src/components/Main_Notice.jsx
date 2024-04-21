@@ -69,11 +69,11 @@ export default function Main_Notice () {
 const NoticeSection = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 45%;
+  /* width: 100%; */
   height: 45%;
-  min-width: 600px;
+  /* min-width: 600px; */
   padding: 10px;
-  margin: auto;
+  /* margin: auto; */
   background-color: #FFFFFF;
 `;
 
@@ -92,6 +92,7 @@ const NoticeH2 = styled.h2`
 
 
 const NoitceList = styled.div`
+  /* width:50%; */
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -111,6 +112,7 @@ const NoticeImgDiv = styled.div`
   border-radius: 6%;
   position: relative;
   box-shadow: 5px 5px rgba(0,0,0,.1);
+
 `;
 
 const NoticeContentDiv = styled.div`

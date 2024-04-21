@@ -137,25 +137,21 @@ export default AbsenceSubmitHistory;
 const AbsenceHistoryContainer = styled.div`
   border: 2px solid #c8cce5;
   border-radius: 10px;
-  width: 555px;
-  height: 440px;
-  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   box-sizing: border-box;
 `;
 
 const UpcomingAbsence = styled.div`
   width: 100%;
-  height: 85px;
+  height: 20%;
   border-bottom: 2px solid #c8cce5;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 0 4%;
+  padding: 4%;
   box-sizing: border-box;
 `;
 
@@ -209,7 +205,7 @@ const DDay = styled.div`
 const FutureAbsenceList = styled.ul`
   width: 100%;
   height: 100%;
-  position: absolute;
+  min-height: 10rem;
   top: 25%;
   left: 50%;
   transform: translateX(-50%);
