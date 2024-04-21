@@ -16,6 +16,7 @@ const NOTICE_DUMMY_IMG = 'https://firebasestorage.googleapis.com/v0/b/toyproject
 
 export default function Notice_Add () {
 
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imgFile, setImgFile] = useState('');
@@ -88,12 +89,14 @@ export default function Notice_Add () {
 const Section = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 700px;
+  min-width: 600px;
+  width: 60%;
   height: 500px;
   padding: 10px;
   margin: auto;
-  margin-top: 70px;
+  margin-top: 15px;
   position: relative;
+  background-color: #FFFFFF;
 `;
 
 const Header = styled.h2`
@@ -135,10 +138,12 @@ const Textarea = styled.textarea`
 const TitleLine = styled.div`
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 `;
 const ContentLine = styled.div`
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 `;
 
 const FileLine = styled.div`

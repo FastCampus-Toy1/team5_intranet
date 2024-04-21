@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import '../style.scss';
 
 const Btn = styled.button`
   width: 108px;

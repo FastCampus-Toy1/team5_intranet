@@ -31,16 +31,16 @@ const Searchwrap = styled.div`
 `
 
 const Input = styled.input`
-  background: #ffffff;
+  position: relative;
+  top: 25px;
+  align-self: stretch;
+  flex-shrink: 0;
+  gap: 8px;
+  overflow: hidden;
   border-radius: 6px;
   border-style: solid;
   border-color: #1656fd;
   border-width: 1px;
   padding: 8px 12px 8px 12px;
-  gap: 8px;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  top: 25px;
+  background: #FFFFFF;
 `

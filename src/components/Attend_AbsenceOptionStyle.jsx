@@ -1,5 +1,6 @@
 const AbsenceOptionwrap = styled.div`
   border-radius: 30px;
+  font-size: 15px;
   width: ${props => (props.value == '연차' ? '55px'
           : props.value == '반차' ? '55px' 
           : props.value == '반차(오전)' ? '70px' 
@@ -10,6 +11,7 @@ const AbsenceOptionwrap = styled.div`
           : props.value == '병가' ? '55px'
           : props.value == '기타' ? '55px'
           : 'none')};
+
   height:  ${props => (props.value == '연차' ? '18px'
             : props.value == '반차' ? '18px'
             : props.value == '반차(오전)' ? '23px' 
@@ -20,7 +22,7 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '병가' ? '18px'
             : props.value == '기타' ? '18px' 
             : 'none')};
-  font-size: 15px;
+
   padding: ${props => (props.value == '연차' ? '8px 8px 4px 3px'
             : props.value == '반차' ? '8px 8px 4px 3px'
             : props.value == '반차(오전)' ? '8px 5px 0px 5px' 
@@ -31,6 +33,7 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '병가' ? '8px 8px 4px 3px'
             : props.value == '기타' ? '8px 8px 4px 3px'
             : 'none')};
+
   background-image: ${props => (props.value == '연차' ? 'linear-gradient(3deg, #9B8AFB, #DD2590)'
                                 : props.value == '반차' ? 'linear-gradient(3deg, #FEB273, #EC4A0A)' 
                                 : props.value == '반차(오전)' ? 'linear-gradient(0deg, #FECB4B, #F04438)' 
@@ -42,3 +45,5 @@ const AbsenceOptionwrap = styled.div`
                                 : props.value == '기타' ? 'linear-gradient(3deg, #717BBC, #363F72)'
                                 : 'none')};
 `
+
+export default AbsenceOptionwrap;
