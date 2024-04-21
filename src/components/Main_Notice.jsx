@@ -76,6 +76,8 @@ const NoticeSection = styled.section`
   margin: auto;
   margin-top: 20px;
   margin-right: 20px;
+  padding: 10px;
+  box-sizing: border-box;
   background-color: #FFFFFF;
 `;
 
