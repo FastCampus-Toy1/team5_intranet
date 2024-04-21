@@ -22,6 +22,30 @@
  <img width="180" alt="장경빈_profile_img" src="https://github.com/FastCampus-Toy1/team5_intranet/assets/105346651/2113ce00-9401-4b3a-981a-7d83e43bb7d1"> | <img width="180"  alt="정보현_profile_img" src="https://github.com/FastCampus-Toy1/team5_intranet/assets/105346651/00fbefd1-5d1a-4f23-b659-15f4ee1bda13"> | <img width="180" alt="강수경_profile_img" src="https://github.com/FastCampus-Toy1/team5_intranet/assets/105346651/192a2a66-e4c5-4c6a-8ffe-d36574190518"> | <img width="180" alt="이진영_profile_img" src="https://github.com/FastCampus-Toy1/team5_intranet/assets/105346651/40942804-5f34-48e0-9b41-10106a35a8eb" > | <img width="180" alt="신수민_profile_img" src="https://github.com/FastCampus-Toy1/team5_intranet/assets/105346651/4ac1189e-d538-42c9-8ef9-b5e1480c2a75" > |
 | [BaDook2](https://github.com/BaDook2) | [정보현](https://github.com/jeongbohyeoun) | [sue0226](https://github.com/sue0226) | [FE_이진영](https://github.com/holololob) | [soominnnn](https://github.com/soominnnn) |
 | 팀장 | 팀원 | 팀원 | 팀원 | 팀원 |
+
+## 🔥사용 기술 스택
+1 ) 프론트엔드 기술<br><br>
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
+<img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+
+2 ) 데이터베이스<br><br>
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
+
+3 ) 도구 및 라이브러리<br><br>
+<img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=NPM&logoColor=white">
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
+<img src="https://img.shields.io/badge/Visual_Studio_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white"/> 
+
+4 ) 협업 및 프로젝트 관리<br><br>
+<img alt="Notion" src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/>
+<img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/>
+
+5 ) 디자인<br><br>
+<img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
 ## ✨ 역할 분담
 
 ### 장경빈
@@ -90,13 +114,15 @@
 
 ## ❤️ 프로젝트 진행 소감
 ### 장경빈
-다양한 리액트 훅을 써보지 못해서 아쉬웠고, 상태관리 라이브러리의 필요성을 절실하게 느꼈다. 또한 파이어베이스를 처음 사용해보았는데 간단하게 사용할 수 있다는 것을 느꼈고, 나중에 혼자 많이 사용해봐야겠다고 다짐했다.
+다양한 리액트 훅을 써보지 못해서 아쉬웠고, 상태관리 라이브러리의 필요성을 절실하게 느꼈습니다. 또한, 파이어베이스를 처음 사용해보았는데 간단하게 사용할 수 있다는 것을 느꼈고, 나중에 혼자 많이 사용해봐야겠다고 다짐했습니다.
 
 ### 정보현
 첫 팀 프로젝트여서 내가 못따라가면 어떡하나 싶었지만, 팀원들의 도움으로 잘 해결해나갈 수 있었고, 팀원들과의 소통이 재미있었습니다. <br>
 특히, 이런 저런 오류나 맞춰야할 부분들을 팀원들과 소통하면서 해결하고, 모르는 것들을 알려주는 부분이 가장 좋았던 것 같습니다.
+
 ### 강수경
 추가 예정
+
 ### 이진영
 최초 계획한 것과 동일한 결과물이 나오지 않을 줄 예상하기는 했지만 직접 경험하는 것은 또 다른 일임을 알았다.<br>
 굳이 필요하지 않은 컴포넌트를 만들거나, 또는 만든 컴포넌트를 재사용한 기회가 많지 않았다는 점이 아쉽다.
