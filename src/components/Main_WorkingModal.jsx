@@ -56,7 +56,6 @@ const TimeInfo = styled.h1`
 function Main_WorkingModal({isOpen, time, status, onClick, clickOutsideOfModal}) {
 
   const ref = useRef(null);
-  console.log(isOpen);
 
   return(
     <>
