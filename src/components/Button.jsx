@@ -12,6 +12,7 @@ const Btn = styled.button`
   background-color: white;
   box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
   transition-duration: 0.1s;
+  cursor: pointer;
 
   &:active {
     position: relative;
