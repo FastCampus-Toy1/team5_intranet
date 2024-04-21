@@ -23,11 +23,13 @@ const Datafield = ({ selectedLabel, results }) => {
       let status;
 
       let endDate;
-<<<<<<< HEAD
-        if (['반차(오전)', '반차(오후)', '조퇴', '외출'].includes(absenceOption)) {
-          endDate = new Date(doc.data().startDate).toLocaleDateString('ko-KR');
+      
+        if (
+          ["반차(오전)", "반차(오후)", "조퇴", "외출"].includes(absenceOption)
+        ) {
+          endDate = new Date(doc.data().startDate).toLocaleDateString("ko-KR");
         } else if (doc.data().endDate) {
-          endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
+          endDate = new Date(doc.data().endDate).toLocaleDateString("ko-KR");
         }
         else {
           endDate = '미선택 '; 
@@ -37,14 +39,6 @@ const Datafield = ({ selectedLabel, results }) => {
         status = '거절';
       } else if (diffInDays <= 7) {
         status = '승인';
-=======
-      if (
-        ["반차(오전)", "반차(오후)", "조퇴", "외출"].includes(absenceOption)
-      ) {
-        endDate = new Date(doc.data().startDate).toLocaleDateString("ko-KR");
-      } else if (doc.data().endDate) {
-        endDate = new Date(doc.data().endDate).toLocaleDateString("ko-KR");
->>>>>>> temp
       } else {
         endDate = "미선택 ";
       }
