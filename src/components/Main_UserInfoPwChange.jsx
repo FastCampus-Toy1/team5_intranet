@@ -75,14 +75,14 @@ function Main_UserInfoPwChange() {
 
 
   return (
-    <UserInfo>
+    <>
       <SectionBox3>
         <SectionH2>비밀번호 변경</SectionH2>
         <Main_UserInfoInput labelText="비밀번호" placeholderText="새 비밀번호를 입력하세요." value={password} onChange={(e) => setPassword(e.target.value)}></Main_UserInfoInput>
         <Main_UserInfoInput labelText="비밀번호 확인" placeholderText="새 비밀번호를 한번 더 입력하세요." value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></Main_UserInfoInput>
       </SectionBox3>
       <TempoBtn disabled={isButtonDisabled} onClick={handleButtonClick}>등록</TempoBtn>
-    </UserInfo>
+    </>
   )
 };
 
