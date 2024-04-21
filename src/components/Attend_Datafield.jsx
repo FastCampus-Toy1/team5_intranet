@@ -228,6 +228,7 @@ const Members = styled.div`
   background-color: white;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.25);
   transition-duration: 0.1s;
+  cursor: pointer;
 
   &:active {
     box-shadow: none;
@@ -310,6 +311,7 @@ const ReasonWrap = styled.div`
   margin: 0px auto;
   margin-bottom: 20px;
   border-radius: 0 0 10px 10px;
+  cursor: pointer;
 `
 
 const ReasonContent = styled.div`
