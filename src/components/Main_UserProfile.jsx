@@ -18,7 +18,7 @@ function Main_UserProfile() {
   };
 
   const userName = window.sessionStorage.getItem("userName")
-  
+
   return (
     <ProfileSection>
       <ProfileHeader>
@@ -86,6 +86,7 @@ const ProfileH3 = styled.h3`
 const SettingImg = styled.img`
   padding: 2.5px;
   margin: 20px;
+  cursor: pointer;
 `;
 
 const Backdrop = styled.div`
