@@ -46,12 +46,10 @@ const Screen = styled.section`
   flex-direction: column;
   width: 90vw;
   height: 98vh;
+  margin: 0 5vw;
   border-radius: 10px;
   background-color: #ebecf5;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  
 `;
 
 const Main = styled.section`
