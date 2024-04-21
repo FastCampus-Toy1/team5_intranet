@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-function Main_UserInfoInput({ labelText, placeholderText, value, disabled }) {
+function Main_UserInfoInput({ labelText, placeholderText, value, onChange, disabled }) {
   const [placeholder, setPlaceholder] = useState(placeholderText);
 
   return (
@@ -13,6 +13,7 @@ function Main_UserInfoInput({ labelText, placeholderText, value, disabled }) {
         onFocus={() => setPlaceholder('')}
         onBlur={() => setPlaceholder(placeholderText)}
         value={value}
+        onChange={onChange}
         disabled={disabled} />
     </InputWrap>
   );
