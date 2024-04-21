@@ -26,12 +26,11 @@ function AbsenceSubmitHistory(props) {
     return num < 1 ? "거절" : num < 7 ? "승인" : "승인전";
   };
 
-  async function LoadAbsence() {
+  const LoadAbsence = async () => {
     const ABSENCE_COLLECTION = collection(db, "Absence");
     const newLoadAbsence = [];
-    const USER_ID = sessionStorage.getItem("userID")
-      ? sessionStorage.getItem("userID")
-      : "testid";
+    const USER_ID = sessionStorage.getItem("userID") || "testid";
+
     try {
       const querySnapshot = await getDocs(
         ABSENCE_COLLECTION,
@@ -51,6 +50,7 @@ function AbsenceSubmitHistory(props) {
     newLoadAbsence.sort(
       (a, b) => new Date(a.startDate) - new Date(b.startDate)
     );
+
     setUpcomingAbsenceList(
       newLoadAbsence.filter(
         (absence) => dateDifferenceCalc(absence.startDate) < 7
@@ -61,7 +61,7 @@ function AbsenceSubmitHistory(props) {
         (absence) => dateDifferenceCalc(absence.startDate) >= 7
       )
     );
-  }
+  };
 
   useEffect(() => {
     LoadAbsence();
@@ -86,7 +86,7 @@ function AbsenceSubmitHistory(props) {
               <>
                 <AbsenceOption>
                   {upComingAbsenceList[currentIdx].absenceOption}
-                  <SubmitStatus props={untilDDay}>
+                  <SubmitStatus $untilDDay={untilDDay}>
                     {status(untilDDay)}
                   </SubmitStatus>
                 </AbsenceOption>
@@ -115,11 +115,15 @@ function AbsenceSubmitHistory(props) {
           <FutureAbsenceList>
             {futureAbsenceList.map((list, index) => (
               <FutureAbsence key={index}>
-                <>
                 <span>{list.startDate}</span>
+                {list.endDate ? (
+                  <>
                     <span>~</span>
                     <span>{list.endDate}</span>
-                    </>
+                  </>
+                ) : (
+                  []
+                )}
                 <span>{list.absenceOption}</span>
               </FutureAbsence>
             ))}
@@ -162,12 +166,12 @@ const AbsenceOption = styled.span`
 `;
 
 const SubmitStatus = styled.span`
-  background-image: ${(props) =>
-    +props.untilDDay < 7
+  background-image: ${props =>{
+    return +props.untilDDay < 7
       ? "linear-gradient(3deg, #2E90FA, #175CD3)"
       : +props.untilDDay < 1
       ? "linear-gradient(3deg, #32D583, #039855)"
-      : "linear-gradient(3deg, #F97066, #D92D20)"};
+      : "linear-gradient(3deg, #F97066, #D92D20)"}};
   border-radius: 10px;
   width: 2.4rem;
   height: 0.7rem;
@@ -204,15 +208,12 @@ const DDay = styled.div`
 
 const FutureAbsenceList = styled.ul`
   width: 100%;
-  height: 100%;
   min-height: 10rem;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
+  max-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2rem;
+  margin-top: 2rem;
 `;
 
 const FutureAbsence = styled.li`

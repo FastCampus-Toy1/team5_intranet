@@ -26,7 +26,7 @@ export default AbsenceReason;
 
 const Container = styled.div`
   width: 100%;
-  height: 235px;
+  height: 20vh;
   border: 1px solid #c8cce5;
   display: flex;
   flex-direction: column;
@@ -39,11 +39,10 @@ const Container = styled.div`
 
 const SubmitButton = styled.button`
   width: 100%;
-  height: 15%;
+  height: 5vh;
   background-color: transparent;
   border: transparent;
-  position: absolute;
-  top: 0;
+  border-bottom: 1px solid #c8cce5;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -53,12 +52,12 @@ const SubmitButton = styled.button`
     background-color: #c8cce5;
     cursor: pointer;
   }
-  z-index: 2;
+  z-index: 5;
 `;
 const AbsenceReasonInput = styled.textarea`
-  height: 205px;
+  height: 30vh;
   border: 1px solid #c8cce5;
-  border-radius: 10px;
+  border-top: transparent;
   z-index: 3;
   outline: none;
   resize: none;

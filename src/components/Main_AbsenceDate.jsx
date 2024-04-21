@@ -7,21 +7,14 @@ function AbsenceDate({ props }) {
   const [endDate, setEndDate] = useState(currentTime);
   const [absenceGuide, setAbsenceGuide] = useState(`-`);
 
-  const dateToString = (dateObj) => {
-    let dateStr;
-    try {
-      dateStr = dateObj.toISOString().slice(0, 10);
-    } catch (error) {
-      console.log(error);
-      console.log(
-        "Main_AbsenceDate.jsx 파일에 dateToString() 함수에 오류 발생"
-      );
-    }
-    return dateStr;
-  };
+  const dateToString = (dateObj) => dateObj.toISOString().slice(0, 10);
+
   useEffect(() => {
     const usedVacation = (endDate - startDate) / 1000 / 60 / 60 / 24 + 1;
-    if (startDate < currentTime) {
+    const isValidStartDate = startDate < currentTime;
+    const isValidEndDate = endDate >= startDate;
+    const isSameDate = startDate.toDateString() === currentTime.toDateString();
+    if (isValidStartDate) {
       setAbsenceGuide("오늘보다 이릅니다");
     } else if (!props.isVacation) {
       setAbsenceGuide("-");
@@ -31,26 +24,21 @@ function AbsenceDate({ props }) {
       props.setIsValidAbsence(true);
     } else if (props.remainingVacation < usedVacation) {
       setAbsenceGuide("보유한 연차보다 쉬는날이 많습니다.");
-    } else if (
-      startDate.getFullYear() === currentTime.getFullYear() &&
-      startDate.getMonth() === currentTime.getMonth() &&
-      startDate.getDate() === currentTime.getDate()
-    ) {
+    } else if (isSameDate) {
       setAbsenceGuide("당일 휴가사용 금지");
-    } else if (endDate < startDate) {
+    } else if (!isValidEndDate) {
       setAbsenceGuide("휴가 시작 날보다 끝나는 날이 이릅니다");
-    } else if (endDate >= startDate) {
+    } else {
+      const remainingVacation = props.remainingVacation - usedVacation;
       setAbsenceGuide(
-        `휴가 ${usedVacation}일 사용(남는 휴가:${
-          props.remainingVacation - usedVacation
-        }일)`
+        `휴가 ${usedVacation}일 사용(남는 휴가:${remainingVacation}일)`
       );
       props.setUseVacation(usedVacation);
       props.setStartAbsenceDate(dateToString(startDate));
       props.setEndAbsenceDate(dateToString(endDate));
       props.setIsValidAbsence(true);
     }
-  }, [startDate, endDate, props.isVacation, props.isSubmit]);
+  }, [startDate, endDate, props.isVacation, props.remainingVacation]);
 
   return (
     <DateSettingContainer>

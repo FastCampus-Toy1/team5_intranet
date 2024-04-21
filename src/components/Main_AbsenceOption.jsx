@@ -27,7 +27,8 @@ function AbsenceOption({ props }) {
     setIsAbsenceOptionOpen(false);
     props.setAbsenceOption(
       `${selectedAbsence}` +
-        (selectedAbsence === "반차" ? `(${selectedTime})` : "")
+        (selectedAbsence === "반차" ? selectedTime === "시간 선택"? "" : `(${selectedTime})`
+         : "")
     );
   }, [selectedAbsence, selectedTime]);
 
