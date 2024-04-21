@@ -11,12 +11,14 @@ function Main_UserProfile() {
   const openModal = () => {
     setShowModal(true);
   };
-
+  
   // 모달 닫기 함수
   const closeModal = () => {
     setShowModal(false);
   };
 
+  const userName = window.sessionStorage.getItem("userName")
+  
   return (
     <ProfileSection>
       <ProfileHeader>
@@ -25,7 +27,7 @@ function Main_UserProfile() {
       </ProfileHeader>
       <Main_UserProfileImage></Main_UserProfileImage>
       <ProfileContentDiv>
-        <ProfileH2>신콩이</ProfileH2>
+        <ProfileH2>{userName}</ProfileH2>
         <ProfileH3>Frontend</ProfileH3>
       </ProfileContentDiv>
       <Main_TimeTable></Main_TimeTable>
