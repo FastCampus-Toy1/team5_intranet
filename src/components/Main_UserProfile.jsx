@@ -33,6 +33,7 @@ return (
     </ProfileContentDiv>
 
     <Main_TimeTable></Main_TimeTable>
+    
 
     <Backdrop $showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
       {showModal && <Main_UserInfo closeModal={closeModal} />}
@@ -45,27 +46,35 @@ export default Main_UserProfile;
 const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   width: 100%;
-  min-width: 600px;
-  min-height: 458px;
+  min-width: 200px;
+  min-height: 360px;
   border: 2px solid #C8CCE5;
   border-radius: 10px;
-
   background-color: #FFFFFF;
 `;
 
 const ProfileHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  
+
   width: 100%;
-  margin: 20px;
+`;
+
+const ProfileContentDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 155px;
+  margin: 30px 0 10px 0;
 `;
 
 const ProfileH1 = styled.h1`
+  margin: 20px;
+
   font-size: 30px;
   font-weight: 700;
 `;
@@ -81,20 +90,9 @@ const ProfileH3 = styled.h3`
 `;
 
 const SettingImg = styled.img`
-  width: 25px;
-  height: 25px;
   padding: 2.5px;
-
-  cursor: pointer;
-`;
-
-const ProfileContentDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 180px;
-  height: 70px;
+  margin: 20px;
+  /* cursor: pointer; */
 `;
 
 const Backdrop = styled.div`
@@ -102,7 +100,7 @@ const Backdrop = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* 모달(2)보다 아래에 위치 */
+  z-index: 2; /* 모달(10)보다 아래에 위치 */
 
   width: 100%;
   height: 100%;

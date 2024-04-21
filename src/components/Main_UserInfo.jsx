@@ -38,9 +38,11 @@ const UserInfo = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 2;
+  z-index: 10;
 
-  width: 570px;
+  width: 50vw;
+  min-width: 500px;
+  height: 90vh;
   border: 1px solid #C8CCE5;
   border-radius: 10px;
   box-sizing: border-box;
@@ -51,7 +53,7 @@ const UserInfo = styled.div`
 `;
 
 const Header = styled.div`
-  width: 100%;
+  width: 95%;
   height: 38px;
   margin-top: 13px;
   margin-left: 15px;
@@ -63,7 +65,7 @@ const Header = styled.div`
 const SectionH2 = styled.h2`
   display: block;
   
-  width: 480px;
+  width: 95%;
   margin-bottom: 20px;  
 
   font-size: 20px;
@@ -76,7 +78,7 @@ const SectionBox1 = styled.div`
   justify-content: center;
   align-items: center;
   
-  width: 520px;
+  width: 92%;
   height: 80px;
   border-bottom: 1px solid #C8CCE5;
   box-sizing: border-box;
@@ -88,7 +90,7 @@ const SectionBox2 = styled.div`
   justify-content: center;
   align-items: center;
   
-  width: 520px;
+  width: 92%;
   height: 190px;
   margin: 10px;
   border-bottom: 1px solid #C8CCE5;
@@ -101,7 +103,7 @@ const SectionBox3 = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 520px;
+  width: 92%;
   height: 190px;
   box-sizing: border-box;
 `;
