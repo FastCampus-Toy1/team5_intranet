@@ -69,13 +69,13 @@ export default function Main_Notice () {
 const NoticeSection = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 50vw;
-  height: 48vh;
+  width: 100%;
+  height: 41vh;
   min-width: 600px;
   min-height: 100px;
-  padding: 10px;
   margin: auto;
   margin-top: 20px;
+  margin-right: 20px;
   background-color: #FFFFFF;
 `;
 
