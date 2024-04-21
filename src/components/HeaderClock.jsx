@@ -7,15 +7,13 @@ const ClockH1 = styled.h1`
   /* width: 100%; */
   /* height: 24px; */
   font-size: 30px;
-  font-family: "Pretendard-Regular";
 `;
 
 function HeaderClock() {
-  const [timer, setTimer] = useState("");
+  const [timer, setTimer] = useState(currentTimer());
 
   const currentTimer = () => {
     const date = new Date();
-
     return `${date.toLocaleString()}`;
   };
 
@@ -26,6 +24,7 @@ function HeaderClock() {
 
     return () => clearInterval(timer);
   }, []);
+
   return <ClockH1>{timer}</ClockH1>;
 }
 
