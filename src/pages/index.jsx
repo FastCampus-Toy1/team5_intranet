@@ -39,6 +39,7 @@ const BackGround = styled.section`
   width: 100vw;
   height: 100vh;
   background-color: #e7e8f0;
+  position: fixed;
 `;
 
 const Screen = styled.section`
@@ -49,7 +50,6 @@ const Screen = styled.section`
   margin: 0 5vw;
   border-radius: 10px;
   background-color: #ebecf5;
-  
 `;
 
 const Main = styled.section`
