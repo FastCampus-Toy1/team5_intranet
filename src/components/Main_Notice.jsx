@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { db } from '../core/firebase.js';
-import { getDocs, collection, orderBy, limit, query } from "firebase/firestore";
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { styled } from 'styled-components';
-import  Button  from './Button.jsx';
-import  Message from './Notice_Message.jsx';
+import { db } from '../core/firebase.js';
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import Button from './Button.jsx';
+import Message from './Notice_Message.jsx';
 
 const NOTICE_COLLECTION = "Notice";
 
@@ -21,7 +21,7 @@ export default function Main_Notice () {
 
       async function getList() {
 
-        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(2));
+        const q = query(collection(db, NOTICE_COLLECTION), orderBy("timestamp", "desc"), limit(3));
 
         const querySnapshot = await getDocs(q); 
       
@@ -69,11 +69,15 @@ export default function Main_Notice () {
 const NoticeSection = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  /* width: 100%; */
-  height: 45%;
-  /* min-width: 600px; */
-  padding: 10px;
-  /* margin: auto; */
+  width: 100%;
+  height: 41vh;
+  min-width: 600px;
+  min-height: 100px;
+  margin: auto;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 13px;
+  box-sizing: border-box;
   background-color: #FFFFFF;
 `;
 
@@ -86,53 +90,56 @@ const NoticeHeader = styled.div`
 
 const NoticeH2 = styled.h2`
   font-size: 30px;
+  font-weight: 700;
   margin-right: auto;
   font-weight: 700;
 `;
 
-
 const NoitceList = styled.div`
-  /* width:50%; */
+  width: 100%;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
   margin-bottom: 10px;
+  /* background-color: orange; */
 `;
 
 const NoticeImgDiv = styled.div`
   border: solid 1px #C8CCE5;
-  width: 230px;
-  height: 270px;
+  width: 32%;
+  height: 80%;
   background-image: url(${({$url}) => $url});
-  background-size: 230px 190px;
+  background-size: 100% 75%;
   background-repeat: no-repeat;
   background-position-x: center;
   border-radius: 6%;
   position: relative;
   box-shadow: 5px 5px rgba(0,0,0,.1);
-
 `;
 
 const NoticeContentDiv = styled.div`
-  height: 80px;
+  height: 25%;
   width: 100%;
   background-color: transparent;
   position: absolute;
   bottom: 0;
   left:0;
+  border-top: solid 1px #C8CCE5;
 `;
 
 const NoticeTitle = styled.div`
   font-weight: 700;
-  font-size: 17px;
-  margin: 10px;
+  font-size: 13px;
+  margin: 7px;
 `;
 
 const NoticeContent = styled.div`
-  margin: 10px;
-  line-height: 1.3;
+  margin: 5px;
+  line-height: 1.1;
+  font-size: 12px;
   overflow: hidden;
   word-wrap: break-word;
   text-align: left;
