@@ -168,15 +168,15 @@ export default function Notice () {
   );
 }
 
-
-
 const NoticeSection = styled.section`
   border: solid 2px #C8CCE5;
   border-radius: 10px;
-  width: 95%;
+  width: 90%;
   height: 100%;
   padding: 20px;
-  margin:auto;
+  margin: auto;
+  margin-top: 15px;
+  background-color: #FFFFFF;
 `;
 const NoticeHeader = styled.div`
   display: flex;
@@ -200,10 +200,10 @@ const NoitceList = styled.div`
 const NoticeImgDiv = styled.div`
   margin-left: 20px;
   border: solid 1px #C8CCE5;
-  min-width: 300px;
-  height: 350px;
+  min-width: 280px;
+  height: 330px;
   background-image: url(${({$url}) => $url});
-  background-size: 300px 250px;
+  background-size: 300px 240px;
   background-repeat: no-repeat;
   background-position-x: center;
   border-radius: 6%;
@@ -212,12 +212,12 @@ const NoticeImgDiv = styled.div`
 `;
 
 const NoticeContentDiv = styled.div`
-  height: 100px;
+  height: 90px;
   width: 100%;
-  background-color: transparent;
   position: absolute;
   bottom: 0;
   left:0;
+  border-top: solid 1px #C8CCE5;
 `;
 
 const NoticeTitle = styled.div`
@@ -228,7 +228,7 @@ const NoticeTitle = styled.div`
 
 const NoticeContent = styled.div`
   margin: 10px;
-  line-height: 1.5;
+  line-height: 1.3;
   overflow: hidden;
   word-wrap: break-word;
   text-align: left;

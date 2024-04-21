@@ -19,7 +19,7 @@ function Main_UserProfile() {
 
 return (
   <ProfileSection>
-
+  
     <ProfileHeader>
       <ProfileH1>유저 프로필</ProfileH1>
       <SettingImg src={settingImage} onClick={openModal}></SettingImg>
@@ -36,6 +36,7 @@ return (
 
     <Backdrop $showModal={showModal} onClick={closeModal} /> {/* 모달이 열릴 때만 배경 레이어 표시 */}
       {showModal && <Main_UserInfo closeModal={closeModal} />}
+      
   </ProfileSection>
 );
 }

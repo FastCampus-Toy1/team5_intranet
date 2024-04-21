@@ -1,6 +1,6 @@
-import AbsenceDetailResonInput from "./Main_AbsenceDetailReasonInput";
-import ChoiceAbsenceDate from "./Main_ChoiceAbsenceDate";
-import ChoiceAbsenceOption from "./Main_ChoiceAbsenceOption";
+import AbsenceReason from "./Main_AbsenceReason";
+import AbsenceDate from "./Main_AbsenceDate";
+import AbsenceOption from "./Main_AbsenceOption";
 import AbsenceSubmitHistory from "./Main_AbsenceSubmitHistory";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -41,7 +41,6 @@ function UserAbsenceContainer() {
       querySnapshot.docs[0].data().remainingVacation
     );
 
-    console.log(usingVacation);
     await updateDoc(docRef, {
       remainingVacation: serverRemainingVacation - usingVacation,
     });
@@ -76,6 +75,7 @@ function UserAbsenceContainer() {
       submitAbsence();
       updateRemainingVacation();
       setIsSubmit(false);
+      setIsValidAbsence(false);
     }
   }, [isValidAbsence, isSubmit]);
 
@@ -83,11 +83,11 @@ function UserAbsenceContainer() {
     <>
       <AbsenceContainer>
         <Inner>
-          <ChoiceAbsenceOption
+          <div>휴가신청</div>
+          <AbsenceOption
             props={{ setAbsenceOption, setIsVacation, remainingVacation }}
           />
-          <RemaingVacation>남은 휴가 : {remainingVacation}</RemaingVacation>
-          <ChoiceAbsenceDate
+          <AbsenceDate
             props={{
               setStartAbsenceDate,
               setEndAbsenceDate,
@@ -95,10 +95,11 @@ function UserAbsenceContainer() {
               setUseVacation,
               isVacation,
               remainingVacation,
+              isSubmit,
             }}
           />
-          <AbsenceDetailResonInput props={{ setIsSubmit, setAbsenceReason }} />
-          <AbsenceSubmitHistory />
+          <AbsenceReason props={{ setIsSubmit, setAbsenceReason }} />
+          <AbsenceSubmitHistory props={{ isSubmit }} />
         </Inner>
       </AbsenceContainer>
     </>
@@ -108,21 +109,24 @@ function UserAbsenceContainer() {
 export default UserAbsenceContainer;
 
 const AbsenceContainer = styled.section`
-  width: 585px;
+  width: 45%;
+  min-width: 600px;
   height: 70%;
   border: 2px solid #c8cce5;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  padding-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const Inner = styled.div`
-  width: 80%;
-  height: 90%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5em;
+  font-size: 1.4em;
 `;
-
-const RemaingVacation = styled.span``;

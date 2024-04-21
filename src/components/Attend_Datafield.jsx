@@ -12,26 +12,38 @@ const Datafield = ({selectedLabel, results}) => {
     const newmemberList = []; // 빈 배열로 초기화
     const querySnapshot = await getDocs(collection(db, MEMBER_COLLECTION));
     querySnapshot.forEach((doc) => {
-      const uid = sessionStorage.getItem('user.id');
+      const userName = sessionStorage.getItem('userName');
       const hdoOption = doc.data().hdoOption; // hdoOption 변수 선언
       const startDate = new Date(doc.data().startDate);
+      const absenceOption = doc.data().absenceOption;
       const now = new Date();
       const diffInDays = Math.ceil((startDate - now) / (1000 * 60 * 60 * 24));
-    let status;
+      let status;
 
-    if (diffInDays >= 14) {
-      status = '승인';
-    } else if (diffInDays >= 1) {
-      status = '신청 중';
-    } else if (diffInDays < 1) {
-      status = '거절';
-    }
+      let endDate;
+        if (['반차(오전)', '반차(오후)', '조퇴', '외출'].includes(absenceOption)) {
+          endDate = new Date(doc.data().startDate).toLocaleDateString('ko-KR');
+        } else if (doc.data().endDate) {
+          endDate = new Date(doc.data().endDate).toLocaleDateString('ko-KR');
+        }
+        else {
+          endDate = '미선택 '; 
+        }
+    
+      if (hdoOption == "(시간 선택)" || !startDate || endDate == "미선택 " || absenceOption == "사유 선택") {
+        status = '거절';
+      } else if (diffInDays <= 7) {
+        status = '승인';
+      } else {
+        status = '승인 전';
+      }
+
       newmemberList.push({
-        id : doc.data().userID,// uid ? uid : Math.random().toString(36).substring(2, 11), // uid가 null이면 랜덤한 값을 사용
+        id : userName,
         absenceOption: hdoOption ? hdoOption + ' ' + doc.data().absenceOption : doc.data().absenceOption, // hdoOption이 없는 경우 absenceOption만 출력
         hdoOption: hdoOption,
         startDate : new Date(doc.data().startDate).toLocaleDateString('ko-KR'), 
-        endDate: new Date(doc.data().endDate).toLocaleDateString('ko-KR'),
+        endDate: endDate,
         reason: doc.data().reason,
         status: status,
       });
@@ -100,7 +112,8 @@ const Datafield = ({selectedLabel, results}) => {
                         : member.absenceOption === '조퇴' ? '🎒 ' + member.absenceOption
                         : member.absenceOption === '연차' ? '🏖️ ' + member.absenceOption
                         : member.absenceOption === '반차' ? '🕧 ' + member.absenceOption
-                        : member.absenceOption === '기타' ? '❓ ' + member.absenceOption
+                        : member.absenceOption === '사유 선택' ? '❌ '
+                        : member.absenceOption === '반차(시간 선택)' ? '❌ '
                         : member.absenceOption}
               </AbsenceOptionwrap>
             </AbsenceOption>
@@ -134,22 +147,22 @@ export default Datafield;
 
 const Datafd = styled.div`
   grid-row: 3 / 4;
-  grid-column: 1 / 6;🪖
+  grid-column: 1 / 6;
 `
 
 const ListName = styled.div`
+  position: relative;
   grid-column: 1 / 6;
   display: flex;
   align-items: center;
-  text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid #C8CCE5;
   width: 98%;
   height: 40px;
+  padding: 10px;
   margin: 0px auto;
-  position: relative;
   margin-bottom: 10px;
   font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #C8CCE5;
 `;
 
 const Name = styled.div`
@@ -178,26 +191,22 @@ const MembersWrapper = styled.div`
 `;
 
 const Members = styled.div`
+  position: relative;
   grid-column: 1 / 6;
   display: flex;
   align-items: center;
-  text-align: center;
-  padding: 10px 5px 10px 10px;
-  border: 1px solid #C8CCE5;
-  border-radius: 10px;
   width: 98%;
   height: 40px;
+  padding: 10px 5px 10px 10px;
   margin: 0px auto;
-  position: relative;
-  font-family: 'Pretendard-Regular';
+  text-align: center;
+  border: 1px solid #C8CCE5;
+  border-radius: 10px;
   background-color: white;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.25);
   transition-duration: 0.1s;
 
   &:active {
-    position: relative;
-    left: 2px;
-    top: 2px;
     box-shadow: none;
 
   &:hover {
@@ -212,16 +221,16 @@ const Id = styled.div`
 `;
 
 const AbsenceOption = styled.div`
-  flex: 1;
-  flex: 1;
-  color: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
+  color: #FFF;
 `;
 
 const AbsenceOptionwrap = styled.div`
   border-radius: 30px;
+  font-size: 15px;
   width: ${props => (props.value == '연차' ? '55px'
           : props.value == '반차' ? '55px' 
           : props.value == '반차(오전)' ? '70px' 
@@ -230,8 +239,10 @@ const AbsenceOptionwrap = styled.div`
           : props.value == '조퇴' ? '55px' 
           : props.value == '외출' ? '55px'
           : props.value == '병가' ? '55px'
-          : props.value == '기타' ? '55px'
+          : props.value == '사유 선택' ? '55px'
+          : props.value == '반차(시간 선택)' ? '70px'
           : 'none')};
+
   height:  ${props => (props.value == '연차' ? '18px'
             : props.value == '반차' ? '18px'
             : props.value == '반차(오전)' ? '23px' 
@@ -240,9 +251,10 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '조퇴' ? '18px'
             : props.value == '외출' ? '18px' 
             : props.value == '병가' ? '18px'
-            : props.value == '기타' ? '18px' 
+            : props.value == '사유 선택' ? '18px' 
+            : props.value == '반차(시간 선택)' ? '18px' 
             : 'none')};
-  font-size: 15px;
+  
   padding: ${props => (props.value == '연차' ? '8px 8px 4px 3px'
             : props.value == '반차' ? '8px 8px 4px 3px'
             : props.value == '반차(오전)' ? '8px 5px 0px 5px' 
@@ -251,8 +263,10 @@ const AbsenceOptionwrap = styled.div`
             : props.value == '조퇴' ? '8px 8px 4px 3px'
             : props.value == '외출' ? '8px 8px 4px 3px'
             : props.value == '병가' ? '8px 8px 4px 3px'
-            : props.value == '기타' ? '8px 8px 4px 3px'
+            : props.value == '사유 선택' ? '8px 8px 4px 3px'
+            : props.value == '반차(시간 선택)' ? '8px 8px 4px 3px'
             : 'none')};
+
   background-image: ${props => (props.value == '연차' ? 'linear-gradient(3deg, #9B8AFB, #DD2590)'
                                 : props.value == '반차' ? 'linear-gradient(3deg, #FEB273, #EC4A0A)' 
                                 : props.value == '반차(오전)' ? 'linear-gradient(0deg, #FECB4B, #F04438)' 
@@ -261,39 +275,37 @@ const AbsenceOptionwrap = styled.div`
                                 : props.value == '조퇴' ? 'linear-gradient(3deg, #717BBC, #363F72)'
                                 : props.value == '외출' ? 'linear-gradient(3deg, #851651, #510B24)'
                                 : props.value == '병가' ? 'linear-gradient(3deg, #717BBC, #363F72)' 
-                                : props.value == '기타' ? 'linear-gradient(3deg, #717BBC, #363F72)'
                                 : 'none')};
 `
 
 const ReasonWrap = styled.div`
   display: flex;
-  border-radius: 0 0 10px 10px;
+  justify-content: center;
+  align-items: center;
   width: 99%;
   height: 120px;
   margin: 0px auto;
   margin-bottom: 20px;
-  justify-content: center;
-  align-items: center;
+  border-radius: 0 0 10px 10px;
 `
 
 const ReasonContent = styled.div`
   display: flex;
-  font-size: 23px;
-  font-weight: 600;
-  display: flex;
-  width: 20%;
-  margin-left: 30px;
   justify-content: center;
   align-items: center;
+  width: 20%;
+  margin-left: 30px;
+  font-size: 23px;
+  font-weight: 600;
 `
 
 const Reason = styled.div`
-  border: 2px solid #C8CCE5;
-  border-radius: 10px;
-  height: 80px;
   width: 80%;
+  height: 80px;
   padding: 10px 10px 0px 10px;
   margin: 10px 30px 10px 0;
+  border: 2px solid #C8CCE5;
+  border-radius: 10px;
 
   &:hover {
     border-color: #0BA5EC;
@@ -309,22 +321,22 @@ const EndDate = styled.div`
 `;
 
 const Status = styled.div`
-  flex: 1;
-  color: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
+  color: #FFF;
 `;
 
 const Statuswrap = styled.div`
-  background-image: ${props => (props.value == '신청 중' ? 'linear-gradient(3deg, #2E90FA, #175CD3)' 
-                    : props.value == '승인' ? 'linear-gradient(3deg, #32D583, #039855)' 
-                    : props.value == '거절' ? 'linear-gradient(3deg, #F97066, #D92D20)': 'none')};
-  border-radius: 10px;
   width: 56px;
   height: 23px;
-  font-size: 15px;
   padding-top: 9px;
+  border-radius: 10px;
+  font-size: 15px;
+  background-image: ${props => (props.value == '승인 전' ? 'linear-gradient(3deg, #2E90FA, #175CD3)' 
+  : props.value == '승인' ? 'linear-gradient(3deg, #32D583, #039855)' 
+  : props.value == '거절' ? 'linear-gradient(3deg, #F97066, #D92D20)': 'none')};
 `;
 
 
