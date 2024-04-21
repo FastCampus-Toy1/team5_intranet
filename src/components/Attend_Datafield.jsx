@@ -230,9 +230,6 @@ const Members = styled.div`
   transition-duration: 0.1s;
   cursor: pointer;
 
-  &:active {
-    box-shadow: none;
-
   &:hover {
     border: 2px solid #0BA5EC;
   }
