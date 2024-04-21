@@ -76,14 +76,14 @@ const NoticeSection = styled.section`
   margin: auto;
   margin-top: 20px;
   margin-right: 20px;
-  padding: 10px;
+  padding: 13px;
   box-sizing: border-box;
   background-color: #FFFFFF;
 `;
 
 const NoticeHeader = styled.div`
   display: flex;
-  margin: 10px 20px;
+  margin: 5px 20px;
   flex-grow: 1;
   align-items: center;
 `;
@@ -133,12 +133,12 @@ const NoticeContentDiv = styled.div`
 const NoticeTitle = styled.div`
   font-weight: 700;
   font-size: 13px;
-  margin: 10px;
+  margin: 7px;
 `;
 
 const NoticeContent = styled.div`
-  margin: 10px;
-  line-height: 1.2;
+  margin: 5px;
+  line-height: 1.1;
   font-size: 12px;
   overflow: hidden;
   word-wrap: break-word;
